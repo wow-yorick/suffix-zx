@@ -1,0 +1,15 @@
+name: Fluffiness
+type: theme
+description: 'A cuddly theme that offers extra fluffiness.'
+package: Custom
+core: 8.x
+libraries:
+  - fluffiness/globalstyling
+stylesheets-remove:
+  - '@classy/css/layout.css'
+  - core/assets/vendor/normalize-css/normalize.css
+regions:
+  header: Header
+  content: Content
+  sidebar_first: 'Sidebar first'
+  footer: Footer
