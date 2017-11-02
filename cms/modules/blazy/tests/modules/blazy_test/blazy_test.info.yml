@@ -1,0 +1,16 @@
+name: Blazy Test
+description: 'Testing a few Blazy hooks, etc.'
+type: module
+hidden: true
+package: Testing
+# core: 8.x
+dependencies:
+  - blazy:blazy
+  - drupal:responsive_image
+  - drupal:views
+
+# Information added by Drupal.org packaging script on 2017-05-25
+version: '8.x-1.0-rc2'
+core: '8.x'
+project: 'blazy'
+datestamp: 1495745286

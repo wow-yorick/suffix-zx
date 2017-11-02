@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+id: x_main
+name: x_main
+label: 'X Main'
+weight: -4
+group: main
+skin: fullwidth
+breakpoints: 3
+optimized: true
+options:
+  settings:
+    downArrow: true
+    downArrowTarget: '#main'
+    downArrowOffset: 120
+    lazyLoad: ondemand
+    slidesToShow: 1
+    cssEase: 'cubic-bezier(0.445, 0.050, 0.550, 0.950)'
+    easing: easeOutBounce
+  responsives:
+    responsive:
+      -
+        breakpoint: 900
+        unslick: false
+        settings:
+          swipeToSlide: true
+      -
+        breakpoint: 480
+        unslick: false
+        settings:
+          swipeToSlide: true
+      -
+        breakpoint: 320
+        unslick: false
+        settings:
+          swipeToSlide: true

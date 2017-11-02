@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+id: x_split
+name: x_split
+label: 'X Split'
+weight: 0
+group: main
+skin: split
+breakpoints: 0
+optimized: true
+options:
+  settings:
+    lazyLoad: ondemand
+    slidesToShow: 1

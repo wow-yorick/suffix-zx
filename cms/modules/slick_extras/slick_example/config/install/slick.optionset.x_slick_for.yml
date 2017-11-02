@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+id: x_slick_for
+name: x_slick_for
+label: 'X Slick for'
+weight: -2
+group: main
+skin: classic
+breakpoints: 0
+optimized: true
+options:
+  settings:
+    arrows: false
+    lazyLoad: ondemand
+    slidesToShow: 1

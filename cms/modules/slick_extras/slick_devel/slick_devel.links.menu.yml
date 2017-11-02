@@ -1,0 +1,6 @@
+slick_devel.settings:
+  title: 'Slick Development'
+  parent: entity.slick.collection
+  route_name: slick_devel.settings
+  description: 'Configure the Slick development module settings.'
+  weight: 20

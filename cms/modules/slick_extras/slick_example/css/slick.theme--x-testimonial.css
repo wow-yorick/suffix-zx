@@ -1,0 +1,38 @@
+/**
+ * @file
+ * Slick example testimonial with thumbnail and description and slidesToShow 2.
+ */
+
+.slick--skin--x-testimonial {
+  border-bottom: 1px solid #111;
+  border-top: 1px solid #111;
+  min-height: 80px;
+  padding: 15px 30px;
+  text-transform: uppercase;
+}
+
+.slick--skin--x-testimonial .slide__content {
+  color: #c42c2c;
+  padding: 0 10px;
+}
+
+.slick--skin--x-testimonial .slide__media {
+  border-radius: 50%;
+  float: left;
+  height: 100px;
+  margin-top: 0;
+  width: 100px;
+  overflow: hidden;
+}
+
+.slick--skin--x-testimonial .slide__caption {
+  font-size: 14px;
+  font-size: 0.875rem;
+  left: auto;
+  line-height: 1.2;
+  margin-left: 100px;
+  padding: 0 20px;
+  position: relative;
+  top: auto;
+  width: auto;
+}

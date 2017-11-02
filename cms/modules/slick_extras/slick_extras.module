@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Provides Slick extra utilities.
+ */
+
+/**
+ * Implements hook_slick_skins_info().
+ *
+ * The class must implement \Drupal\slick\SlickSkinInterface.
+ */
+function slick_extras_slick_skins_info() {
+  return '\Drupal\slick_extras\SlickExtrasSkin';
+}

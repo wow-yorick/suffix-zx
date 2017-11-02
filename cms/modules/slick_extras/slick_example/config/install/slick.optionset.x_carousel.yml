@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+id: x_carousel
+name: x_carousel
+label: 'X Carousel'
+weight: -8
+group: ''
+skin: boxed-carousel
+breakpoints: 2
+optimized: true
+options:
+  settings:
+    centerMode: true
+    centerPadding: '0'
+    dots: true
+    lazyLoad: ondemand
+    slidesToShow: 5
+    slidesToScroll: 3
+    swipeToSlide: true
+    cssEase: 'cubic-bezier(0.950, 0.050, 0.795, 0.035)'
+    waitForAnimate: false
+  responsives:
+    responsive:
+      -
+        breakpoint: 900
+        unslick: false
+        settings:
+          centerMode: true
+          centerPadding: 10px
+          slidesToShow: 3
+          swipeToSlide: true
+          waitForAnimate: false
+      -
+        breakpoint: 641
+        unslick: false
+        settings:
+          centerMode: true
+          centerPadding: ''
+          swipeToSlide: true
+          waitForAnimate: false

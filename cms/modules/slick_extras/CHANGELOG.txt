@@ -1,0 +1,59 @@
+
+Slick extras 8.x-1.0-dev, 2017-01-19
+------------------------------------
+- Updated slick.optionset.x_slick_nav.yml to use max-width since it is not
+  enabling Mobile first option.
+
+Slick extras 8.x-1.0-dev, 2016-12-09
+------------------------------------
+- Fixed for edgeFriction when it is integer, no longer double.
+
+Slick extras 8.x-1.0-dev, 2016-12-07
+------------------------------------
+- Optimized optionsets for Slick Beta6+.
+- Fixed for coding standards.
+
+Slick extras 8.x-1.0-dev, 2016-09-07
+------------------------------------
+- Marked it Beta 3.
+- Added group main for sample skin X: Testimonial to decultter other skins.
+
+Slick extras 8.x-1.0-dev, 2016-07-18
+------------------------------------
+- #2759639 by Sonal.Sangale: Remove @file tag docblock from all the .php files.
+- Updated to reflect Slick 8.x-1.0-beta2.
+- A few cleanups.
+
+Slick extras 8.x-1.0-dev, 2016-04-11
+------------------------------------
+- Updated to reflect Slick 8.x-1.0-beta1.
+
+Slick extras 8.x-1.0-dev, 2016-04-06
+------------------------------------
+- Updated Slick example to disable cache by default.
+
+Slick extras 8.x-1.0-dev, 2016-03-28
+------------------------------------
+- Updated to reflect Slick 8.x-1.0-alpha6.
+
+Slick extras 8.x-1.0-dev, 2016-03-23
+------------------------------------
+- Updated to reflect Slick 8.x-1.0-alpha5.
+
+Slick extras 8.x-1.0-dev, 2016-02-11
+------------------------------------
+- Removed untested 3d optionsets.
+
+Slick extras 8.x-1.0-dev, 2016-01-20
+------------------------------------
+- Removed trivial settings: pattern, wrapper class.
+
+Slick extras 8.x-1.0-dev, 2016-01-19
+------------------------------------
+- A few cleanup.
+
+Slick extras 8.x-1.0-dev, 2016-01-18
+------------------------------------
+- Updated slick_example descriptions.
+- Issue #2651740: D8 port
+- Initial D8 port.

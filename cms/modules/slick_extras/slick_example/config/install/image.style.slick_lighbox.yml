@@ -1,0 +1,18 @@
+uuid: e6a90909-d8fc-4ad9-9204-4b0d17671f69
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+name: slick_lighbox
+label: 'Slick lightbox'
+effects:
+  0bace1f0-9902-4008-8d2e-46b3f17d7daf:
+    uuid: 0bace1f0-9902-4008-8d2e-46b3f17d7daf
+    id: image_scale
+    weight: 1
+    data:
+      width: 800
+      height: null
+      upscale: true

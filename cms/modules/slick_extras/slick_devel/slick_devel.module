@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Provides options for the Slick development.
+ */
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function slick_devel_library_info_alter(&$libraries, $module) {
+  $slick_path = drupal_get_path('module', 'slick');
+  $path = drupal_get_path('module', 'slick_devel');
+  $config = \Drupal::config('slick_devel.settings');
+
+  if ($config->get('unminified')) {
+    // Switch to the un-minified version of the library.
+    if ($module == 'slick' && isset($libraries['slick'])) {
+      $libraries['slick']['js'] = ['/libraries/slick/slick/slick.js' => []];
+    }
+  }
+
+  if ($config->get('debug')) {
+    // Switch to the development version of the slick.load.js.
+    if ($module == 'slick' && isset($libraries['slick.load'])) {
+      $libraries['slick.load']['js'] = ['/' . $slick_path . '/js/slick.load.js' => []];
+    }
+  }
+  else {
+    // Switch to the development version of the slick.load.js.
+    if ($config->get('replace') && $module == 'slick' && isset($libraries['slick.load'])) {
+      $libraries['slick.load']['js'] = ['/' . $path . '/js/slick.load.devel.js' => []];
+    }
+  }
+
+  if ($config->get('disable')) {
+    // Disable the module slick.load.js.
+    if ($module == 'slick' && isset($libraries['slick.load'])) {
+      unset($libraries['slick.load']['js']);
+    }
+  }
+}

@@ -1,0 +1,5 @@
+slick_devel.settings:
+  route_name: slick_devel.settings
+  base_route: entity.slick.collection
+  # parent_id: entity.slick.collection
+  title: 'Development'

@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+name: slick_fullscreen
+label: 'Slick fullscreen'
+effects:
+  8e56f5d5-7f8e-44bb-ae00-c506185a6f14:
+    uuid: 8e56f5d5-7f8e-44bb-ae00-c506185a6f14
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1600
+      height: 1200
