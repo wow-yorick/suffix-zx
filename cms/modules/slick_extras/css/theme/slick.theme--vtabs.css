@@ -1,0 +1,78 @@
+/**
+ * @file.
+ * Adds a vertical tabs like thumbnail navigation.
+ */
+
+.slick-wrapper--vtabs {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.slick--skin--vtabs {
+  height: 100%;
+  margin: 0;
+  padding: 42px 0;
+  position: absolute;
+  right: 0;
+  text-align: left;
+  top: 0;
+  width: 210px;
+  z-index: 9;
+}
+
+.slick--skin--vtabs .slick__arrow {
+  bottom: 0;
+  height: 100%;
+  left: 50%;
+  margin-left: -1px;
+  top: 0;
+  width: 2px;
+}
+
+.slick--skin--vtabs .slick-arrow {
+  left: 50%;
+  margin-left: -21px;
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.slick--skin--vtabs .slick-prev {
+  top: 0;
+}
+
+.slick--skin--vtabs .slick-next {
+  top: auto;
+  bottom: 0;
+}
+
+.slick--skin--vtabs .slick__slide {
+  background: #222;
+  width: 100%;
+}
+
+.slick--skin--vtabs .slick-current {
+  background: #000;
+}
+
+.slick--skin--vtabs.slick--has-caption {
+  width: 280px;
+}
+
+.slick--skin--vtabs.slick--has-caption .slick__slide {
+  padding: 0 5px;
+}
+
+.slick--skin--vtabs.slick--has-caption img {
+  float: left;
+  max-width: 68px;
+}
+
+.slick--skin--vtabs.slick--has-caption .slide__caption {
+  color: #fff;
+  font-size: 14px;
+  font-size: 0.875rem;
+  margin-left: 80px;
+  padding: 2px 0;
+  width: auto;
+}

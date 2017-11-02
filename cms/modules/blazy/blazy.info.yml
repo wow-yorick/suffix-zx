@@ -1,0 +1,14 @@
+name: Blazy
+type: module
+description: "Provides basic Blazy integration for lazy loading and multi-serving images."
+# version: VERSION
+# core: 8.x
+package: Blazy
+dependencies:
+  - drupal:image
+
+# Information added by Drupal.org packaging script on 2017-05-25
+version: '8.x-1.0-rc2'
+core: '8.x'
+project: 'blazy'
+datestamp: 1495745286

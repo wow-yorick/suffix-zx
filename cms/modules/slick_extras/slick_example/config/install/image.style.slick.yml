@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+name: slick
+label: Slick
+effects:
+  483dc177-a6e8-4e0b-9918-24c064767935:
+    uuid: 483dc177-a6e8-4e0b-9918-24c064767935
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1380
+      height: 520

@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+name: slick_square
+label: 'Slick square'
+effects:
+  b262610b-641a-4d02-9100-a5f5e344a4ba:
+    uuid: b262610b-641a-4d02-9100-a5f5e344a4ba
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 640
+      height: 640

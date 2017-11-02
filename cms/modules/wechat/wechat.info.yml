@@ -1,0 +1,12 @@
+name: Wechat
+description: 'Wechat public open platform integration.'
+# core: 8.x
+package: Wechat
+type: module
+# version: VERSION
+
+# Information added by Drupal.org packaging script on 2016-12-01
+version: '8.x-1.0-beta3'
+core: '8.x'
+project: 'wechat'
+datestamp: 1480586289

@@ -1,0 +1,17 @@
+# Schema for the configuration files of the Slick Devel module.
+slick_devel.settings:
+  type: config_object
+  label: 'Slick devel settings'
+  mapping:
+    unminified:
+      type: boolean
+      label: 'Enable development mode'
+    debug:
+      type: boolean
+      label: 'Use non-minified slick.load.js'
+    disable:
+      type: boolean
+      label: 'Disable module slick.load.js'
+    replace:
+      type: boolean
+      label: 'Replace the slick.load.js with development version: slick.load.devel.js'

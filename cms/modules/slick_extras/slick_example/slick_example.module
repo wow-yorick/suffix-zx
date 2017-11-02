@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Provides Slick carousel examples.
+ *
+ * Provides samples for Optionsets, Image styles, Views blocks and a few
+ * supported alters.
+ * Please do not use this module for your works, instead use it to learn how to
+ * make the most out of Slick module. This module will be updated at times to
+ * reflect the best shot Slick can give, so it may not keep your particular use.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_slick_skins_info().
+ *
+ * To provide own skins, simply provide the legit class namespace, and the class
+ * must implement \Drupal\slick\SlickSkinInterface.
+ *
+ * @see slick.api.php for mode detailed instruction on this.
+ * @see \Drupal\slick\SlickSkinInterface
+ */
+function slick_example_slick_skins_info() {
+  return '\Drupal\slick_example\SlickExampleSkin';
+}
+
+/**
+ * Implements hook_help().
+ */
+function slick_example_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.slick_example':
+      return check_markup(file_get_contents(dirname(__FILE__) . '/README.txt'));
+  }
+}

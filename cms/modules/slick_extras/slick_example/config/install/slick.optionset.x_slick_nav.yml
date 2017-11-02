@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+id: x_slick_nav
+name: x_slick_nav
+label: 'X Slick nav'
+weight: -1
+group: thumbnail
+skin: asnavfor
+breakpoints: 2
+optimized: true
+options:
+  settings:
+    centerMode: true
+    centerPadding: ''
+    focusOnSelect: true
+    lazyLoad: ondemand
+    slidesToShow: 7
+  responsives:
+    responsive:
+      -
+        breakpoint: 769
+        unslick: false
+        settings:
+          arrows: false
+          centerMode: true
+          centerPadding: ''
+          focusOnSelect: true
+          slidesToShow: 5
+      -
+        breakpoint: 481
+        unslick: false
+        settings:
+          centerMode: true
+          centerPadding: '0'
+          focusOnSelect: true
+          slidesToShow: 3

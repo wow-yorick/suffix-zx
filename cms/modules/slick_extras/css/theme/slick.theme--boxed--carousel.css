@@ -1,0 +1,21 @@
+/**
+ * @file
+ * Detailed stylings are all yours, get yourself dirty.
+ */
+
+.slick--skin--boxed-carousel .slick-list {
+  margin: 0 60px;
+}
+
+.slick--skin--boxed-carousel .slide__content {
+  padding: 0;
+}
+
+.slick--skin--boxed-carousel .slide__content .slide__title {
+  font-size: 22px;
+  font-size: 1.375rem;
+}
+
+.slick--skin--boxed-carousel .slide__caption {
+  padding: 20px;
+}

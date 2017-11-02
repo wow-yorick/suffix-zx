@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+id: x_fullscreen
+name: x_fullscreen
+label: 'X Fullscreen'
+weight: -6
+group: main
+skin: fullscreen
+breakpoints: 0
+optimized: true
+options:
+  settings:
+    dots: true
+    lazyLoad: blazy
+    slidesToShow: 1
+    cssEase: 'cubic-bezier(0.680, -0.550, 0.265, 1.550)'

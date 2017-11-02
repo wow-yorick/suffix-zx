@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Add an URL formatter for image field
+ */
+use Drupal\Component\Utility\Unicode;
+use Drupal\image\Entity\ImageStyle;
+
+
+/**
+ * Implements hook_theme().
+ */
+function image_url_formatter_theme() {
+  return array(
+    'image_url_formatter' => array(
+      'variables' => array(
+        'item' => NULL,
+        'url' => NULL,
+        'image_style' => NULL,
+        'url_type' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Returns HTML for an image url field formatter.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - item: An array of image data.
+ *   - image_style: An optional image style.
+ *   - path: An optional array containing the link 'path' and link 'options'.
+ *
+ * @ingroup themeable
+ */
+function template_preprocess_image_url_formatter(&$variables) {
+  $item = $variables['item'];
+  // drupal_set_message(var_export($item,true));
+  $output = $item->entity->url();
+  //drupal_set_message('entity->url:' .  $output);
+  if ($variables['image_style']) {
+    $image['style_name'] = $variables['image_style'];
+	//drupal_set_message('style_name:' .  $image['style_name']);
+    $output = ImageStyle::load($image['style_name'])->buildUrl($item->entity->getFileUri());
+	//drupal_set_message('output:' .  $output);
+	//drupal_set_message('item uri:' .   $item->entity->getFileUri());
+  }
+  
+  $url_type = isset($variables['url_type']) ? $variables['url_type'] : 0;
+  if ($url_type == 1){
+    $output = str_replace($GLOBALS['base_url'], '', $output);
+  }
+  elseif ($url_type == 2){
+     $output = str_replace($GLOBALS['base_url'] . '/', '', $output);
+  }
+  
+  // The link path and link options are both optional, but for the options to be
+  // processed, the link path must at least be an empty string.
+  if (isset($variables['path']['path'])) {
+    $path = $variables['path']['path'];
+    $options = isset($variables['path']['options']) ? $variables['path']['options'] : array();
+    // When displaying an image inside a link, the html option must be TRUE.
+    $options['html'] = TRUE;
+    $output = \Drupal::l($output, $path, $options);
+  }
+
+  $variables['image'] = $output;
+}

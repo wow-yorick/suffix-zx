@@ -1,0 +1,7 @@
+slick_devel.settings:
+  path: '/admin/config/media/slick/devel'
+  defaults:
+    _form: '\Drupal\slick_devel\SlickDevelSettingsForm'
+    _title: 'Slick Development'
+  requirements:
+    _permission: 'administer slick'

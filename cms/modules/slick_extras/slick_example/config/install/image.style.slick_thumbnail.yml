@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_example
+name: slick_thumbnail
+label: 'Slick thumbnail'
+effects:
+  7deb6f28-2397-467e-8300-d89bf057e217:
+    uuid: 7deb6f28-2397-467e-8300-d89bf057e217
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 210
+      height: 158

@@ -1,0 +1,15 @@
+uuid: 6cfb4e82-8c36-421d-a037-1d16a16e4344
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - blazy_test
+third_party_settings: {  }
+name: 'bundle test'
+type: bundle_test
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false
