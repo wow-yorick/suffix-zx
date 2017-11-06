@@ -1,0 +1,16 @@
+name: Commerce Cart Test
+type: module
+description: Contains various non-specific things needed in tests.
+package: Testing
+# core: 8.x
+dependencies:
+  - commerce_store
+  - commerce_product
+  - commerce_cart
+  - views
+
+# Information added by Drupal.org packaging script on 2017-09-20
+version: '8.x-2.0'
+core: '8.x'
+project: 'commerce'
+datestamp: 1505910849

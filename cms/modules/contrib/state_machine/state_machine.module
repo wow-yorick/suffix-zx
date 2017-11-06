@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Provides workflow functionality.
+ */
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function state_machine_field_widget_info_alter(array &$info) {
+  $info['options_select']['field_types'][] = 'state';
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function state_machine_field_formatter_info_alter(array &$info) {
+  $info['list_default']['field_types'][] = 'state';
+}

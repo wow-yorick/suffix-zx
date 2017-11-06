@@ -1,0 +1,9 @@
+services:
+  state_machine_test.fulfillment_guard:
+    class: Drupal\state_machine_test\Guard\FulfillmentGuard
+    tags:
+      - { name: state_machine.guard, group: order }
+  state_machine_test.event_subscriber:
+    class: Drupal\state_machine_test\EventSubscriber\WorkflowTransitionEventSubscriber
+    tags:
+      - { name: event_subscriber }

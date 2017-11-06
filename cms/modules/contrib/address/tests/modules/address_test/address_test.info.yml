@@ -1,0 +1,14 @@
+name: Address test
+type: module
+description: 'Provides functionality for testing the address module.'
+package: Testing
+# core: 8.x
+dependencies:
+  - address
+  - views
+
+# Information added by Drupal.org packaging script on 2017-09-20
+version: '8.x-1.2'
+core: '8.x'
+project: 'address'
+datestamp: 1505896147

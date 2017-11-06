@@ -1,0 +1,20 @@
+name: Commerce Payment
+type: module
+description: 'Provides payment functionality.'
+package: Commerce
+# core: 8.x
+dependencies:
+  - commerce:commerce_order
+  - entity_reference_revisions
+  - filter
+  - user
+config_devel:
+  install:
+    - field.storage.user.commerce_remote_id
+    - field.field.user.user.commerce_remote_id.yml
+
+# Information added by Drupal.org packaging script on 2017-09-20
+version: '8.x-2.0'
+core: '8.x'
+project: 'commerce'
+datestamp: 1505910849

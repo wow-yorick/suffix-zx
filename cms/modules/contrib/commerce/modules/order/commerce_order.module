@@ -1,0 +1,184 @@
+<?php
+
+/**
+ * @file
+ * Defines the Order entity and associated features.
+ */
+
+use Drupal\commerce\BundleFieldDefinition;
+use Drupal\commerce_order\Entity\OrderTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_order_theme($existing, $type, $theme, $path) {
+  return [
+    'commerce_order' => [
+      'render element' => 'elements',
+    ],
+    'commerce_order__admin' => [
+      'base hook' => 'commerce_order',
+      'render element' => 'elements',
+    ],
+    'commerce_order__user' => [
+      'base hook' => 'commerce_order',
+      'render element' => 'elements',
+    ],
+    'commerce_order_edit_form' => [
+      'render element' => 'form',
+    ],
+    'commerce_order_receipt' => [
+      'variables' => [
+        'order_entity' => NULL,
+        'billing_information' => NULL,
+        'shipping_information' => NULL,
+        'payment_method' => NULL,
+        'totals' => NULL,
+      ],
+    ],
+    'commerce_order_total_summary' => [
+      'variables' => [
+        'totals' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_local_tasks_alter().
+ */
+function commerce_order_local_tasks_alter(&$definitions) {
+  $id = 'entity.profile.user_profile_form:profile.type.customer';
+  if (isset($definitions[$id])) {
+    $definitions[$id]['title'] = t('Address book');
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * - Changes the label of the purchased_entity field to the label of the
+ *   target type (e.g. 'Product variation').
+ * - Forbids editing the purchased_entity once the order item is no longer new.
+ */
+function commerce_order_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $field_definition = $context['items']->getFieldDefinition();
+  $field_name = $field_definition->getName();
+  $entity_type = $field_definition->getTargetEntityTypeId();
+  if ($field_name == 'purchased_entity' && $entity_type == 'commerce_order_item') {
+    if (!empty($element['target_id']['#target_type'])) {
+      $target_type = \Drupal::service('entity_type.manager')->getDefinition($element['target_id']['#target_type']);
+      $element['target_id']['#title'] = $target_type->getLabel();
+      if (!$context['items']->getEntity()->isNew()) {
+        $element['#disabled'] = TRUE;
+      }
+    }
+  }
+}
+
+/**
+ * Prepares variables for order templates.
+ *
+ * Default template: commerce-order.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing rendered fields.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_commerce_order(array &$variables) {
+  /** @var Drupal\commerce_order\Entity\OrderInterface $order */
+  $order = $variables['elements']['#commerce_order'];
+
+  $variables['order_entity'] = $order;
+  $variables['order'] = [];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['order'][$key] = $variables['elements'][$key];
+  }
+
+  if ($order->getBillingProfile()) {
+    $profile_view_bulder = \Drupal::entityTypeManager()->getViewBuilder('profile');
+    $variables['order']['billing_information'] = $profile_view_bulder->view($order->getBillingProfile());
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_commerce_order().
+ */
+function commerce_order_theme_suggestions_commerce_order(array $variables) {
+  return _commerce_entity_theme_suggestions('commerce_order', $variables);
+}
+
+/**
+ * Implements hook_theme_suggestions_commerce_order_receipt().
+ */
+function commerce_order_theme_suggestions_commerce_order_receipt(array $variables) {
+  $suggestions = [];
+  if (isset($variables['order_entity'])) {
+    $order = $variables['order_entity'];
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $order->bundle();
+  }
+  return $suggestions;
+}
+
+/**
+ * Adds the default order_items field to an order type.
+ *
+ * Order items can't be a base field because the Views integration is broken.
+ * Instead, it is created as a configurable field for each order type.
+ *
+ * @param \Drupal\commerce_order\Entity\OrderTypeInterface $order_type
+ *   The order type.
+ */
+function commerce_order_add_order_items_field(OrderTypeInterface $order_type) {
+  $field_definition = BundleFieldDefinition::create('entity_reference')
+    ->setTargetEntityTypeId('commerce_order')
+    ->setTargetBundle($order_type->id())
+    ->setName('order_items')
+    ->setLabel('Order items')
+    ->setCardinality(BundleFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(TRUE)
+    ->setSetting('target_type', 'commerce_order_type')
+    ->setSetting('handler', 'default')
+    ->setDisplayOptions('form', [
+      'type' => 'inline_entity_form_complex',
+      'weight' => 0,
+      'settings' => [
+        'override_labels' => TRUE,
+        'label_singular' => 'order item',
+        'label_plural' => 'order items',
+      ],
+    ])
+    ->setDisplayOptions('view', [
+      'type' => 'commerce_order_item_table',
+      'weight' => 0,
+    ]);
+
+  $configurable_field_manager = \Drupal::service('commerce.configurable_field_manager');
+  $configurable_field_manager->createField($field_definition);
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function commerce_order_views_data_alter(array &$data) {
+  $data['commerce_order']['store_id']['field']['id'] = 'commerce_store';
+  $data['commerce_order']['state']['filter']['id'] = 'state_machine_state';
+}
+
+/**
+ * Implements hook_mail().
+ *
+ * Captures the outgoing mail and sets appropriate message body and headers.
+ */
+function commerce_order_mail($key, &$message, $params) {
+  if (isset($params['headers'])) {
+    $message['headers'] = array_merge($message['headers'], $params['headers']);
+  }
+
+  $message['from'] = $params['from'];
+  $message['subject'] = $params['subject'];
+  $message['body'][] = $params['body'];
+}

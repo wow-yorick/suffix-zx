@@ -1,0 +1,26 @@
+default:
+  id: default
+  label: Default
+  group: entity_test
+  states:
+    new:
+      label: New
+    fulfillment:
+      label: Fulfilment
+    completed:
+      label: Completed
+    canceled:
+      label: Canceled
+  transitions:
+    create:
+      label: Create
+      from: [new]
+      to:   fulfillment
+    fulfill:
+      label: Fulfill
+      from: [fulfillment]
+      to: completed
+    cancel:
+      label: Cancel
+      from: [new, fulfillment]
+      to:   canceled
