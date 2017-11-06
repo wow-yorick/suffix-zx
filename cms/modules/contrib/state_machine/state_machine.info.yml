@@ -1,0 +1,11 @@
+name: State Machine
+type: module
+description: Provides code-driven workflow functionality.
+# core: 8.x
+package: Other
+
+# Information added by Drupal.org packaging script on 2016-10-30
+version: '8.x-1.0-beta3'
+core: '8.x'
+project: 'state_machine'
+datestamp: 1477868941

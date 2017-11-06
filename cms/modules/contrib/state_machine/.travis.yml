@@ -1,0 +1,56 @@
+language: php
+sudo: false
+
+php:
+  - 5.5
+  - 5.6
+  - 7
+  - hhvm
+
+matrix:
+  allow_failures:
+    # We cannot use hhvm-nightly since that does not work in Travis CI's old
+    # Ubuntu 12.04.
+    - php: hhvm
+  # Don't wait for the allowed failures to build.
+  fast_finish: true
+
+mysql:
+  database: state_machine
+  username: root
+  encoding: utf8
+
+before_script:
+  # Remove Xdebug as we don't need it and it causes
+  # PHP Fatal error:  Maximum function nesting level of '256' reached.
+  # We also don't care if that file exists or not on PHP 7.
+  - phpenv config-rm xdebug.ini || true
+
+  # Remember the current state_machine test directory for later use in the Drupal
+  # installation.
+  - TESTDIR=$(pwd)
+  # Navigate out of module directory to prevent blown stack by recursive module
+  # lookup.
+  - cd ..
+
+  # Create database.
+  - mysql -e 'create database state_machine'
+  # Export database variable for kernel tests.
+  - export SIMPLETEST_DB=mysql://root:@127.0.0.1/state_machine
+  # Download Drupal 8 core.
+  - travis_retry git clone --branch 8.0.x --depth 1 http://git.drupal.org/project/drupal.git
+  - cd drupal
+
+  # Reference state_machine in build site.
+  - ln -s $TESTDIR modules/state_machine
+
+  # Start a web server on port 8888, run in the background; wait for
+  # initialization.
+  - nohup php -S localhost:8888 > /dev/null 2>&1 &
+
+  # Export web server URL for browser tests.
+  - export SIMPLETEST_BASE_URL=http://localhost:8888
+
+script:
+  # Run the PHPUnit tests which also include the kernel tests.
+  - ./vendor/phpunit/phpunit/phpunit -c ./core/phpunit.xml.dist --verbose ./modules/state_machine
