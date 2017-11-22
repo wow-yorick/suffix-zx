@@ -29,13 +29,13 @@ class RegisterForm extends SimpleForm {
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Title'),
-      '#description' => $this->t('asfda.'),
+      '#description' => $this->t('测试描述.'),
       '#required' => TRUE,
     ];
     $form['name'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Name'),
-      '#description' => $this->t('Test.'),
+      '#title' => $this->t('姓名'),
+      '#description' => $this->t('名字.'),
       '#required' => TRUE,
     ];
 
