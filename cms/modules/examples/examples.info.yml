@@ -1,0 +1,13 @@
+name: Examples for Developers
+type: module
+description: 'Provides example code for you to learn from.'
+package: Example modules
+# core: 8.x
+dependencies:
+  - drupal:toolbar
+
+# Information added by Drupal.org packaging script on 2017-11-01
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'examples'
+datestamp: 1509562690

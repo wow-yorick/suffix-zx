@@ -1,0 +1,14 @@
+app_user.register:
+  path: '/app_user/register'
+  defaults:
+    _controller: '\Drupal\app_user\Controller\UserController::register'
+    _title: '注册'
+  requirements:
+    _permission: 'access content'
+app_user.ajax_demo:
+  path: 'app_user/ajax-demo'
+  defaults:
+    _form:  '\Drupal\app_user\Form\RegisterForm'
+    _title: 'my'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,12 @@
+name: APP用户中心
+type: module
+description: '用户中心.'
+package: Custom
+# version: VERSION
+# core: 8.x
+version: '8.4.0'
+core: '8.x'
+project: 'drupal'
+datestamp: 1507146289
+dependencies:
+  - examples:fapi_example
