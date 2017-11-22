@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - simpletest_example
+name: 'SimpleTest Example Node Type'
+type: simpletest_example
+description: 'A content type that exists so we can test it.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true
+third_party_settings: {  }

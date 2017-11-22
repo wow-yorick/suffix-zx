@@ -1,0 +1,15 @@
+name: Form API Example
+type: module
+description: Demonstrates the Drupal Form API.
+package: Example modules
+# core: 8.x
+configure: fapi_example.description
+dependencies:
+  - drupal:node
+  - examples:examples
+
+# Information added by Drupal.org packaging script on 2017-11-01
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'examples'
+datestamp: 1509562690

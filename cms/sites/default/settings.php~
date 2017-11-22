@@ -1,0 +1,14 @@
+<?php
+$databases['default']['default'] = array (
+  'database' => 'suffix_zx',
+  'username' => 'root',
+  'password' => 'qQ2587011$',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['hash_salt'] = 'C-MpaTxIdbkY_lPkRNjxzTf69E0KnGqrszhHvusX-FGo5ld2-0q-6XkCQDpH_izAlTYfuaw__Q';
+$settings['install_profile'] = 'standard';
+$config_directories['sync'] = 'sites/default/files/config_lp3XtKtQ06kgzo4RumelWHrAqYF1MVPu0r0BkaMU6FgkIfPqQXeqTDD-MPm2byuFCnQp5GBeew/sync';

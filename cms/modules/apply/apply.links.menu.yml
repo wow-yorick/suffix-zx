@@ -1,0 +1,6 @@
+apply.admin:
+  title: 'Apply settings'
+  description: 'apply link'
+  parent: system.admin_config_development
+  route_name: apply.content
+  weight: 100

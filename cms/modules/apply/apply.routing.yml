@@ -1,0 +1,7 @@
+apply.content:
+  path: '/apply'
+  defaults:
+    _controller: '\Drupal\apply\Controller\ApplyController::content'
+    _title: 'apply title'
+  requirements:
+    _permission: 'access content'
