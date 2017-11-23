@@ -1,0 +1,40 @@
+services:
+  commerce_shipping.packer_manager:
+    class: Drupal\commerce_shipping\PackerManager
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: service_collector, call: addPacker, tag: commerce_shipping.packer }
+
+  commerce_shipping.default_packer:
+    class: Drupal\commerce_shipping\Packer\DefaultPacker
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: commerce_shipping.packer, priority: -100 }
+
+  commerce_shipping.order_shipment_summary:
+    class: Drupal\commerce_shipping\OrderShipmentSummary
+    arguments: ['@entity_type.manager']
+
+  commerce_shipping.shipment_order_processor:
+    class: Drupal\commerce_shipping\ShipmentOrderProcessor
+    arguments: ['@entity_type.manager', '@commerce_shipping.packer_manager']
+    tags:
+      - { name: commerce_order.order_processor, priority: 200 }
+
+  commerce_shipping.referenceable_plugin_types_subscriber:
+    class: Drupal\commerce_shipping\EventSubscriber\ReferenceablePluginTypesSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  commerce_shipping.order_subscriber:
+    class: Drupal\commerce_shipping\EventSubscriber\OrderSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  plugin.manager.commerce_shipping_method:
+    class: Drupal\commerce_shipping\ShippingMethodManager
+    parent: default_plugin_manager
+
+  plugin.manager.commerce_package_type:
+    class: Drupal\commerce_shipping\PackageTypeManager
+    arguments: ['@module_handler', '@cache.discovery']

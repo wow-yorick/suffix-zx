@@ -1,0 +1,13 @@
+name: Simple Mobile Login
+type: module
+description: 'This module provide functionality to login with mobile number.'
+package: Other
+# core: 8.x
+dependencies:
+  - telephone
+
+# Information added by Drupal.org packaging script on 2017-11-07
+version: '8.x-1.6'
+core: '8.x'
+project: 'simple_mobile_login'
+datestamp: 1510038194

@@ -1,0 +1,31 @@
+commerce_shipping.configuration:
+  path: '/admin/commerce/config/shipping'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Shipping'
+  requirements:
+    _permission: 'access commerce administration pages'
+
+entity.commerce_package_type.collection:
+  path: '/admin/commerce/config/package-types'
+  defaults:
+    _entity_list: 'commerce_package_type'
+    _title: 'Package types'
+  requirements:
+    _permission: 'administer commerce_package_type'
+
+entity.commerce_shipping_method.collection:
+  path: '/admin/commerce/config/shipping-methods'
+  defaults:
+    _entity_list: 'commerce_shipping_method'
+    _title: 'Shipping methods'
+  requirements:
+    _permission: 'administer commerce_shipping_method'
+
+entity.commerce_shipment_type.collection:
+  path: '/admin/commerce/config/shipment-types'
+  defaults:
+    _entity_list: 'commerce_shipment_type'
+    _title: 'Shipment types'
+  requirements:
+    _permission: 'administer commerce_shipment_type'

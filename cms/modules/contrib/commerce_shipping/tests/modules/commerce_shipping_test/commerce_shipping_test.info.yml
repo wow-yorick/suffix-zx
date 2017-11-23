@@ -1,0 +1,15 @@
+name: Shipping Test
+type: module
+description: Contains various non-specific things needed in tests.
+package: Testing
+# core: 8.x
+dependencies:
+  - commerce_checkout
+  - commerce_payment
+  - commerce_shipping
+
+# Information added by Drupal.org packaging script on 2017-10-17
+version: '8.x-2.0-beta4'
+core: '8.x'
+project: 'commerce_shipping'
+datestamp: 1508273947

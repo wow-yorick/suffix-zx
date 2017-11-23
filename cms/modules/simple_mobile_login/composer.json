@@ -1,0 +1,20 @@
+{
+  "name": "drupal/simple_mobile_login",
+  "description": "This module provide functionality to login with mobile number.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/simple_mobile_login",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Jeetendra Kumar",
+      "email": "jeetendra.j2006@gmail.com",
+      "homepage": "https://www.drupal.org/u/jeetendrakumar",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+        "issues": "https://www.drupal.org/project/issues/simple_mobile_login",
+        "source": "https://cgit.drupalcode.org/simple_mobile_login"
+    },
+  "minimum-stability": "dev"
+}

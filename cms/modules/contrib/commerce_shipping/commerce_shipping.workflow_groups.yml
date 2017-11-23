@@ -1,0 +1,3 @@
+commerce_shipment:
+  label: Shipment
+  entity_type: commerce_shipment

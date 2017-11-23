@@ -1,0 +1,17 @@
+physical_test.measurement_test_form:
+  path: '/physical/measurement_test_form/{restrict_unit}'
+  defaults:
+    _form: '\Drupal\physical_test\Form\MeasurementTestForm'
+    _title: 'Measurement test form'
+    restrict_unit: FALSE
+  requirements:
+    _access: 'TRUE'
+
+physical_test.dimensions_test_form:
+  path: '/physical/dimensions_test_form/{restrict_unit}'
+  defaults:
+    _form: '\Drupal\physical_test\Form\DimensionsTestForm'
+    _title: 'Dimensions test form'
+    restrict_unit: FALSE
+  requirements:
+    _access: 'TRUE'
