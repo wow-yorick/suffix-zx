@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "21e70372ea7e32f728d730afa0c374e1",
+    "content-hash": "8afffae4e9594fc3d23cbc465ee5baf6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3955,7 +3955,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2017-02-06T09:59:54+00:00"
+            "time": "2017-02-06 09:59:54"
         },
         {
             "name": "behat/mink-browserkit-driver",
