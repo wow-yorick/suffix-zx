@@ -6,7 +6,8 @@
     "require": {
         "composer/installers": "^1.0.24",
         "wikimedia/composer-merge-plugin": "^1.4",
-        "drupal/commerce_wechat_pay": "1.x-dev"
+        "drupal/commerce_wechat_pay": "1.x-dev",
+        "drupal/commerce": "2.0.0"
     },
     "replace": {
         "drupal/core": "^8.4"
