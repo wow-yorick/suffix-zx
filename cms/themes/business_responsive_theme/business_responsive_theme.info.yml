@@ -1,0 +1,35 @@
+name: Business Responsive Theme
+type: theme
+description: 'Zymphonies Drupal 8 Responsive Theme. Developed & Designed by <a href=http://www.zymphonies.com>Zymphonies</a><br/>Contact us for Drupal Design & Development <a href=mailto:info@zymphonies.com>info@zymphonies.com</a>'
+package: core
+# core: 8.x
+
+#Libraries
+libraries:
+  - business_responsive_theme/bootstrap
+  - business_responsive_theme/global-components
+
+#Regions
+regions:
+  header: 'Header'
+  primary_menu: 'Primary Menu'
+  slideshow: 'Slideshow'  
+  topwidget_first: 'Top First Widget'
+  topwidget_second: 'Top Second Widget'
+  topwidget_third: 'Top Third Widget' 
+  highlighted: 'Highlighted' 
+  page_title: 'Page Title'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar' 
+  footer_first: 'Footer First Widget'
+  footer_second: 'Footer Second Widget'
+  footer_third: 'Footer Third Widget'
+  footer_menu: 'Footer Menu'
+  auto_hidden_block: 'Auto hidden blocks'
+# Information added by Drupal.org packaging script on 2016-01-12
+version: '8.x-1.0'
+core: '8.x'
+project: 'business_responsive_theme'
+datestamp: 1452621842

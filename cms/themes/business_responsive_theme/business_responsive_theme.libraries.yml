@@ -1,0 +1,32 @@
+bootstrap:
+  version: 1.x
+  css:
+    theme:
+      includes/bootstrap/css/bootstrap.min.css: {}
+  js:
+    includes/bootstrap/js/bootstrap.min.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+
+global-components:
+  Version: 1.x
+  css:
+    theme:
+      css/sm-core-css.css: {}
+      css/base.css: {}
+      css/font-awesome.css: {}
+      css/custom-style.css: {}
+      css/custom-media.css: {}
+  js:  
+    js/jquery.smartmenus.min.js: {}
+    js/custom.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
