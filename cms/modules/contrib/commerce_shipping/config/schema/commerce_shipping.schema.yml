@@ -1,0 +1,88 @@
+commerce.commerce_condition.plugin.shipment_address:
+  type: commerce_condition_configuration
+  mapping:
+    zone:
+      type: address_zone
+      label: 'Zone'
+
+commerce.commerce_condition.plugin.shipment_weight:
+  type: commerce_condition_configuration
+  mapping:
+    operator:
+      type: string
+      label: 'Operator'
+    weight:
+      type: field.value.physical_measurement
+      label: 'Weight'
+
+commerce_order.commerce_order_type.*.third_party.commerce_shipping:
+  type: mapping
+  label: 'Shipping settings'
+  mapping:
+    shipment_type:
+      type: string
+      label: 'Shipment type'
+
+commerce_checkout.commerce_checkout_pane.shipping_information:
+  type: commerce_checkout_pane_configuration
+  mapping:
+    require_shipping_profile:
+      type: boolean
+      label: 'Hide shipping costs until an address is entered'
+
+commerce_shipping.commerce_shipping_method.plugin.*:
+  type: commerce_shipping_method_configuration
+
+commerce_shipping.commerce_shipping_method.plugin.flat_rate:
+  type: commerce_shipping_method_configuration
+  mapping:
+    rate_label:
+      type: label
+      label: 'Rate label'
+    rate_amount:
+      type: field.value.commerce_price
+      label: 'Rate amount'
+
+commerce_shipping.commerce_shipping_method.plugin.flat_rate_per_item:
+  type: commerce_shipping_method_configuration
+  mapping:
+    rate_label:
+      type: label
+      label: 'Rate label'
+    rate_amount:
+      type: field.value.commerce_price
+      label: 'Rate amount'
+
+commerce_shipping_method_configuration:
+  type: mapping
+  mapping:
+    default_package_type:
+      type: string
+      label: 'Default package type'
+    services:
+      type: sequence
+      label: 'Services'
+      orderby: value
+      sequence:
+        type: string
+
+commerce_shipping.commerce_shipment_type.*:
+  type: commerce_config_entity_bundle
+  label: 'Shipment type'
+
+commerce_shipping.commerce_package_type.*:
+  type: config_entity
+  label: 'Package type'
+  mapping:
+    id:
+      type: string
+      label: 'Machine-readable name'
+    label:
+      type: label
+      label: 'Label'
+    dimensions:
+      type: field.value.physical_dimensions
+      label: 'Dimensions'
+    weight:
+      type: field.value.physical_measurement
+      label: 'Weight'

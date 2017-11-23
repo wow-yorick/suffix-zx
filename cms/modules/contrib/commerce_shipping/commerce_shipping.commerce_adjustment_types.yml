@@ -1,0 +1,4 @@
+shipping:
+  label: Shipping
+  has_ui: true
+  weight: 5

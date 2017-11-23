@@ -1,0 +1,206 @@
+<?php
+
+/**
+ * @file
+ * Provides core shipping functionality.
+ */
+
+use Drupal\commerce\BundleFieldDefinition;
+use Drupal\commerce\PurchasableEntityInterface;
+use Drupal\commerce_order\Entity\OrderInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_commerce_entity_trait_info_alter().
+ */
+function commerce_shipping_commerce_entity_trait_info_alter(array &$definitions) {
+  // Expose the purchasable entity traits for every purchasable entity type.
+  $entity_types = \Drupal::entityTypeManager()->getDefinitions();
+  $entity_types = array_filter($entity_types, function (EntityTypeInterface $entity_type) {
+    return $entity_type->entityClassImplements(PurchasableEntityInterface::class);
+  });
+  $entity_type_ids = array_keys($entity_types);
+
+  $definitions['purchasable_entity_dimensions']['entity_types'] = $entity_type_ids;
+  $definitions['purchasable_entity_shippable']['entity_types'] = $entity_type_ids;
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function commerce_shipping_entity_base_field_info(EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'commerce_store') {
+    $fields['shipping_countries'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Supported shipping countries'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setSetting('allowed_values_function', ['\Drupal\commerce_store\Entity\Store', 'getAvailableCountries'])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+        'weight' => 4,
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+
+    return $fields;
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function commerce_shipping_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  /** @var \Drupal\Core\Field\BaseFieldDefinition $field_definition */
+  $field_definition = $context['items']->getFieldDefinition();
+  $field_name = $field_definition->getName();
+  $entity_type = $field_definition->getTargetEntityTypeId();
+  $widget_name = $context['widget']->getPluginId();
+  if ($field_name == 'shipping_countries' && $entity_type == 'commerce_store' && $widget_name == 'options_select') {
+    $element['#options']['_none'] = t('- All countries -');
+    $element['#size'] = 5;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function commerce_shipping_commerce_order_delete(OrderInterface $order) {
+  if ($order->hasField('shipments') && !$order->get('shipments')->isEmpty()) {
+    $shipment_storage = \Drupal::entityTypeManager()->getStorage('commerce_shipment');
+    $shipment_storage->delete($order->get('shipments')->referencedEntities());
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for 'commerce_order_type_form'.
+ */
+function commerce_shipping_form_commerce_order_type_form_alter(array &$form, FormStateInterface $form_state) {
+  /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
+  $order_type = $form_state->getFormObject()->getEntity();
+  $shipment_type_id = $order_type->getThirdPartySetting('commerce_shipping', 'shipment_type');
+  $shipment_type_storage = \Drupal::entityTypeManager()->getStorage('commerce_shipment_type');
+  $shipment_types = $shipment_type_storage->loadMultiple();
+  $shipment_types = array_map(function ($shipment_type) {
+    return $shipment_type->label();
+  }, $shipment_types);
+  $shipment_type_ids = array_keys($shipment_types);
+
+  $form['commerce_shipping'] = [
+    '#type' => 'container',
+    '#weight' => 4,
+    '#element_validate' => ['commerce_shipping_order_type_form_validate'],
+  ];
+  $form['commerce_shipping']['enable_shipping'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable shipping for this order type'),
+    '#default_value' => !empty($shipment_type_id),
+  ];
+  $form['commerce_shipping']['shipment_type'] = [
+    '#type' => 'select',
+    '#title' => t('Shipment type'),
+    '#options' => $shipment_types,
+    '#default_value' => $shipment_type_id ?: reset($shipment_type_ids),
+    '#required' => TRUE,
+    '#states' => [
+      'visible' => [
+        ':input[name="commerce_shipping[enable_shipping]"]' => ['checked' => TRUE],
+      ],
+    ],
+  ];
+  $form['actions']['submit']['#submit'][] = 'commerce_shipping_order_type_form_submit';
+}
+
+/**
+ * Validation handler for commerce_shipping_form_commerce_order_type_form_alter().
+ */
+function commerce_shipping_order_type_form_validate(array $element, FormStateInterface $form_state) {
+  /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
+  $order_type = $form_state->getFormObject()->getEntity();
+  $previous_value = $order_type->getThirdPartySetting('commerce_shipping', 'shipment_type');
+  $settings = $form_state->getValue(['commerce_shipping']);
+  /** @var \Drupal\commerce\ConfigurableFieldManagerInterface $configurable_field_manager */
+  $configurable_field_manager = \Drupal::service('commerce.configurable_field_manager');
+
+  // Don't allow shipping to be disabled if there's data in the field.
+  if ($previous_value && !$settings['enable_shipping']) {
+    $field_definition = commerce_shipping_build_shipment_field_definition($order_type->id());
+    if ($configurable_field_manager->hasData($field_definition)) {
+      $form_state->setError($element['enable_shipping'], t('Shipping cannot be disabled until all orders with shipment data are deleted.'));
+    }
+  }
+}
+
+/**
+ * Submission handler for commerce_shipping_form_commerce_order_type_form_alter().
+ */
+function commerce_shipping_order_type_form_submit(array $form, FormStateInterface $form_state) {
+  /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
+  $order_type = $form_state->getFormObject()->getEntity();
+  $previous_value = $order_type->getThirdPartySetting('commerce_shipping', 'shipment_type');
+  $settings = $form_state->getValue(['commerce_shipping']);
+  /** @var \Drupal\commerce\ConfigurableFieldManagerInterface $configurable_field_manager */
+  $configurable_field_manager = \Drupal::service('commerce.configurable_field_manager');
+
+  $field_definition = commerce_shipping_build_shipment_field_definition($order_type->id());
+  if (!$previous_value && $settings['enable_shipping']) {
+    $configurable_field_manager->createField($field_definition);
+  }
+  elseif ($previous_value && !$settings['enable_shipping']) {
+    $configurable_field_manager->deleteField($field_definition);
+  }
+
+  $shipment_type_id = $settings['enable_shipping'] ? $settings['shipment_type'] : '';
+  $order_type->setThirdPartySetting('commerce_shipping', 'shipment_type', $shipment_type_id);
+  $order_type->save();
+}
+
+/**
+ * Builds the $order->shipment field definition.
+ *
+ * @param string $order_type_id
+ *   The order type ID.
+ *
+ * @return \Drupal\commerce\BundleFieldDefinition
+ *   The field definition.
+ */
+function commerce_shipping_build_shipment_field_definition($order_type_id) {
+  $field_definition = BundleFieldDefinition::create('entity_reference')
+    ->setTargetEntityTypeId('commerce_order')
+    ->setTargetBundle($order_type_id)
+    ->setName('shipments')
+    ->setLabel('Shipments')
+    ->setCardinality(BundleFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setSetting('target_type', 'commerce_shipment')
+    ->setSetting('handler', 'default');
+
+  return $field_definition;
+}
+
+/**
+ * Implements hook_preprocess_commerce_order().
+ */
+function commerce_shipping_preprocess_commerce_order(&$variables) {
+  /** @var Drupal\commerce_order\Entity\OrderInterface $order */
+  $order = $variables['order_entity'];
+  $summary = \Drupal::service('commerce_shipping.order_shipment_summary')->build($order);
+  if (!empty($summary)) {
+    $variables['order']['shipping_information'] = [
+      '#markup' => render($summary),
+    ];
+  }
+}
+
+/**
+ * Implements hook_preprocess_commerce_order_receipt().
+ */
+function commerce_shipping_preprocess_commerce_order_receipt(&$variables) {
+  /** @var Drupal\commerce_order\Entity\OrderInterface $order */
+  $order = $variables['order_entity'];
+  $summary = \Drupal::service('commerce_shipping.order_shipment_summary')->build($order);
+  if (!empty($summary)) {
+    $variables['shipping_information'] = [
+      '#markup' => render($summary),
+    ];
+  }
+}

@@ -1,0 +1,8 @@
+services:
+  plugin.manager.unit:
+    class: Drupal\physical\UnitManager
+    arguments: ['@cache.discovery', '@module_handler']
+
+  physical.number_formatter:
+    class: Drupal\physical\NumberFormatter
+    arguments: ['@language_manager']

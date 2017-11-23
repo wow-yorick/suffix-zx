@@ -1,0 +1,14 @@
+entity.commerce_package_type.edit_form:
+  route_name: entity.commerce_package_type.edit_form
+  base_route: entity.commerce_package_type.edit_form
+  title: Edit
+
+entity.commerce_shipping_method.edit_form:
+  route_name: entity.commerce_shipping_method.edit_form
+  base_route: entity.commerce_shipping_method.edit_form
+  title: Edit
+
+entity.commerce_shipment_type.edit_form:
+  route_name: entity.commerce_shipment_type.edit_form
+  base_route: entity.commerce_shipment_type.edit_form
+  title: Edit

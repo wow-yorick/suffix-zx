@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_shipping
+id: shipping
+label: Shipping
+plugin: multistep_default
+configuration:
+  display_checkout_progress: true
+  panes:
+    login:
+      allow_guest_checkout: true
+      allow_registration: false
+      step: login
+      weight: 0
+    contact_information:
+      double_entry: false
+      step: order_information
+      weight: 1
+    shipping_information:
+      require_shipping_profile: true
+      step: order_information
+      weight: 2
+    review:
+      step: review
+      weight: 3
+    completion_message:
+      step: complete
+      weight: 4
+    order_summary:
+      view: commerce_checkout_order_summary
+      step: _sidebar
+      weight: 5

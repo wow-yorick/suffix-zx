@@ -1,0 +1,5 @@
+services:
+  commerce_shipping_test.test_packer:
+    class: Drupal\commerce_shipping_test\Packer\TestPacker
+    tags:
+      - { name: commerce_shipping.packer }

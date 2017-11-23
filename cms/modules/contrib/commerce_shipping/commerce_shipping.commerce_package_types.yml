@@ -1,0 +1,12 @@
+custom_box:
+  remote_id: custom
+  label: 'Custom box (1x1x1 mm)'
+  dimensions:
+    length: 1
+    width: 1
+    height: 1
+    unit: 'mm'
+
+commerce_package_type:
+  class: \Drupal\commerce_shipping\Plugin\Commerce\PackageType\PackageType
+  deriver: \Drupal\commerce_shipping\Plugin\Deriver\PackageTypeDeriver

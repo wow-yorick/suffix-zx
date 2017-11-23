@@ -5749,5 +5749,169 @@
         ],
         "description": "Symfony PHPUnit Bridge",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "drupal/physical",
+        "version": "1.0.0-rc3",
+        "version_normalized": "1.0.0.0-RC3",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/physical",
+            "reference": "8.x-1.0-rc3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/physical-8.x-1.0-rc3.zip",
+            "reference": "8.x-1.0-rc3",
+            "shasum": "5d2e4325b72d66ed8671b4a72fd1a731d4548143"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-rc3",
+                "datestamp": "1491902043",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "RC releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "czigor",
+                "homepage": "https://www.drupal.org/user/826222"
+            },
+            {
+                "name": "joelpittet",
+                "homepage": "https://www.drupal.org/user/160302"
+            },
+            {
+                "name": "mglaman",
+                "homepage": "https://www.drupal.org/user/2416470"
+            },
+            {
+                "name": "rszrama",
+                "homepage": "https://www.drupal.org/user/49344"
+            }
+        ],
+        "description": "Physical supplies such fields as physical weight and dimensions.",
+        "homepage": "http://drupal.org/project/physical",
+        "support": {
+            "source": "http://cgit.drupalcode.org/physical"
+        }
+    },
+    {
+        "name": "drupal/commerce_shipping",
+        "version": "2.0.0-beta4",
+        "version_normalized": "2.0.0.0-beta4",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/commerce_shipping",
+            "reference": "8.x-2.0-beta4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/commerce_shipping-8.x-2.0-beta4.zip",
+            "reference": "8.x-2.0-beta4",
+            "shasum": "4fde717879f0f52a20946affb1537306864ff0ea"
+        },
+        "require": {
+            "drupal/commerce": "~2.0",
+            "drupal/commerce_order": "*",
+            "drupal/commerce_price": "*",
+            "drupal/core": "~8.0",
+            "drupal/physical": "~1.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.0-beta4",
+                "datestamp": "1508273944",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Beta releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "googletorp",
+                "homepage": "https://www.drupal.org/user/386230"
+            },
+            {
+                "name": "rszrama",
+                "homepage": "https://www.drupal.org/user/49344"
+            }
+        ],
+        "description": "Provides shipping functionality for Commerce.",
+        "homepage": "http://drupal.org/project/commerce_shipping",
+        "support": {
+            "source": "http://cgit.drupalcode.org/commerce_shipping"
+        }
+    },
+    {
+        "name": "drupal/commerce_demo",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mglaman/commerce_demo.git",
+            "reference": "8f047e59a1b1bf7379769a59ab24bce9f3966441"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mglaman/commerce_demo/zipball/8f047e59a1b1bf7379769a59ab24bce9f3966441",
+            "reference": "8f047e59a1b1bf7379769a59ab24bce9f3966441",
+            "shasum": ""
+        },
+        "require": {
+            "drupal/commerce": "^2",
+            "drupal/commerce_shipping": "^2"
+        },
+        "require-dev": {
+            "drupal/config_devel": "~1"
+        },
+        "time": "2017-09-12T05:31:24+00:00",
+        "type": "drupal-module",
+        "installation-source": "source",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Commerce demo stuff",
+        "homepage": "https://www.drupal.org/project/commerce_demo",
+        "keywords": [
+            "Drupal"
+        ],
+        "support": {
+            "issues": "http://drupal.org/project/issues/commerce_demo",
+            "source": "http://cgit.drupalcode.org/commerce_demo"
+        }
     }
 ]

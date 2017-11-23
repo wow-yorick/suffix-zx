@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Shipping.
+ */
+
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Remove the 'adjustments' field from shipments.
+ */
+function commerce_shipping_update_8200() {
+  $entity_definition_update = \Drupal::entityDefinitionUpdateManager();
+
+  $storage_definition = BaseFieldDefinition::create('commerce_adjustment')
+    ->setLabel(t('Adjustments'))
+    ->setTargetEntityTypeId('commerce_shipment')
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('form', FALSE)
+    ->setDisplayConfigurable('view', TRUE);
+  $entity_definition_update->uninstallFieldStorageDefinition($storage_definition);
+}
+
+/**
+ * Add the condition fields to shipping methods.
+ */
+function commerce_shipping_update_8201() {
+  $entity_definition_update = \Drupal::entityDefinitionUpdateManager();
+
+  $storage_definition = BaseFieldDefinition::create('commerce_plugin_item:commerce_condition')
+    ->setLabel(t('Conditions'))
+    ->setTargetEntityTypeId('commerce_shipping_method')
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(FALSE)
+    ->setDisplayOptions('form', [
+      'type' => 'commerce_conditions',
+      'weight' => 3,
+      'settings' => [
+        'entity_types' => ['commerce_order', 'commerce_shipment'],
+      ],
+    ]);
+  $entity_definition_update->installFieldStorageDefinition('conditions', 'commerce_shipping_method', 'commerce_shipping', $storage_definition);
+
+  $storage_definition = BaseFieldDefinition::create('list_string')
+    ->setLabel(t('Condition operator'))
+    ->setDescription(t('The condition operator.'))
+    ->setRequired(TRUE)
+    ->setSetting('allowed_values', [
+      'AND' => t('All conditions must pass'),
+      'OR' => t('Only one condition must pass'),
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'options_buttons',
+      'weight' => 4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDefaultValue('AND');
+  $entity_definition_update->installFieldStorageDefinition('condition_operator', 'commerce_shipping_method', 'commerce_shipping', $storage_definition);
+}

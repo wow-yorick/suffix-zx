@@ -1,0 +1,20 @@
+/**
+ * @file
+ * Admin styling.
+ */
+
+.form-type-physical-measurement .form-type-physical-number, .form-type-physical-measurement .form-type-select {
+  display: inline-block;
+}
+
+.form-type-physical-measurement .form-type-select select {
+  padding-bottom: 0.4em;
+}
+
+.form-type-physical-dimensions .form-type-physical-number, .form-type-physical-dimensions .form-type-select {
+  display: inline-block;
+}
+
+.form-type-physical-dimensions .form-type-select select {
+  padding-bottom: 0.4em;
+}

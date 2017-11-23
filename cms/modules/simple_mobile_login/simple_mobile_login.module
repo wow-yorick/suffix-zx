@@ -1,0 +1,144 @@
+<?php
+
+/**
+ * @file
+ * Module file for simple mobile login.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function simple_mobile_login_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.mobile_login':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module provide functionality to login with mobile number') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function simple_mobile_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $field_name = simple_mobile_login_get_telephone_field();
+  if (!empty($field_name['label'])) {
+    if ($form_id == 'user_login_form') {
+      array_unshift($form['#validate'], 'simple_mobile_login_validate');
+      $form['name']['#title'] = $field_name['label'] . " / Username";
+      $form['name']['#description'] = t("Enter your @fieldname / username.", array('@fieldname' => $field_name['label']));
+    }
+
+    // Set new register form validation.
+    if ($form_id == 'user_register_form') {
+      $form['#validate'][] = 'simple_mobile_login_user_register_validate';
+    }
+
+    // Set new edit form validation.
+    if ($form_id == 'user_form') {
+      $form['#validate'][] = 'simple_mobile_login_user_edit_validate';
+    }
+  }
+}
+
+/**
+ * register form validation.
+ */
+function simple_mobile_login_user_register_validate($form, FormStateInterface &$form_state) {
+  $field_name = simple_mobile_login_get_telephone_field();
+  $user_input = $form_state->getValue($field_name['name']);
+  $query = \Drupal::entityQuery('user');
+  $query->condition($field_name['name'] . '.value', $user_input[0]['value']);
+  $results = $query->execute();
+  if (count($results) > 0) {
+    $form_state->setErrorByName($field_name['name'], t('Entered @fieldlabel is already exists. Please enter different value', array('@fieldlabel' => $field_name['label'])));
+  }
+}
+
+/**
+ * edit form validation.
+ */
+function simple_mobile_login_user_edit_validate($form, FormStateInterface &$form_state) {
+  $field_name = simple_mobile_login_get_telephone_field();
+
+  // get the user that's being.
+  // we will query user via email adress since it's a unique field.
+  $user_mail = $form_state->getValue('mail');
+  $user = user_load_by_mail($user_mail);
+  $user_id = $user->id();
+
+  $user_input = $form_state->getValue($field_name['name']);
+  $query = \Drupal::entityQuery('user');
+  $query->condition($field_name['name'] . '.value', $user_input[0]['value']);
+  $results = $query->execute();
+
+  if (count($results) == 1) {
+    // check if the mobile number in the database belongs to the user we are editing.
+    $db_user_id = array_values($results)[0];
+    // if these are different users then display an error message.
+    // since the user is not allowed to use another user mobile number.
+    if ($db_user_id != $user_id) {
+      $form_state->setErrorByName($field_name['name'], t('Entered @fieldlabel is already exists. Please enter different value', array('@fieldlabel' => $field_name['label'])));
+    }
+  }
+}
+
+/**
+ * Custom validate function to check mobile number.
+ */
+function simple_mobile_login_validate($form, FormStateInterface &$form_state) {
+  $user_not_found = TRUE;
+  $login_input = $form_state->getValue('name');
+  // Load user object by username.
+  $user_load_by_name = user_load_by_name($login_input);
+  if ($user_load_by_name) {
+    $user_not_found = FALSE;
+  }
+  else {
+    $field_name = simple_mobile_login_get_telephone_field();
+    $query = \Drupal::entityQuery('user');
+    $query->condition($field_name['name'] . '.value', $login_input);
+    $results = $query->execute();
+    if ($results) {
+      $user_not_found = FALSE;
+      // Check for multiple records.
+      if (count($results) > 1) {
+        $form_state->setErrorByName('name', t('Sorry, Please contact administration. There are multiple user records found with same input.'));
+        \Drupal::logger('user')->notice('Login attempt failed for %user. with field', array('%user' => $login_input));
+      }
+      else {
+        $uid = array_keys($results)[0];
+        $query = \Drupal::database()->select('users_field_data', 'u');
+        $query->fields('u', array('name'));
+        $query->condition('u.uid', $uid);
+        $name = $query->execute()->fetchObject();
+        $form_state->setValue('name', $name->name);
+      }
+    }
+  }
+  if ($user_not_found) {
+    $form_state->setErrorByName('name', t('Sorry, unrecognized username or password. <a href="@password">Have you forgotten your password?</a>', array('@password' => Url::fromRoute('user.pass'))));
+    \Drupal::logger('user')->notice('Login attempt failed for %user.', array('%user' => $login_input));
+  }
+}
+
+/**
+ * Get telephone field information.
+ */
+function simple_mobile_login_get_telephone_field() {
+  $entity_type_id = 'user';
+  $bundle = 'user';
+  $field = array();
+  foreach (\Drupal::service('entity_field.manager')->getFieldDefinitions($entity_type_id, $bundle) as $field_definition) {
+    if ($field_definition->getFieldStorageDefinition()->isBaseField() == FALSE && $field_definition->getType() === 'telephone') {
+      $field['name'] = $field_definition->getName();
+      $field['label'] = $field_definition->getLabel();
+    }
+  }
+  return $field;
+}

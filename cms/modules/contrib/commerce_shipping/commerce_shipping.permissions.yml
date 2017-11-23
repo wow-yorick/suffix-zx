@@ -1,0 +1,15 @@
+administer commerce_shipping_method:
+  title: 'Administer shipping methods'
+  'restrict access': TRUE
+
+administer commerce_shipment:
+  title: 'Administer shipments'
+  'restrict access': TRUE
+
+administer commerce_shipment_type:
+  title: 'Administer shipment types'
+  'restrict access': TRUE
+
+administer commerce_package_type:
+  title: 'Administer package types'
+  'restrict access': TRUE

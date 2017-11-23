@@ -1,0 +1,24 @@
+commerce_shipping.configuration:
+  title: 'Shipping'
+  route_name: 'commerce_shipping.configuration'
+  parent: 'commerce.configuration'
+
+entity.commerce_package_type.collection:
+  title: 'Package types'
+  route_name: entity.commerce_package_type.collection
+  parent: 'commerce_shipping.configuration'
+  description: 'Manage you package types'
+
+entity.commerce_shipping_method.collection:
+  title: 'Shipping methods'
+  route_name: 'entity.commerce_shipping_method.collection'
+  parent: 'commerce_shipping.configuration'
+  description: 'Manage your shipping methods.'
+  weight: -10
+
+entity.commerce_shipment_type.collection:
+  title: 'Shipment types'
+  route_name: entity.commerce_shipment_type.collection
+  parent: 'commerce_shipping.configuration'
+  description: 'Manage you shipment types'
+  weight: -5
