@@ -1,0 +1,9 @@
+{
+    "name": "drupal/nice_login",
+    "description": "Enhances the login, reset password and register pages.",
+    "homepage": "https://www.drupal.org/project/nice_login",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "require": {}
+}

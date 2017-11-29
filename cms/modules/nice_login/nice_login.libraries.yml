@@ -1,0 +1,5 @@
+form:
+  css:
+    theme:
+      css/nice_login.css: {}
+
