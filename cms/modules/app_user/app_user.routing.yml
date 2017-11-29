@@ -12,3 +12,14 @@ app_user.ajax_demo:
     _title: 'my'
   requirements:
     _permission: 'access content'
+app_user.router_test_demo:
+  path: 'app_user/test'
+  options:
+    _auth: [ 'basic_auth' ]
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  defaults:
+    _form:  '\Drupal\app_user\Controller\UserController::test11'
+    _title: 'test roule'
+  requirements:
+    _permission: 'access content'

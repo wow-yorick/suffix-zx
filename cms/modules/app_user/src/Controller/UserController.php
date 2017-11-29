@@ -8,4 +8,9 @@ class UserController {
   public function register() {
     return array();
   }
+
+  public function test11()
+  {
+    echo 322;
+  }
 }
