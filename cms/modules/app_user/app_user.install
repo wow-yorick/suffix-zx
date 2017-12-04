@@ -136,6 +136,11 @@ function app_user_schema() {
         'length' => 12,
         'not null' => TRUE,
       ),
+      'is_default' => array(
+        'description' => t('是否默认.'),
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
       'username' => array(
         'description' => t('联系人.'),
         'type' => 'varchar',
