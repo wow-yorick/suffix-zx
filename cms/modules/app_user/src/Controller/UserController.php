@@ -9,76 +9,9 @@ use Drupal\Core\Controller\ControllerBase;
 class UserController extends APIBaseController {
 
   public function register() {
-    $this->success($credentials);
+    $this->success($this->requestData);
   }
 
-  /**
-   * Logs in a user.
-   *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The request.
-   *
-   * @return \Symfony\Component\HttpFoundation\Response
-   *   A response which contains the ID and CSRF token.
-   */
-  public function login(Request $request) {
-    $format = $this->getRequestFormat($request);
-
-    $content = $request->getContent();
-    $credentials = $this->serializer->decode($content, $format);
-    if (!isset($credentials['name']) && !isset($credentials['pass'])) {
-      throw new BadRequestHttpException('Missing credentials.');
-    }
-
-    if (!isset($credentials['name'])) {
-      throw new BadRequestHttpException('Missing credentials.name.');
-    }
-    if (!isset($credentials['pass'])) {
-      throw new BadRequestHttpException('Missing credentials.pass.');
-    }
-
-    $this->floodControl($request, $credentials['name']);
-
-    if ($this->userIsBlocked($credentials['name'])) {
-      throw new BadRequestHttpException('The user has not been activated or is blocked.');
-    }
-
-    if ($uid = $this->userAuth->authenticate($credentials['name'], $credentials['pass'])) {
-      $this->flood->clear('user.http_login', $this->getLoginFloodIdentifier($request, $credentials['name']));
-      /** @var \Drupal\user\UserInterface $user */
-      $user = $this->userStorage->load($uid);
-      $this->userLoginFinalize($user);
-
-      // Send basic metadata about the logged in user.
-      $response_data = [];
-      if ($user->get('uid')->access('view', $user)) {
-        $response_data['current_user']['uid'] = $user->id();
-      }
-      if ($user->get('roles')->access('view', $user)) {
-        $response_data['current_user']['roles'] = $user->getRoles();
-      }
-      if ($user->get('name')->access('view', $user)) {
-        $response_data['current_user']['name'] = $user->getAccountName();
-      }
-      $response_data['csrf_token'] = $this->csrfToken->get('rest');
-
-      $logout_route = $this->routeProvider->getRouteByName('user.logout.http');
-      // Trim '/' off path to match \Drupal\Core\Access\CsrfAccessCheck.
-      $logout_path = ltrim($logout_route->getPath(), '/');
-      $response_data['logout_token'] = $this->csrfToken->get($logout_path);
-
-      $encoded_response_data = $this->serializer->encode($response_data, $format);
-      return new Response($encoded_response_data);
-    }
-
-    $flood_config = $this->config('user.flood');
-    if ($identifier = $this->getLoginFloodIdentifier($request, $credentials['name'])) {
-      $this->flood->register('user.http_login', $flood_config->get('user_window'), $identifier);
-    }
-    // Always register an IP-based failed login event.
-    $this->flood->register('user.failed_login_ip', $flood_config->get('ip_window'));
-    throw new BadRequestHttpException('Sorry, unrecognized username or password.');
-  }
 
   public function test11()
   {
