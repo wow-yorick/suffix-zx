@@ -1,7 +1,0 @@
-name: Hi 
-type: theme
-description: '自定义主题.'
-package: Custom
-core: 8.x
-regions:
-  page_top: 'top' 
