@@ -1,0 +1,13 @@
+name: 后装修商务 
+type: module
+description: 定制商务流程 
+# core: 8.x
+package: Custom
+dependencies:
+  - commerce:commerce
+
+# Information added by Drupal.org packaging script on 2016-04-30
+version: '8.x-1.0'
+core: '8.x'
+project: 'app_user'
+datestamp: 1462032240
