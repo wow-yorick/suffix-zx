@@ -1,0 +1,7 @@
+suffix_zx_commerce_product.configuration:
+  path: '/app_user/suffix_zx_commerce/config/products'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: '自定义产品配置'
+  requirements:
+    _permission: 'access commerce administration pages'
