@@ -1,16 +1,12 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
-  <meta name="format-detection" content="email=no,address=no,telephone=no">
-  <css-placeholder token="{{ placeholder_token|raw }}">
-    <js-placeholder token="{{ placeholder_token|raw }}">
-  <script type="text/javascript" src="js/wapCommon.js"></script>
-  <script type="text/javascript" src="js/swiper.min.js"></script>
-</head>
-<body>
+{{ attach_library('suffix_zx/suffpage-home') }}
+<!--- Start content -->
+{% if page.content %}
+  <div class="content_layout">
+    <div class={{contentlayout}}>
+        {{ page.content }}
+    </div>
+  </div>
+{% endif %}
 <header class="header">
   <a href="javascript:;" class="city"><span>上海</span></a>
   <form class="search-box" action="">
@@ -185,5 +181,3 @@
         },
     });
 </script>
-</body>
-</html>
