@@ -30,20 +30,22 @@ function suffix_zx_commerce_preprocess_block(array &$variables) {
   // Empty the block local_tasks_block on pages login, reset password
   // and register for removing corresponding tabs on these pages.
   $route_name = \Drupal::routeMatch()->getRouteName();
-  $plugin_id = $variables['elements']['#plugin_id'];
-  $routes = ['user.login', 'user.pass', 'user.register'];
-  if (in_array($route_name, $routes) && 'local_tasks_block' === $plugin_id) {
-    $variables['content'] = [];
-  }
+  echo $route_name;
+  echo '<br>';
+  echo "plugin_id:".$plugin_id = $variables['elements']['#plugin_id'].'<br>';
+  // $routes = ['user.login', 'user.pass', 'user.register'];
+  // if (in_array($route_name, $routes) && 'local_tasks_block' === $plugin_id) {
+  //   $variables['content'] = [];
+  // }
 }
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function suffix_zx_commerce_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  if ('user.login' !== \Drupal::routeMatch()->getRouteName()) {
+  if ('user.login' == \Drupal::routeMatch()->getRouteName()) {
     echo \Drupal::routeMatch()->getRouteName();
-    return;
+    echo 234234234;
   }
 
   // Wrap the form.
