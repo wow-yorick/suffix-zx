@@ -1,7 +1,11 @@
-global-styling:
-  version: VERSION
+suffpage-home:
+  version: 1.x
   css:
-    base:
-      #css/layout.css: {}
+    theme:
       css/common.css: {}
       css/home.css: {}
+  js:
+      js/wapCommon.js: {}
+      js/swiper.min.js: {}
+  dependencies:
+    - core/jquery
