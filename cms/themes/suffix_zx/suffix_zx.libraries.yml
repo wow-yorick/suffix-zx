@@ -1,0 +1,7 @@
+global-styling:
+  version: VERSION
+  css:
+    base:
+      #css/layout.css: {}
+      css/common.css: {}
+      css/home.css: {}

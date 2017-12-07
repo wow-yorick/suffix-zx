@@ -31,6 +31,7 @@ class SufProductViewBuilder extends EntityViewBuilder {
   public function __construct(EntityTypeInterface $entity_type, EntityManagerInterface $entity_manager, LanguageManagerInterface $language_manager, ProductVariationFieldRenderer $variation_field_renderer) {
     parent::__construct($entity_type, $entity_manager, $language_manager);
     $this->variationFieldRenderer = $variation_field_renderer;
+    echo 33;
   }
 
   /**
