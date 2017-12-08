@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Twig Xdebug install and update hooks.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function twig_xdebug_requirements($phase) {
+  $requirements = [];
+  if ($phase == 'install') {
+    if (!class_exists('\Ajgl\Twig\Extension\BreakpointExtension')) {
+      $requirements['breakpoints_library'] = [
+        'description' => t('Twig Xdebug requires the ajgl/breakpoint-twig-extension library.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+
+  return $requirements;
+}

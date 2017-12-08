@@ -8,7 +8,8 @@
         "wikimedia/composer-merge-plugin": "^1.4",
         "drupal/commerce_wechat_pay": "1.x-dev",
         "drupal/commerce": "2.0.0",
-        "drupal/commerce_demo": "dev-master"
+        "drupal/commerce_demo": "dev-master",
+        "drupal/console": "~1.0"
     },
     "replace": {
         "drupal/core": "^8.4"
@@ -85,5 +86,8 @@
             "type": "vcs",
             "url": "https://github.com/mglaman/commerce_demo"
         }
+    },
+    "require-dev": {
+        "drupal/twig_xdebug": "^1.0"
     }
 }
