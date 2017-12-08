@@ -1,0 +1,5 @@
+services:
+  twig_xdebug:
+    class: Ajgl\Twig\Extension\BreakpointExtension
+    tags:
+      - { name: twig.extension }
