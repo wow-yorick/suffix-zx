@@ -30,7 +30,7 @@ use Drupal\commerce_product\Entity\ProductVariationInterface;
  *     "event" = "Drupal\commerce_product\Event\ProductEvent",
  *     "storage" = "Drupal\commerce\CommerceContentEntityStorage",
  *     "access" = "Drupal\commerce\EntityAccessControlHandler",
- *     "permission_provider" = "Drupal\commerce\EntityPermissionProvider",
+ *     #"permission_provider" = "Drupal\commerce\EntityPermissionProvider",
  *     "view_builder" = "Drupal\commerce_product\ProductViewBuilder",
  *     "list_builder" = "Drupal\commerce_product\ProductListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
