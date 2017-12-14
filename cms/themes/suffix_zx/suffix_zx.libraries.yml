@@ -9,3 +9,14 @@ suffpage-home:
       js/swiper.min.js: {}
   dependencies:
     - core/jquery
+
+suffpage-login:
+  version: 1.x
+  css:
+    theme:
+      css/common.css: {}
+      css/personal-center.css: {}
+  js:
+      js/flexible.js: {}
+      js/zepto.min.js: {}
+      js/wapCommon.js: {}
