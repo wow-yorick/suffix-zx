@@ -9,7 +9,8 @@
         "drupal/commerce_wechat_pay": "1.x-dev",
         "drupal/commerce": "2.0.0",
         "drupal/commerce_demo": "dev-master",
-        "drupal/console": "~1.0"
+        "drupal/console": "~1.0",
+        "drush/drush": "^8.1"
     },
     "replace": {
         "drupal/core": "^8.4"
