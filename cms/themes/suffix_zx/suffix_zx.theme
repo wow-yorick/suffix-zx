@@ -1,0 +1,52 @@
+<?php
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Link;
+/**
+* Implements hook_form_FORM_ID_alter().
+*/
+function suffix_zx_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    if ('user.login' !== \Drupal::routeMatch()->getRouteName()) {
+        return;
+    }
+    $link = Link::createFromRoute(t('注册新用户请点击此处'), 'user.register');
+    $link->getUrl()->setOption('attributes', ['class' => ['member-cut']]);
+    // Wrap the form.
+    $form['#prefix'] = '<div class="profile-9vcMlb wrapper"><div class="member-container"><div class="login-box">';
+    $form['#suffix'] = '<p class="Agsu">点击”登录”按钮，即表示您同意用户服务协议</p>'.$link->toString().
+            '</div></div></div>';
+    //$form['#attached']['library'][] = 'suffix_zx/suffpage-login';
+    $form['name'] = [
+        '#type' => 'textfield',
+        '#size' => 60,
+        '#maxlength' => USERNAME_MAX_LENGTH,
+        '#required' => TRUE,
+        '#attributes' => [
+            'autocorrect' => 'none',
+            'autocapitalize' => 'none',
+            'spellcheck' => 'false',
+            'autofocus' => 'autofocus',
+            'placeholder' =>'请使用手机号码或帐号',
+        ],
+        '#prefix'=>'<div class="line-item">',
+        '#suffix'=>'</div>',
+    ];
+    $form['pass'] = [
+        '#type' => 'password',
+        '#size' => 60,
+        '#required' => TRUE,
+        '#attributes' => [
+            'placeholder' => '请输入帐号密码或手机验证码'
+        ],
+        '#prefix'=>'<div class="line-item">',
+        '#suffix'=>'<a href="javascript:;" class="get-code">获取验证码</a></div>',
+    ];
+
+    $form['actions'] = ['#type' => 'actions'];
+    $form['actions']['submit'] = [
+        '#type' => 'submit',
+        '#value' => '登录',
+        '#attributes' => [
+            'class' => ['member-btn'],
+        ]
+    ];
+}
