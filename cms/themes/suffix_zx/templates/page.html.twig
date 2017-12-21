@@ -53,6 +53,9 @@
 {{ attach_library('suffix_zx/suffpage-home') }}
 <header class="header">
     {% include '@suffix_zx/includes/header.html.twig' %}
+    {% if page.header %}
+        {{ page.header }}
+    {% endif %}
 </header>
 {% if page.highlighted %}
     <div class="highlighted">
