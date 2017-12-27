@@ -2,9 +2,11 @@
 $databases['default']['default'] = array (
   'database' => 'suffix_zx',
   'username' => 'root',
-  'password' => 'qQ2587011$',
+  //'password' => 'qQ2587011$',
+  'password' => 'QIaWVDLs',
   'prefix' => '',
-  'host' => 'localhost',
+  //'host' => 'localhost',
+  'host' => '47.97.108.218',
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
