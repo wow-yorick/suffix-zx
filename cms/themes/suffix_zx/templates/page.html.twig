@@ -69,7 +69,6 @@
 {% endif %}
 {{ page.breadcrumb }}
 <div class="wrapper">
-
     {% if page.content %}
         {{ page.content }}
     {% endif %}
@@ -107,6 +106,9 @@
 </div>
 <div class="bottom-fxied">
     {% include '@suffix_zx/includes/footer.html.twig' %}
+    {#{% if page.footer %}
+        {{ page.footer }}
+    {% endif %}#}
 </div>
 <script>
     var swiper = new Swiper('.home-swiper', {
