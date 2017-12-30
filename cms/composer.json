@@ -10,7 +10,8 @@
         "drupal/commerce": "2.0.0",
         "drupal/commerce_demo": "dev-master",
         "drupal/console": "~1.0",
-        "drush/drush": "^8.1"
+        "drush/drush": "^8.1",
+        "tecnickcom/tc-lib-barcode": "^1.15"
     },
     "replace": {
         "drupal/core": "^8.4"

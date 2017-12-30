@@ -1,0 +1,11 @@
+{
+    "name": "drupal/commerce_cnpay",
+    "description": "Commerce China Payments.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "require": {
+        "overtrue/wechat": "^4.0.0-beta.4",
+        "tecnickcom/tc-lib-barcode": "^1.15.6"
+    },
+    "minimum-stability": "dev"
+}

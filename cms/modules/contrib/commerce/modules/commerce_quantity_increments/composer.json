@@ -1,0 +1,12 @@
+{
+    "name": "drupal/commerce_quantity_increments",
+    "type": "drupal-module",
+    "description": "Commerce Quantity Increments is a small module on top of Drupal Commerce, that provides possibility to set and validate quantity increments on a per product variation level.",
+    "homepage": "http://drupal.org/project/commerce_quantity_increments",
+    "license": "GPL-2.0+",
+    "require": {
+        "drupal/core": "~8.2",
+        "drupal/commerce": "~2.0"
+    },
+    "minimum-stability": "dev"
+}

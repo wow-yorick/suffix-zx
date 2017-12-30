@@ -1,0 +1,6 @@
+commerce_cnpay.check_state:
+  path: /payment/state/{commerce_payment_gateway}/{out_trade_no}
+  defaults:
+    _controller: \Drupal\commerce_cnpay\Controller\PaymentController::checkState
+  requirements:
+    _user_is_logged_in: 'TRUE'

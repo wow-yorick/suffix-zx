@@ -1,0 +1,16 @@
+commerce_order_number.settings:
+  type: config_entity
+  label: Settings
+  mapping:
+    generator:
+      type: string
+      label: 'Order number generator'
+    padding:
+      type: integer
+      label: 'Order number padding'
+    pattern:
+      type: string
+      label: 'Order number pattern'
+    force:
+      type: boolean
+      label: 'Force order number setting'

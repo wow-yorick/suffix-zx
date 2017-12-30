@@ -1,0 +1,7 @@
+commerce_order_number.settings:
+  path: '/admin/commerce/config/commerce_order_number'
+  defaults:
+    _form: '\Drupal\commerce_order_number\Form\SettingsForm'
+    _title: 'Commerce order number: Configuration'
+  requirements:
+    _permission: 'administer commerce_order_number'
