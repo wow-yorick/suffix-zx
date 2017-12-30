@@ -1,0 +1,23 @@
+label: Translation
+tips:
+  locale-overview:
+    label: 'User interface translation'
+  locale-language:
+    label: 'Translation language'
+    body: 'Choose the language you want to translate.'
+  locale-search:
+    label: Search
+    body: 'Enter the specific word or sentence you want to translate, you can also write just a part of a word.'
+  locale-filter:
+    label: 'Filter the search'
+    body: 'You can search for untranslated strings if you want to translate something that isn''t translated yet. If you want to modify an existing translation, you might want to search only for translated strings.'
+  locale-submit:
+    label: 'Apply your search criteria'
+    body: 'To apply your search criteria, click on the <em>Filter</em> button.'
+  locale-translate:
+    label: Translate
+    body: 'You can write your own translation in the text fields of the right column. Try to figure out in which context the text will be used in order to translate it in the appropriate way.'
+  locale-validate:
+    label: 'Validate the translation'
+  locale-continue:
+    label: 'Continuing on'

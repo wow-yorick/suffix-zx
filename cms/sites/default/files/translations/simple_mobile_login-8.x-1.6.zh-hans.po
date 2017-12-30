@@ -1,0 +1,26 @@
+# Chinese, Simplified translation of Simple Mobile Login (8.x-1.6)
+# Copyright (c) 2017 by the Chinese, Simplified translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Mobile Login (8.x-1.6)\n"
+"POT-Creation-Date: 2017-11-07 07:43+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: Chinese, Simplified\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Other"
+msgstr "其它"
+msgid "Login attempt failed for %user."
+msgstr "%user 登录失败。"
+msgid "About"
+msgstr "关于"
+msgid ""
+"Sorry, unrecognized username or password. <a href=\"@password\">Have "
+"you forgotten your password?</a>"
+msgstr ""
+"很抱歉，用户账号错误，或您输入的密码错误。<a "
+"href=\"@password\">忘记密码了？</a>"

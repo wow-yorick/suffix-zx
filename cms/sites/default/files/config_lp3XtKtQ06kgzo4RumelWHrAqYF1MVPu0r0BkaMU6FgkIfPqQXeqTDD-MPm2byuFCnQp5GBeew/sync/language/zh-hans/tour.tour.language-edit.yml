@@ -1,0 +1,14 @@
+label: 'Editing languages'
+tips:
+  language-edit-overview:
+    label: 'Editing languages'
+    body: '<p>This page provides the ability to edit a language on your site, including custom languages.</p>'
+  language-edit-langcode:
+    label: 'Language code'
+    body: '<p>You cannot change the code of a language on the site, since it is used by the system to keep track of the language.</p>'
+  language-edit-label:
+    label: 'Language name'
+  language-edit-direction:
+    label: 'Language direction'
+  language-edit-continue:
+    label: 'Continuing on'

@@ -1,0 +1,13 @@
+uuid: 72b2e623-036e-4ee3-a740-40c1a64546ba
+langcode: zh-hans
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: dz5_l09fj1m6b4MZVYlHjYHsXSlG9aQHGGoupPb8phg
+id: profile_publish_action
+label: 'Publish selected profile'
+type: profile
+plugin: profile_publish_action
+configuration: {  }

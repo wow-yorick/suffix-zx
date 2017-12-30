@@ -1,0 +1,15 @@
+label: Language
+tips:
+  language-overview:
+    label: Languages
+    body: '<p>The "Languages" page allows you to add, edit, delete, and reorder languages for the site.</p>'
+  language-add:
+    body: '<p>To add more languages to your site, click the "Add language" button.</p><p>Added languages will be displayed in the language list and can then be edited or deleted.</p>'
+  language-reorder:
+    label: 'Reordering languages'
+  language-default:
+    label: 'Set a language as default'
+  language-operations:
+    label: 'Modifying languages'
+  language-continue:
+    label: 'Continuing on'

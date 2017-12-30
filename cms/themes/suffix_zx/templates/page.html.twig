@@ -56,6 +56,9 @@
     {% if page.header %}
         {{ page.header }}
     {% endif %}
+    {% if page.header_search %}
+        {{ page.header_search }}
+    {% endif %}
 </header>
 {% if page.highlighted %}
     <div class="highlighted">
@@ -66,7 +69,41 @@
 {% endif %}
 {{ page.breadcrumb }}
 <div class="wrapper">
-    {{ page.content }}
+
+    {% if page.content %}
+        {{ page.content }}
+    {% endif %}
+
+    {% if page.content_slick %}
+        {{ page.content_slick }}
+    {% endif %}
+
+    {% if page.content_nav %}
+        {{ page.content_nav }}
+    {% endif %}
+
+    {% if page.content_qwhx %}
+    <div class="house-refresh">
+        <h2 class="SubTitle"><span>全屋焕新</span><em class="hot-icon"></em></h2>
+        {{ page.content_qwhx }}
+    </div>
+    {% endif %}
+
+    {% if page.content_qwgz %}
+    <div class="local-remould">
+        <h2 class="SubTitle"><span>局部改造</span></h2>
+        <div class="retrofit-content">
+            <div class="remouldTarget flex">
+                <a href="/jubu-chufang">厨房</a>
+                <a href="/jubu-woshi">卧室</a>
+                <a href="/jubu-weishengjian">卫生间</a>
+                <a href="/jubu-keting">客厅</a>
+            </div>
+            {{ page.content_qwgz }}
+        </div>
+    </div>
+    {% endif %}
+
 </div>
 <div class="bottom-fxied">
     {% include '@suffix_zx/includes/footer.html.twig' %}

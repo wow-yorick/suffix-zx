@@ -1,0 +1,8 @@
+tips:
+  language-add-overview:
+    body: '<p>This page provides the ability to add common languages to your site.</p><p>If the desired language is not available, you can add a custom language.</p>'
+  language-add-choose:
+    label: 'Select language'
+    body: '<p>Choose a language from the list, or choose "Custom language..." at the end of the list.</p><p>Click the "Add language" button when you are done choosing your language.</p><p>When adding a custom language, you will get an additional form where you can provide the name, code, and direction of the language.</p>'
+  language-add-continue:
+    label: 'Continuing on'

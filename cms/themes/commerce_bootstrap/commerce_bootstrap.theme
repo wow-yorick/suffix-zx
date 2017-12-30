@@ -21,3 +21,16 @@ function commerce_bootstrap_form_commerce_order_item_add_to_cart_form_alter(&$fo
     }
   }
 }
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function commerce_bootstrap_form_commerce_checkout_flow_multistep_default_alter(&$form, FormStateInterface $form_state) {
+  // Do not attach input-addons for the payment method elements.
+  if (!empty($form['payment_information']['payment_method'])) {
+    $form['payment_information']['payment_method']['#bootstrap_ignore_process'] = TRUE;
+    foreach ($form['payment_information']['payment_method']['#options'] as $key => $option) {
+      $form['payment_information']['payment_method'][$key]['#bootstrap_ignore_process'] = TRUE;
+    }
+  }
+}
