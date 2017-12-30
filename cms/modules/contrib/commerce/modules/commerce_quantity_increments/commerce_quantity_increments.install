@@ -1,0 +1,28 @@
+<?php
+/**
+ * Implements hook_install().
+ *
+ * Ensure that the the quantity input field is visible on the add_to_cart form
+ * display of commerce_order_item entities of default type 'product_variation'.
+ */
+function commerce_quantity_increments_install() {
+  commerce_quantity_increments_update_form_displays();
+}
+
+/**
+ * Ensures that the the quantity input field is visible on the add_to_cart form
+ * display of commerce_order_item entities of default type 'product_variation'.
+ * The 'quantity' form display component is updated if necessary.
+ */
+function commerce_quantity_increments_update_form_displays() {
+  $bundles = ['product_variation'];
+  foreach ($bundles as $bundle) {
+    $form_display = \Drupal::entityTypeManager()->getStorage('entity_form_display')->load('commerce_order_item.' . $bundle . '.add_to_cart');
+    if ($form_display && !$form_display->getComponent('quantity')) {
+      $form_display->setComponent('quantity', array(
+        'type' => 'number',
+        'weight' => 1,
+      ))->save();
+    }
+  }
+}

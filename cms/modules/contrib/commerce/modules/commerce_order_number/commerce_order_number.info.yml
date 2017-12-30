@@ -1,0 +1,15 @@
+name: Commerce order number
+type: module
+description: 'Provides an extensible framework for generating ID independent order numbers.'
+# core: 8.x
+package: Commerce
+
+dependencies:
+  - commerce
+  - commerce:commerce_order
+
+# Information added by Drupal.org packaging script on 2017-09-26
+version: '8.x-1.0-alpha2'
+core: '8.x'
+project: 'commerce_order_number'
+datestamp: 1506409746

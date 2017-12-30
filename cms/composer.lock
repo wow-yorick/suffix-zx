@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4df9116be49de695e856196b1464dca2",
+    "content-hash": "960e646188d814ee38097d80f8a5518c",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1322,7 +1322,7 @@
                 "issues": "http://drupal.org/project/issues/commerce_demo",
                 "source": "http://cgit.drupalcode.org/commerce_demo"
             },
-            "time": "2017-09-12 05:31:24"
+            "time": "2017-09-12T05:31:24+00:00"
         },
         {
             "name": "drupal/commerce_order",
@@ -1645,8 +1645,7 @@
             "homepage": "http://drupal.org/project/commerce_wechat_pay",
             "support": {
                 "source": "http://cgit.drupalcode.org/commerce_wechat_pay"
-            },
-            "time": "2017-10-31 05:52:09"
+            }
         },
         {
             "name": "drupal/console",
@@ -5370,31 +5369,35 @@
         },
         {
             "name": "tecnickcom/tc-lib-barcode",
-            "version": "1.15.4",
+            "version": "1.15.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/tc-lib-barcode.git",
-                "reference": "34b0224f71ebfe83adcef9f14f3d81965fb55493"
+                "reference": "18b8b9224c995cd9d7518e8551be833cbc31b323"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/tecnickcom/tc-lib-barcode/34b0224f71ebfe83adcef9f14f3d81965fb55493.zip",
-                "reference": "34b0224f71ebfe83adcef9f14f3d81965fb55493",
+                "url": "https://files.phpcomposer.com/files/tecnickcom/tc-lib-barcode/18b8b9224c995cd9d7518e8551be833cbc31b323.zip",
+                "reference": "18b8b9224c995cd9d7518e8551be833cbc31b323",
                 "shasum": ""
             },
             "require": {
+                "ext-bcmath": "*",
+                "ext-date": "*",
+                "ext-gd": "*",
+                "ext-pcre": "*",
                 "php": ">=5.4",
-                "tecnickcom/tc-lib-color": "^1.12.1"
+                "tecnickcom/tc-lib-color": "^1.12.6"
             },
             "require-dev": {
                 "apigen/apigen": "^4.1.2",
-                "bartlett/php-compatinfo": "^5.0.0",
-                "pdepend/pdepend": "^2.2.2",
-                "phploc/phploc": "^2.1.5|^3.0.0",
-                "phpmd/phpmd": "^2.3.2",
-                "phpunit/phpunit": "4.8.19|^5.0.0",
-                "sebastian/phpcpd": "^2.0.2",
-                "squizlabs/php_codesniffer": "^2.5.0|^3.0.0"
+                "bartlett/php-compatinfo": "^5.0.4",
+                "pdepend/pdepend": "^2.5.0",
+                "phploc/phploc": "^2.1.5 || ^3.0.1",
+                "phpmd/phpmd": "^2.6.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0",
+                "sebastian/phpcpd": "^2.0.4 || 3.0.0",
+                "squizlabs/php_codesniffer": "^2.8.0 || ^3.0.0"
             },
             "type": "library",
             "autoload": {
@@ -5452,7 +5455,7 @@
                 "tc-lib-barcode",
                 "upc"
             ],
-            "time": "2016-11-17T18:13:54+00:00"
+            "time": "2017-02-12T13:51:39+00:00"
         },
         {
             "name": "tecnickcom/tc-lib-color",
@@ -6130,7 +6133,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2017-02-06 09:59:54"
+            "time": "2017-02-06T09:59:54+00:00"
         },
         {
             "name": "behat/mink-browserkit-driver",
