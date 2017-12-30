@@ -25,8 +25,8 @@ libraries-override:
       theme:
         css/commerce_checkout.form.css: false
 
-# Information added by Drupal.org packaging script on 2017-09-25
+# Information added by Drupal.org packaging script on 2017-11-27
 version: '8.x-1.x-dev'
 core: '8.x'
 project: 'commerce_bootstrap'
-datestamp: 1506322147
+datestamp: 1511797086

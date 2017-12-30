@@ -6,6 +6,17 @@ package: Core
 # core: 8.x
 #base theme: bartik
 #base theme: classy
+#base theme: commerce_bootstrap
+
+regions:
+  header: '头部'
+  header_search: '头部搜索'
+  content: '页面内容'
+  content_slick: '头部焦点图'
+  content_nav: '头部导航'
+  content_qwhx: '全屋焕新'
+  content_qwgz: '全屋改造'
+  footer: '底部'
 
 # Information added by Drupal.org packaging script on 2017-10-04
 version: '8.4.0'

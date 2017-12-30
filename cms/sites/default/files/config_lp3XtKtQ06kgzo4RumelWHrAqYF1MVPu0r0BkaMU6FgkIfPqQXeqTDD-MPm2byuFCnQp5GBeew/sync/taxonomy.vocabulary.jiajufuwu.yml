@@ -1,0 +1,9 @@
+uuid: 4779a426-5c59-48f2-a360-c4e6ff6a320b
+langcode: zh-hans
+status: true
+dependencies: {  }
+name: 家居服务
+vid: jiajufuwu
+description: 家居服务分组
+hierarchy: 0
+weight: 0

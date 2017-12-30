@@ -1,0 +1,13 @@
+uuid: 8117a85a-8841-4561-813f-f9e445b60368
+langcode: zh-hans
+status: true
+dependencies:
+  enforced:
+    module:
+      - devel
+_core:
+  default_config_hash: mYceWZ4FHflXMWwxiO7ePCeXvKMl9F-ARIQ9p4IpvWE
+id: devel
+label: Development
+description: 'Links related to Devel module.'
+locked: true

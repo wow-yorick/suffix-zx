@@ -1,0 +1,10 @@
+uuid: b8298cec-0618-4b0f-af88-ef5e70da5c55
+langcode: zh-hans
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: Q2Ra3jfoIVk0f3SjxJX61byRQFVBAbpzYDQOiY-kno8
+id: main
+label: 'Main navigation'
+description: 'Site section links'
+locked: true

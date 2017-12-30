@@ -1,0 +1,14 @@
+uuid: da7a6b83-0e6a-4d36-af6e-03fe1714bb57
+name: yyd
+mail: qq271645773@126.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: zh-hans
+default_langcode: zh-hans
+_core:
+  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo

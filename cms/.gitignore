@@ -20,7 +20,7 @@ vendor/*
 !sites/development.services.yml
 
 #paths that contain user-generated content.
-sites/*/files
+#sites/*/files
 sites/*/private
 
 # Ignore SimpleTest multi-site environment.
