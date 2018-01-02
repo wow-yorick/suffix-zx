@@ -1,0 +1,9 @@
+name: 需求预约分配API
+type: module
+description: '需求预约分配依赖API配置.'
+package: Custom
+# version: VERSION
+# core: 8.x
+version: '8.4.0'
+core: '8.x'
+#project: 'drupal'

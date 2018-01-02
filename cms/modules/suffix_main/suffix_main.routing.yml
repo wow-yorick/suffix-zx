@@ -1,0 +1,56 @@
+suffix_main.apply:
+  path: '/suffix_main/apply'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\ApplyController::apply'
+    _title: '预约报名'
+  requirements:
+    _permission: 'access content'
+suffix_main.apply_list:
+  path: 'suffix_main/apply_list'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\ApplyController::getApplyList'
+    _title: '报名列表'
+  requirements:
+    _permission: 'access content'
+suffix_main.add_need:
+  path: 'suffix_main/add_need'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::add_need'
+    _title: '新增需求'
+  requirements:
+    _permission: 'access content'
+suffix_main.edit_need:
+  path: 'suffix_main/edit_need'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::edit_need'
+    _title: '更新需求'
+  requirements:
+    _permission: 'access content'
+suffix_main.product_list:
+  path: 'suffix_main/product_list'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::getProductList'
+    _title: '产品列表'
+  requirements:
+    _permission: 'access content'
+suffix_main.add_order:
+  path: 'suffix_main/add_order'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\OrderController::add_order'
+    _title: '新增订单'
+  requirements:
+    _permission: 'access content'
+suffix_main.edit_order:
+  path: 'suffix_main/edit_order'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\OrderController::edit_order'
+    _title: '更新订单'
+  requirements:
+    _permission: 'access content'
+suffix_main.order_list:
+  path: 'suffix_main/order_list'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\OrderController::orderList'
+    _title: '订单列表'
+  requirements:
+    _permission: 'access content'
