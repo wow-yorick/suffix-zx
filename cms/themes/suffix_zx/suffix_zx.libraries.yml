@@ -20,3 +20,16 @@ suffpage-login:
       js/flexible.js: {}
       js/zepto.min.js: {}
       js/wapCommon.js: {}
+
+suffpage-common:
+  version: 1.x
+  css:
+    css/common.css: {}
+  js:
+    js/zepto.min.js: {}
+    js/flexible.js: {}
+
+suffpage-home-center:
+  version: 1.x
+  css:
+    css/personal-center.css: {}

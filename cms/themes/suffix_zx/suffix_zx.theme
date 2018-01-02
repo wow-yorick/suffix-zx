@@ -1,6 +1,6 @@
 <?php
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Link;
+use Symfony\Component\HttpFoundation\Request;
 /**
 * Implements hook_form_FORM_ID_alter().
 */
@@ -49,4 +49,31 @@ function suffix_zx_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStat
             'class' => ['member-btn'],
         ]
     ];
+}
+
+function suffix_zx_preprocess_commerce_product(&$variables) {
+    $variables['title'] = render($variables['elements']['title']);
+    $variables['fengmiantu'] = render($variables['elements']['field_fengmiantu']);
+    $variables['price'] = render($variables['elements']['field_fengmianjiage']);
+    $variables['body'] = render($variables['elements']['body']);
+    $variables['add_to_cart'] = render($variables['elements']['variations']);
+    $variables['zheqian'] = sprintf("%.2f",ceil($variables['product_entity']->toArray()['field_fengmianjiage'][0]['number']/0.78));
+}
+
+function suffix_zx_preprocess_page(&$variables) {
+    $request = Request::createFromGlobals();
+    $variables['currentUrl'] =$request->getPathInfo();
+    $variables['selected_flag'] = 'front';
+    if(strpos($variables['currentUrl'],'orders')) {
+        $variables['selected_flag'] = 'orders';
+    } elseif (strpos($variables['currentUrl'],'cart')) {
+        $variables['selected_flag'] = 'cart';
+    } elseif (strpos($variables['currentUrl'],'discover')) {
+        $variables['selected_flag'] = 'discover';
+    } elseif (strpos($variables['currentUrl'],'home')) {
+        $variables['selected_flag'] = 'home';
+    } else {
+        $variables['selected_flag'] = 'front';
+    }
+    //dump($variables['user']->getAccount());
 }

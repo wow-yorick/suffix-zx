@@ -23,3 +23,10 @@ app_user.router_test_demo:
     _title: 'test roule'
   requirements:
     _permission: 'access content'
+app_user.home:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\app_user\Controller\HomeController::center'
+    _title: '我的'
+  requirements:
+    _permission: 'access content'
