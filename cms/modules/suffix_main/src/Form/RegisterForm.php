@@ -4,7 +4,6 @@ namespace Drupal\app_user\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 
-use Drupal\fapi_example\Form\SimpleForm;
 /**
  * Implements the ajax demo form controller.
  *
@@ -15,7 +14,7 @@ use Drupal\fapi_example\Form\SimpleForm;
  * @see \Drupal\Core\Form\FormBase
  * @see \Drupal\Core\Form\ConfigFormBase
  */
-class RegisterForm extends SimpleForm {
+class RegisterForm {
 
   /**
    * {@inheritdoc}

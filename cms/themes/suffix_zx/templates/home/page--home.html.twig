@@ -1,0 +1,58 @@
+{{ attach_library('suffix_zx/suffpage-home') }}
+<style media="all">
+	@import url("/themes/suffix_zx/css/personal-center.css?p1thfq");
+</style>
+	<div class="profile-9vcMlb wrapper">
+		<div class="profile-forehead">
+			<div class="profile-box">
+                {% if logged_in %}
+				<div class="userinfo-area">
+					<img class="userinfo-avatar" src="/themes/suffix_zx/image/userinfo_avata.png" alt="">
+					<a href="javascript:;" class="edit"></a>
+				</div>
+				<div class="userinfo-nickname">
+					<span>{{ user.getDisplayName() }}</span>
+					<i class="gender woman">♀</i>
+					<!-- <i class="gender man">♂</i> -->
+				</div>
+                {% else %}
+				<div class="userinfo-area">
+					<img class="userinfo-avatar" src="/themes/suffix_zx/image/default_avatar.png" alt="">
+				</div>
+				<div class="member flex">
+					<a class="login" href="/user/login">登陆</a>
+					<a class="regist" href="/user/register">注册</a>
+				</div>
+                {% endif %}
+			</div>
+		</div>
+		<div class="special-oper">
+			<div class="special-item">
+				<a href="/home/address" class="i-site">
+					<i></i>
+					<span>服务地址</span>
+					<b></b>
+				</a>
+				<a href="javascript:;" class="i-service">
+					<i></i>
+					<span>联系客服</span>
+					<b></b>
+				</a>
+				<a href="javascript:;" class="i-share">
+					<i></i>
+					<span>分享给好友</span>
+					<b></b>
+				</a>
+			</div>
+			<div class="special-item">
+				<a href="/home/setting" class="i-setting">
+					<i></i>
+					<span>设置</span>
+					<b></b>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="bottom-fxied">
+        {% include '@suffix_zx/includes/footer.html.twig' %}
+	</div>
