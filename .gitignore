@@ -1,3 +1,5 @@
 *~
 .idea
 *.tar
+cms/composer.lock
+cms/vendor/composer/installed.json
