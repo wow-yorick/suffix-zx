@@ -7,6 +7,7 @@ suffpage-home:
   js:
       js/wapCommon.js: {}
       js/swiper.min.js: {}
+      js/flexible.js: {}
   dependencies:
     - core/jquery
 
@@ -24,7 +25,8 @@ suffpage-login:
 suffpage-common:
   version: 1.x
   css:
-    css/common.css: {}
+    theme:
+      css/common.css: {}
   js:
     js/zepto.min.js: {}
     js/flexible.js: {}
@@ -32,4 +34,5 @@ suffpage-common:
 suffpage-home-center:
   version: 1.x
   css:
-    css/personal-center.css: {}
+    theme:
+      css/personal-center.css: {}
