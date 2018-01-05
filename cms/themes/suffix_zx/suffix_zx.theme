@@ -77,3 +77,7 @@ function suffix_zx_preprocess_page(&$variables) {
     }
     //dump($variables['user']->getAccount());
 }
+
+function suffix_zx_preprocess_commerce_cart(&$variables) {
+   echo 234234;
+}
