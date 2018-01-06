@@ -75,9 +75,91 @@ function suffix_zx_preprocess_page(&$variables) {
     } else {
         $variables['selected_flag'] = 'front';
     }
+    //dump($variables);
     //dump($variables['user']->getAccount());
 }
 
-function suffix_zx_preprocess_commerce_cart(&$variables) {
-   echo 234234;
+
+function suffix_zx_theme($existing, $type, $theme, $path) {
+    return [
+        'suffix_zx_custom_page' => [
+            //'file' => 'ckeditor.admin.inc',
+            'variables' => [
+                'content' => NULL,
+                'abc' => NULL,
+            ],
+        ],
+    ];
+}
+
+function suffix_zx_theme_registry_alter(&$theme_registry) {
+    //dump($theme_registry);
+    $theme_registry["page__cart"] = [
+            "template" => "page--cart",
+            "path" => "themes/suffix_zx/templates/cart",
+            "render element" => "page",
+            "base hook" => "commerce_cart_page",
+            "type" => "theme_engine",
+            "theme path" => "themes/suffix_zx",
+            //"incomplete preprocess functions" => true,
+            "preprocess functions" => ["suffix_zx_preprocess_page_cart"],
+            'variables' => [
+                'title' => "sadssfd",
+                'description' => NULL,
+                'links' => NULL,
+                'empty' => NULL,
+            ],
+            'override preprocess functions' => true,
+        ];
+    $theme_registry['views_view']['override preprocess functions'] = true;
+    //$theme_registry['views_view']['preprocess functions'][] = 'suffix_zx_preprocess_views_view';
+    dump($theme_registry);
+}
+
+
+function suffix_zx_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+    $view = $variables['view'];
+    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
+        return ;
+    }
+    $suggestions[] = 'cart_views_view';
+    dump($variables);
+}
+
+
+
+function suffix_zx_preprocess_page_cart(&$variables) {
+    $container = \Drupal::service("service_container");
+    $cartProvider = $container->get('commerce_cart.cart_provider');
+    $carts = $cartProvider->getCarts();
+    //dump($carts);
+
+    $carSession = \Drupal::service('commerce_cart.cart_session');
+    $variables['ddd'] ="saf";
+    //dump($variables);
+}
+
+function _getCartViews(array $carts) {
+    $order_type_ids = array_map(function ($cart) {
+        /** @var \Drupal\commerce_order\Entity\OrderInterface $cart */
+        return $cart->bundle();
+    }, $carts);
+    $order_type_storage = $this->entityTypeManager()->getStorage('commerce_order_type');
+    $order_types = $order_type_storage->loadMultiple(array_unique($order_type_ids));
+    $cart_views = [];
+    foreach ($order_type_ids as $cart_id => $order_type_id) {
+        /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
+        $order_type = $order_types[$order_type_id];
+        $cart_views[$cart_id] = $order_type->getThirdPartySetting('commerce_cart', 'cart_form_view', 'commerce_cart_form');
+    }
+
+    return $cart_views;
+}
+
+function suffix_zx_preprocess_views_view($variables) {
+    $view = $variables['view'];
+    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
+        return ;
+    }
+    //dump($variables);
 }

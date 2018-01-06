@@ -1,0 +1,217 @@
+{#
+/**
+ * @file
+ * Theme override for a main view template.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ * - css_name: A css-safe version of the view name.
+ * - css_class: The user-specified classes names, if any.
+ * - header: The optional header.
+ * - footer: The optional footer.
+ * - rows: The results of the view query, if any.
+ * - empty: The content to display if there are no rows.
+ * - pager: The optional pager next/prev links to display.
+ * - exposed: Exposed widget form/info to display.
+ * - feed_icons: Optional feed icons to display.
+ * - more: An optional link to the next page of results.
+ * - title: Title of the view, only used when displaying in the admin preview.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the view title.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the view title.
+ * - attachment_before: An optional attachment view to be displayed before the
+ *   view content.
+ * - attachment_after: An optional attachment view to be displayed after the
+ *   view content.
+ * - dom_id: Unique id for every view being printed to give unique class for
+ *   Javascript.
+ *
+ * @see template_preprocess_views_view()
+ */
+#}
+{%
+  set classes = [
+    'view',
+    'view-' ~ id|clean_class,
+    'view-id-' ~ id,
+    'view-display-id-' ~ display_id,
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div class="shopping-cart cartwrapper">
+  <div class="formula-bar flex">
+    <span>已选中<em>1</em>件商品</span>
+    <a href="javascript:;" class="c-2b">编辑</a>
+  </div>
+  <div class="cartbuy">
+    <a href="javascript:;" class="cart-commodity flex">
+      <label class="option selected"></label>
+      <div class="commodity-ri clearfix">
+        <div class="wares-img">
+          <img src="image/cart-listimg.jpg" alt="">
+        </div>
+        <div class="wares-info">
+          <h3>森马毛衣男2017冬季新款男士假两件韩版潮流针织衫潮</h3>
+          <p>1m2起（含1m2）</p>
+          <div class="pm flex">
+            <span class="price">￥<em>13900</em>.00</span>
+            <span class="amount">x <em>1</em></span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="javascript:;" class="cart-commodity flex">
+      <label class="option"></label>
+      <div class="commodity-ri clearfix">
+        <div class="wares-img">
+          <img src="image/cart-listimg.jpg" alt="">
+        </div>
+        <div class="wares-info">
+          <h3>森马毛衣男2017冬季新款男士假两件韩版潮流针织衫潮</h3>
+          <p>1m2起（含1m2）</p>
+          <div class="pm flex">
+            <span class="price">￥<em>13900</em>.00</span>
+            <span class="amount">x <em>1</em></span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="nominate-box">
+    <h3 class="propose-title"><span>—为您推荐 —</span></h3>
+    <div class="product-list product-large">
+      <ul class="clearfix">
+        <li>
+          <a href="javascript:;" class="clearfix">
+            <div class="img-box">
+              <img src="image/big-img01.jpg" alt="">
+              <div class="Sold">已售<span>1389</span></div>
+            </div>
+            <div class="commodity-attribute">
+              <h3>上水管增压泵安装</h3>
+              <div class="list-price">
+                <span class="price"><i>￥</i>120<em>/套</em></span>
+                <span class="discount">7.8折</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="clearfix">
+            <div class="img-box">
+              <img src="image/big-img01.jpg" alt="">
+              <div class="Sold">已售<span>1389</span></div>
+            </div>
+            <div class="commodity-attribute">
+              <h3>上水管增压泵安装</h3>
+              <div class="list-price">
+                <span class="price"><i>￥</i>120<em>/套</em></span>
+                <span class="discount">7.8折</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="clearfix">
+            <div class="img-box">
+              <img src="image/big-img01.jpg" alt="">
+              <div class="Sold">已售<span>1389</span></div>
+            </div>
+            <div class="commodity-attribute">
+              <h3>上水管增压泵安装</h3>
+              <div class="list-price">
+                <span class="price"><i>￥</i>120<em>/套</em></span>
+                <span class="discount">7.8折</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="clearfix">
+            <div class="img-box">
+              <img src="image/big-img01.jpg" alt="">
+              <div class="Sold">已售<span>1389</span></div>
+            </div>
+            <div class="commodity-attribute">
+              <h3>上水管增压泵安装</h3>
+              <div class="list-price">
+                <span class="price"><i>￥</i>120<em>/套</em></span>
+                <span class="discount">7.8折</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="cartbuy-footer">
+  <div class="cartbuy-box flex">
+    <label class="cb-footer">
+      <b></b>
+      <span>全选</span>
+    </label>
+    <div class="pay-tatol">
+      <div class="ta">
+        <p class="je"><em>合计</em><span class="sum">￥<span class="price">13900</span>.00</span></p>
+        <p class="no-yf">不含运费</p>
+      </div>
+    </div>
+    <a href="javascript:;" class="buy-btn"><span>结算</span><span>(</span><span>1</span><span>)</span></a>
+  </div>
+</div>
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {% if title %}
+    {{ title }}
+  {% endif %}
+  {{ title_suffix }}
+  {% if header %}
+    <div class="view-header">
+      {{ header }}
+    </div>
+  {% endif %}
+  {% if exposed %}
+    <div class="view-filters">
+      {{ exposed }}
+    </div>
+  {% endif %}
+  {% if attachment_before %}
+    <div class="attachment attachment-before">
+      {{ attachment_before }}
+    </div>
+  {% endif %}
+
+  {% if rows %}
+    <div class="view-content">
+      {{ rows }}
+    </div>
+  {% elseif empty %}
+    <div class="view-empty">
+      {{ empty }}
+    </div>
+  {% endif %}
+
+  {% if pager %}
+    {{ pager }}
+  {% endif %}
+  {% if attachment_after %}
+    <div class="attachment attachment-after">
+      {{ attachment_after }}
+    </div>
+  {% endif %}
+  {% if more %}
+    {{ more }}
+  {% endif %}
+  {% if footer %}
+    <div class="view-footer">
+      {{ footer }}
+    </div>
+  {% endif %}
+  {% if feed_icons %}
+    <div class="feed-icons">
+      {{ feed_icons }}
+    </div>
+  {% endif %}
+</div>
