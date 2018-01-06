@@ -19,11 +19,11 @@ class ApplyController extends APIBaseController {
         $validateRule = $this->validateRule();
         $this->fieldVerify($validateRule,$queryData);
         $queryData = self::dataFormat($queryData,$validateRule);
-        $applyInfo = ApplyStorage::get_one(array('mobile'=>$queryData['mobile'],'create_time'=>array(0=>1514788801,1=>'>')));
+//        $applyInfo = ApplyStorage::getApplyInfo(array('mobile'=>$queryData['mobile'],'create_time'=>array(0=>1514788801,1=>'>')));
         $insertData = $this->getDefaultValue();
         $insertData['username'] = $queryData['username'];
         $insertData['mobile'] = $queryData['mobile'];
-        $oldUser = UserStorage::get_one_user_by_mobile($queryData['mobile']);
+        $oldUser = UserStorage::getOneUserByMobile($queryData['mobile']);
         if(!empty($oldUser)){
             $oldUser = $this->json_deal($oldUser);
             $insertData['uid'] = $oldUser['user_id'];
@@ -40,11 +40,11 @@ class ApplyController extends APIBaseController {
             $insertData['latitude'] = $queryData['latitude'];
             $insertData['longitude'] = $queryData['longitude'];
         }
-
         if($queryData['product_id']){
             //购物车预约逻辑
         }
-        $res = ApplyStorage::insert($insertData);
+//        var_export($insertData);die;
+        $res = ApplyStorage::insertApplyInfo($insertData);
         $this->success($res);
     }
 
@@ -62,7 +62,7 @@ class ApplyController extends APIBaseController {
         if($queryData['city']){
             $param['city'] = $queryData['city'];
         }
-        $list = ApplyStorage::load($param,array('field'=>'create_time','order'=>'DESC'));
+        $list = ApplyStorage::applyList($param,array(),array('field'=>'create_time','order'=>'DESC'));
         $this->success($list);
     }
 
@@ -70,9 +70,9 @@ class ApplyController extends APIBaseController {
         return array(
             'username' => '',
             'mobile' => '',
-            'uid'=>null,
+            'uid'=>0,
             'gender' => 0,
-            'product_id'=>null,
+            'product_id'=>0,
             'province' => '',
             'city' => '',
             'district' => '',

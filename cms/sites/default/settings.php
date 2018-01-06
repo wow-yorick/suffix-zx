@@ -2,7 +2,8 @@
 $databases['default']['default'] = array (
   'database' => 'suffix_zx',
   'username' => 'root',
-  'password' => 'qQ2587011$',
+  'password' => '123456',
+//    'password' => 'qQ2587011$',
   //'password' => 'QIaWVDLs',
   'prefix' => '',
   'host' => 'localhost',

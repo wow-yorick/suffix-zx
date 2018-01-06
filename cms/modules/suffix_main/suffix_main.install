@@ -262,6 +262,12 @@ function suffix_main_schema() {
           'length' => 1,
           'not null' => FALSE,
         ),
+        'order_status' => array(
+          'description' => t('订单处理状态.'),
+          'type' => 'int',
+          'length' => 1,
+          'not null' => FALSE,
+        ),
         'create_time' => array(
           'description' => t('创建时间.'),
           'type' => 'int',
