@@ -30,3 +30,10 @@ app_user.home:
     _title: '我的'
   requirements:
     _permission: 'access content'
+app_user.commerce.cart:
+  path: '/usercart'
+  defaults:
+    _controller: '\Drupal\app_user\Controller\CartController::cartPage'
+    _title: '我的购物车'
+  requirements:
+    _permission: 'access content'

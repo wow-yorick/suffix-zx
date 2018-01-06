@@ -6,7 +6,6 @@
 namespace Drupal\app_user\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\examples\Utility\DescriptionTemplateTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends ControllerBase {
