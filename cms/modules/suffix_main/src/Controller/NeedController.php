@@ -40,7 +40,7 @@ class NeedController extends APIBaseController {
         $insertData = $this->getDefaultValue();
         $insertData['apply_id'] = intval($queryData['apply_id']);
         $insertData['product_id'] = $queryData['product_id']?intval($queryData['product_id']):null;
-        $applyInfo = ApplyStorage::get_one(array('apply_id'=>intval($queryData['apply_id'])));
+        $applyInfo = ApplyStorage::getApplyInfo(array('apply_id'=>intval($queryData['apply_id'])));
         if(!$applyInfo){
             $this->error('预约信息错误');
         }
@@ -54,7 +54,7 @@ class NeedController extends APIBaseController {
         $insertData['latitude'] = $applyInfo['latitude'];
         $insertData['remark'] = $applyInfo['remark'];
         if($queryData['product_id']) {
-            $productInfo = ProductStorage::get_one(intval($queryData['product_id']));
+            $productInfo = ProductStorage::getProductInfo(intval($queryData['product_id']));
             if (!$productInfo) {
                 $this->error('产品信息错误');
             }
@@ -63,14 +63,17 @@ class NeedController extends APIBaseController {
             $insertData['create_user'] = $queryData['create_user'];
             $insertData['modify_user'] = $queryData['modify_user'];
         }
-        $res = NeedStorage::insert($insertData);
+        $res = NeedStorage::insertNeedInfo($insertData);
         $return = array('need_id'=>$res);
-        $orderId = $this->assignOrder(2); //自动分单逻辑
-        if($orderId){
-            $return['order_id'] = $orderId;
-            //改变需求状态逻辑
-            NeedStorage::update(array('need_id'=>intval($res),'status'=>2));
+        if(false) {
+            $orderId = $this->assignOrder($res); //自动分单逻辑
+            if ($orderId) {
+                $return['order_id'] = $orderId;
+                //改变需求状态逻辑
+                NeedStorage::updateNeedInfo('need_id',array('need_id' => intval($res), 'status' => 2));
+            }
         }
+
         $this->success($return);
     }
 
@@ -89,12 +92,35 @@ class NeedController extends APIBaseController {
         );
         $this->fieldVerify($validateRule,$queryData);
         $queryData = self::dataFormat($queryData,$validateRule);
-        $list = ProductStorage::get_product_list(array('type'=>$queryData['type'],'deleted'=>intval($queryData['online'])));
+        $list = ProductStorage::getProductList(array('type'=>$queryData['type'],'deleted'=>intval($queryData['online'])));
         $this->success($list);
     }
 
     public function edit_need(){
-        $this->success('edit_need_ok');
+        $queryData = $this->getRequest();
+        $validateRule = array(
+            'need_id'=>array(
+                'rule'=>'require',
+                'declare'=>'需求ID'
+            ),
+            'status'=>array(
+                'rule'=>'all|number',
+                'declare'=>'状态'
+            ),
+            'modify_user'=>array(
+                'rule'=>'all',
+                'declare'=>'操作人'
+            ),
+        );
+        $this->fieldVerify($validateRule,$queryData);
+        $queryData = self::dataFormat($queryData,$validateRule);
+        $res = NeedStorage::updateNeedInfo('need_id',$queryData);
+        $this->success($res);
+    }
+
+    function testSql(){
+        $sql = "UPDATE {sessions} SET sid = '' WHERE uid = :uid";
+        var_export(NeedStorage::sqlSearch($sql));
     }
 
     private function getDefaultValue(){//补全插入数据字段
@@ -122,23 +148,24 @@ class NeedController extends APIBaseController {
     }
 
     private function assignOrder($need_id){
+//        die;
         $return  = null;
-        $shopList = UserStorage::get_user_list_by_role();
+        $shopList = UserStorage::getUserListByRole();
         if($shopList){
             $shopList = $this->json_deal($shopList);
             $shopId = $shopList[0]['uid'];
-            $return  = $this->auto_add_order($need_id,$shopId);
+            $return  = $this->autoAddOrder($need_id,$shopId);
         }
         return $return;
     }
 
-    public function auto_add_order($need_id,$shopId){
+    public function autoAddOrder($need_id,$shopId){
         $insertData = OrderController::getDefaultValue();
-        $needInfo = NeedStorage::get_one(array('need_id'=>intval($need_id)));
+        $needInfo = NeedStorage::getNeedInfo(array('need_id'=>intval($need_id)));
         if(!$needInfo){
             $this->error('需求信息有误');
         }
-        $shopInfo = UserStorage::get_one(array('uid'=>intval($shopId)));
+        $shopInfo = UserStorage::getOneUserByUid(intval($shopId));
         if(!$shopInfo){
             $this->error('商家信息有误');
         }
@@ -151,7 +178,8 @@ class NeedController extends APIBaseController {
         $insertData['city'] = $needInfo['city'];
         $insertData['district'] = $needInfo['district'];
         $insertData['remark'] = $needInfo['remark'];
-        $orderId = OrderStorage::insert($insertData);
+        $orderId = OrderStorage::insertOrderInfo($insertData);
+        var_export($insertData);die;
         return $orderId?:null;
     }
 
