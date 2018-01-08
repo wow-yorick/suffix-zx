@@ -39,45 +39,34 @@
     dom_id ? 'js-view-dom-id-' ~ dom_id,
   ]
 %}
+
 <div class="shopping-cart cartwrapper">
   <div class="formula-bar flex">
-    <span>已选中<em>1</em>件商品</span>
-    <a href="javascript:;" class="c-2b">编辑</a>
+    <span>已选中<em>{{ itemTotal }}</em>件商品</span>
+    <a href="/cart/edit" class="c-2b">编辑</a>
   </div>
-  <div class="cartbuy">
-    <a href="javascript:;" class="cart-commodity flex">
-      <label class="option selected"></label>
-      <div class="commodity-ri clearfix">
-        <div class="wares-img">
-          <img src="image/cart-listimg.jpg" alt="">
-        </div>
-        <div class="wares-info">
-          <h3>森马毛衣男2017冬季新款男士假两件韩版潮流针织衫潮</h3>
-          <p>1m2起（含1m2）</p>
-          <div class="pm flex">
-            <span class="price">￥<em>13900</em>.00</span>
-            <span class="amount">x <em>1</em></span>
-          </div>
-        </div>
-      </div>
-    </a>
-    <a href="javascript:;" class="cart-commodity flex">
-      <label class="option"></label>
-      <div class="commodity-ri clearfix">
-        <div class="wares-img">
-          <img src="image/cart-listimg.jpg" alt="">
-        </div>
-        <div class="wares-info">
-          <h3>森马毛衣男2017冬季新款男士假两件韩版潮流针织衫潮</h3>
-          <p>1m2起（含1m2）</p>
-          <div class="pm flex">
-            <span class="price">￥<em>13900</em>.00</span>
-            <span class="amount">x <em>1</em></span>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
+    {#{{ rows }}#}
+    <div class="cartbuy">
+        {% for item in orderItems %}
+        <a href="{{ item.productUrl }}" class="cart-commodity flex">
+            {#<label class="option selected"></label>#}
+          {#{{ item.removeBtn }}#}
+            <div class="commodity-ri clearfix">
+                <div class="wares-img">
+                    {{ item.smallimg }}
+                </div>
+                <div class="wares-info">
+                    <h3>{{ item.title }}</h3>
+                    <!--<p>1m2起（含1m2）</p>-->
+                    <div class="pm flex">
+                        <span class="price">￥<em>{{ item.totalPrice }}</em>.00</span>
+                        <span class="amount">x <em>{{ item.quantity }}</em></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
   <div class="nominate-box">
     <h3 class="propose-title"><span>—为您推荐 —</span></h3>
     <div class="product-list product-large">
@@ -148,70 +137,16 @@
 </div>
 <div class="cartbuy-footer">
   <div class="cartbuy-box flex">
-    <label class="cb-footer">
-      <b></b>
-      <span>全选</span>
-    </label>
+    {#<label class="cb-footer">#}
+      {#<b></b>#}
+      {#<span>全选</span>#}
+    {#</label>#}
     <div class="pay-tatol">
       <div class="ta">
-        <p class="je"><em>合计</em><span class="sum">￥<span class="price">13900</span>.00</span></p>
+        <p class="je"><em>合计</em><span class="sum">￥<span class="price">{{ price_total }}</span>.00</span></p>
         <p class="no-yf">不含运费</p>
       </div>
     </div>
-    <a href="javascript:;" class="buy-btn"><span>结算</span><span>(</span><span>1</span><span>)</span></a>
+    <a href="/cart/confirm" class="buy-btn"><span>结算</span><span>(</span><span>{{ itemTotal }}</span><span>)</span></a>
   </div>
-</div>
-<div{{ attributes.addClass(classes) }}>
-  {{ title_prefix }}
-  {% if title %}
-    {{ title }}
-  {% endif %}
-  {{ title_suffix }}
-  {% if header %}
-    <div class="view-header">
-      {{ header }}
-    </div>
-  {% endif %}
-  {% if exposed %}
-    <div class="view-filters">
-      {{ exposed }}
-    </div>
-  {% endif %}
-  {% if attachment_before %}
-    <div class="attachment attachment-before">
-      {{ attachment_before }}
-    </div>
-  {% endif %}
-
-  {% if rows %}
-    <div class="view-content">
-      {{ rows }}
-    </div>
-  {% elseif empty %}
-    <div class="view-empty">
-      {{ empty }}
-    </div>
-  {% endif %}
-
-  {% if pager %}
-    {{ pager }}
-  {% endif %}
-  {% if attachment_after %}
-    <div class="attachment attachment-after">
-      {{ attachment_after }}
-    </div>
-  {% endif %}
-  {% if more %}
-    {{ more }}
-  {% endif %}
-  {% if footer %}
-    <div class="view-footer">
-      {{ footer }}
-    </div>
-  {% endif %}
-  {% if feed_icons %}
-    <div class="feed-icons">
-      {{ feed_icons }}
-    </div>
-  {% endif %}
 </div>

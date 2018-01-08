@@ -4,6 +4,10 @@ suffpage-home:
     theme:
       css/common.css: {}
       css/home.css: {}
+      css/discover.css: {}
+      css/order.css: {}
+      css/personal-center.css: {}
+      css/shopping-process.css: {}
   js:
       js/wapCommon.js: {}
       js/swiper.min.js: {}
