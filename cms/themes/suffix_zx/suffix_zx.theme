@@ -1,6 +1,18 @@
 <?php
 use Drupal\Core\Link;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\Component\Render\MarkupInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\views\Plugin\Derivative\ViewsLocalTask;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Entity\View;
+use Drupal\views\Render\ViewsRenderPipelineMarkup;
+use Drupal\views\Views;
 /**
 * Implements hook_form_FORM_ID_alter().
 */
@@ -52,6 +64,7 @@ function suffix_zx_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStat
 }
 
 function suffix_zx_preprocess_commerce_product(&$variables) {
+    //dump($variables['elements']['field_fengmiantu']);exit;
     $variables['title'] = render($variables['elements']['title']);
     $variables['fengmiantu'] = render($variables['elements']['field_fengmiantu']);
     $variables['price'] = render($variables['elements']['field_fengmianjiage']);
@@ -82,39 +95,73 @@ function suffix_zx_preprocess_page(&$variables) {
 
 function suffix_zx_theme($existing, $type, $theme, $path) {
     return [
-        'suffix_zx_custom_page' => [
-            //'file' => 'ckeditor.admin.inc',
-            'variables' => [
-                'content' => NULL,
-                'abc' => NULL,
-            ],
+        'cart_views_view' => [
+            'base hook' => 'cart_views_view',
+            "path" => "themes/suffix_zx/templates/views",
+            "preprocess functions" => ["suffix_zx_preprocess_cart_views_view"],
         ],
+        'cart_views_view_list' => [
+                "type" => "theme_engine",
+                "theme path" => "themes/suffix_zx",
+                "includes" => array('core/modules/views/views.theme.inc'),
+                "variables" => array(
+                    "view" => null,
+                    "options" => null,
+                    "rows" => null,
+                    "title" => null,
+                ),
+                "render element" => "element",
+                'base hook' => 'cart_views_view_list',
+                "path" => "themes/suffix_zx/templates/views",
+                "preprocess functions" => ["suffix_zx_preprocess_cart_views_view_list"],
+                //'override preprocess functions' => true,
+                //"incomplete preprocess functions" => true,
+            ],
+        "cart_views_view_table" => [
+            "template" => "cart-views-view-table",
+            "path" => "themes/suffix_zx/templates/views",
+            "type" => "theme_engine",
+            "theme path" => "themes/suffix_zx",
+            "includes" => [
+              0 => "core/modules/views/views.theme.inc",
+            ],
+            "variables" => [
+              "view" => null,
+              "options" => null,
+              "rows" => null,
+              "title" => null,
+            ],
+            "preprocess functions" => [
+
+            ],
+          ],
+
     ];
 }
 
-function suffix_zx_theme_registry_alter(&$theme_registry) {
+//function suffix_zx_theme_registry_alter(&$theme_registry) {
     //dump($theme_registry);
-    $theme_registry["page__cart"] = [
-            "template" => "page--cart",
-            "path" => "themes/suffix_zx/templates/cart",
-            "render element" => "page",
-            "base hook" => "commerce_cart_page",
-            "type" => "theme_engine",
-            "theme path" => "themes/suffix_zx",
-            //"incomplete preprocess functions" => true,
-            "preprocess functions" => ["suffix_zx_preprocess_page_cart"],
-            'variables' => [
-                'title' => "sadssfd",
-                'description' => NULL,
-                'links' => NULL,
-                'empty' => NULL,
-            ],
-            'override preprocess functions' => true,
-        ];
-    $theme_registry['views_view']['override preprocess functions'] = true;
-    //$theme_registry['views_view']['preprocess functions'][] = 'suffix_zx_preprocess_views_view';
-    dump($theme_registry);
-}
+//    $theme_registry["page__cart"] = [
+//            "template" => "page--cart",
+//            "path" => "themes/suffix_zx/templates/cart",
+//            "render element" => "page",
+//            //"base hook" => "commerce_cart_page",
+//            "type" => "theme_engine",
+//            "theme path" => "themes/suffix_zx",
+//            //"incomplete preprocess functions" => true,
+//            //"preprocess functions" => ["suffix_zx_preprocess_page_cart"],
+//            'variables' => [
+//                'title' => "sadssfd",
+//                'description' => NULL,
+//                'links' => NULL,
+//                'empty' => NULL,
+//            ],
+//            'override preprocess functions' => true,
+//        ];
+//    $theme_registry['views_view']['override preprocess functions'] = true;
+//    $theme_registry['views_view']['preprocess functions'][] = 'suffix_zx_preprocess_views_view';
+//    dump($theme_registry);
+//}
 
 
 function suffix_zx_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
@@ -123,21 +170,39 @@ function suffix_zx_theme_suggestions_views_view_alter(array &$suggestions, array
         return ;
     }
     $suggestions[] = 'cart_views_view';
-    dump($variables);
-}
-
-
-
-function suffix_zx_preprocess_page_cart(&$variables) {
-    $container = \Drupal::service("service_container");
-    $cartProvider = $container->get('commerce_cart.cart_provider');
-    $carts = $cartProvider->getCarts();
-    //dump($carts);
-
-    $carSession = \Drupal::service('commerce_cart.cart_session');
-    $variables['ddd'] ="saf";
     //dump($variables);
 }
+
+//function suffix_zx_theme_suggestions_views_view_table_alter(array &$suggestions, array $variables) {
+//    $view = $variables['view'];
+//    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
+//        return ;
+//    }
+//    $suggestions[] = 'cart_views_view_table';
+//    //dump($variables);
+//}
+//
+//function suffix_zx_theme_suggestions_views_view_list_alter(array &$suggestions, array $variables) {
+//    $view = $variables['view'];
+//    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
+//        return ;
+//    }
+//    //$suggestions[] = 'cart_views_view_list';
+//    //dump($variables);
+//}
+
+
+
+//function suffix_zx_preprocess_page_cart(&$variables) {
+//    $container = \Drupal::service("service_container");
+//    $cartProvider = $container->get('commerce_cart.cart_provider');
+//    $carts = $cartProvider->getCarts();
+//    //dump($carts);
+//
+//    $carSession = \Drupal::service('commerce_cart.cart_session');
+//    $variables['ddd'] ="saf";
+//    //dump($variables);
+//}
 
 function _getCartViews(array $carts) {
     $order_type_ids = array_map(function ($cart) {
@@ -156,10 +221,87 @@ function _getCartViews(array $carts) {
     return $cart_views;
 }
 
-function suffix_zx_preprocess_views_view($variables) {
-    $view = $variables['view'];
-    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
-        return ;
-    }
+//function suffix_zx_preprocess_views_view($variables) {
+//    $view = $variables['view'];
+//    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
+//        return ;
+//    }
+//    //dump($variables);
+//}
+
+function suffix_zx_preprocess_cart_views_view_list(&$variables) {
     //dump($variables);
+}
+
+function suffix_zx_preprocess_cart_views_view(&$variables) {
+    $variables['price_total'] = intval($variables['footer']['commerce_order_total']['#totals']['total']->getNumber());
+    //dump($variables);
+//    $checkout = $variables['rows']['actions']['checkout'];
+//    $checkout['#value'] ="结算";
+//    dump($checkout);
+//    echo render($checkout);
+
+    //dump($variables);
+    $orderCartList = $variables['rows']['output'][0]['#rows'];
+    //dump($variables['rows']);
+    $orderItemsShow = array();
+
+    $itemTotal = 0;
+    foreach ($orderCartList as $key => $resultRow) {
+        //echo $key;
+        //dump($resultRow);exit;
+        $tmp = array(
+            'title' =>'',
+            'unitPrice' => 0,
+            'quantity' => 0,
+            'totalPrice' => 0,
+            'smallimg' => '',
+            'productUrl' => '',
+        );
+        $orderEntity = $resultRow->_entity;
+        $orderRetationshipEntity = $resultRow->_relationship_entities;
+        //dump($orderRetationshipEntity['order_items']);exit;
+        //$purchsed = $orderEntity->getOrdergetPurchasedEntity();
+        $orderItems = $orderRetationshipEntity['order_items'];
+        $productVariation = $orderRetationshipEntity['order_items']->getPurchasedEntity();
+        $product = $productVariation->getProduct();
+        $tmp['title'] = $product->getTitle();
+
+        $tmp['unitPrice'] = explode(" ",$orderItems->getUnitPrice())[0];
+        $tmp['quantity'] = intval($orderItems->getQuantity());
+        $imgStr = $product->get('field_fengmiantu')->view();
+        //unset($imgStr['#label_display']);
+        //unset($imgStr['#title']);
+        $tmp['smallimg'] = render($imgStr);
+        $tmp['totalPrice'] = intval($orderItems->getTotalPrice()->getNumber());
+        $tmp['productUrl'] = '/product/'.$product->toArray()['product_id'][0]['value'];
+        $tmp['removeBtn'] = render($variables['rows']['remove_button'][$key]);
+
+        $itemTotal += $tmp['quantity'];
+        array_push($orderItemsShow, $tmp);
+    }
+    $variables['orderItems'] = $orderItemsShow;
+    $variables['itemTotal'] = $itemTotal;
+    $view = views_embed_view('chanpinliebiao','default');
+    //echo render($view);
+    //dump($view);
+    //dump($view = Views::getView('chanpinliebiao'));exit;
+
+    //$viewManager = \Drupal::service('plugin.manager.views.access');
+    //dump($viewManager->getDefinition('chanpinliebiao'));exit;
+
+//    $view = array(
+//        'product_list' => array(
+//            "#type" => "view",
+//            "#name" => "chanpinliebiao",
+//            "#arguments" => array(),
+//        ),
+//    );
+//    echo render($view);exit;
+    //dump($variables);
+    //$order = $orderCartList[0]->_entity;
+    //dump($orderCartList);
+    //echo $r = render($variables['rows']['output'][0]);exit;
+    //$variables['price_total'] = $order->getSubtotalPrice()->getNumber() ? intval($order->getSubtotalPrice()->getNumber()) : 0;
+
 }

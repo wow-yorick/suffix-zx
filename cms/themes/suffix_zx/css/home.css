@@ -35,10 +35,10 @@
 .retrofit-content{padding:0 .266rem .49rem;}
 .retrofit-content .remouldTarget{padding:.24rem 0 .36rem;}
 .retrofit-content .remouldTarget a{display:block;width:23%;height:.933rem;line-height:.933rem;background: #f5f5f5;text-align:center;border-radius:.2rem;color:#666;font-size:0.32rem;}
-.retrofit-content .retrofit-list{}
-.retrofit-content .retrofit-list li:not(:first-child){margin-top:.266rem;}
-.retrofit-content .retrofit-list li a{display: block;position:relative;}
-.retrofit-content .retrofit-list li a .lr-attribute{height:1.09rem;padding:.293rem .133rem;line-height: .5rem;background: rgba(0,0,0,.6);box-sizing: border-box;position:absolute;left:0;right:0;bottom:0;}
-.retrofit-content .retrofit-list li a .lr-attribute p{width:6.66rem;color: #fefefe;line-height: .5rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:0.3467rem;}
-.retrofit-content .retrofit-list li a .lr-attribute span{color: #f60e2f;font-size:.42rem;}
-.retrofit-content .retrofit-list li a .lr-attribute span em{font-size:.32rem;}
+.jubu-retrofit-ul li{position:relative;}
+.jubu-retrofit-ul li:not(:first-child){margin-top:.266rem;}
+.jubu-retrofit-ul li a{display: block;position:relative;}
+.jubu-retrofit-ul li .lr-attribute{height:1.09rem;padding:.293rem .133rem;line-height: .5rem;background: rgba(0,0,0,.6);box-sizing: border-box;position:absolute;left:0;right:0;bottom:0;}
+.jubu-retrofit-ul li .lr-attribute p{width:6.66rem;color: #fefefe;line-height: .5rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:0.3467rem;}
+.jubu-retrofit-ul li .lr-attribute span{color: #f60e2f;font-size:.42rem;}
+.jubu-retrofit-ul li .lr-attribute span em{font-size:.32rem;}
