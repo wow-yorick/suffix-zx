@@ -33,6 +33,13 @@ suffix_main.product_list:
     _title: '产品列表'
   requirements:
     _permission: 'access content'
+suffix_main.shop_list:
+  path: 'suffix_main/shop_list'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::getShopList'
+    _title: '产品列表'
+  requirements:
+    _permission: 'access content'
 suffix_main.add_order:
   path: 'suffix_main/add_order'
   defaults:

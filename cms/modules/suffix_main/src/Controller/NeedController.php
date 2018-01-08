@@ -84,15 +84,15 @@ class NeedController extends APIBaseController {
                 'rule'=>'require',
                 'declare'=>'分类'
             ),
-            'online'=>array(
-                'rule'=>'all|number',
-                'declare'=>'是否上架',
-                'default'=>0
-            ),
+//            'online'=>array(
+//                'rule'=>'all|number',
+//                'declare'=>'是否上架',
+//                'default'=>0
+//            ),
         );
         $this->fieldVerify($validateRule,$queryData);
         $queryData = self::dataFormat($queryData,$validateRule);
-        $list = ProductStorage::getProductList(array('type'=>$queryData['type'],'deleted'=>intval($queryData['online'])));
+        $list = ProductStorage::getProductList(array('type'=>$queryData['type'],'deleted'=>0));
         $this->success($list);
     }
 
@@ -157,6 +157,11 @@ class NeedController extends APIBaseController {
             $return  = $this->autoAddOrder($need_id,$shopId);
         }
         return $return;
+    }
+
+    public function getShopList(){
+        $shopList = UserStorage::getUserListByRole();
+        $this->success($shopList);
     }
 
     public function autoAddOrder($need_id,$shopId){
