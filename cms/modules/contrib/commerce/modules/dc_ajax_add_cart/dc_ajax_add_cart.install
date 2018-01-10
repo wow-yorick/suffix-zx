@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install/uninstall actions for dc_ajax_add_cart module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function dc_ajax_add_cart_install() {
+  /*
+   * Create 'dc_ajax_add_cart' form display for existing order item types.
+   */
+  if (!\Drupal::isConfigSyncing()) {
+    $order_item_type_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('commerce_order_item');
+    $storage = \Drupal::service('entity_type.manager')->getStorage('entity_form_display');
+
+    foreach (array_keys($order_item_type_bundles) as $bundle) {
+      $form_display = $storage->load('commerce_order_item.' . $bundle . '.dc_ajax_add_cart');
+
+      if (!$form_display) {
+        /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
+        $form_display = $storage->create([
+          'targetEntityType' => 'commerce_order_item',
+          'bundle' => $bundle,
+          'mode' => 'dc_ajax_add_cart',
+          'status' => TRUE,
+        ]);
+
+        $form_display->save();
+      }
+    }
+  }
+}

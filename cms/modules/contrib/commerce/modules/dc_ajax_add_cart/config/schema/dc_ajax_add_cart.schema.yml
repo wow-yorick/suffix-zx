@@ -1,0 +1,12 @@
+field.formatter.settings.dc_ajax_add_cart:
+  type: mapping
+  mapping:
+    show_quantity:
+      type: boolean
+      label: 'Whether to display a quantity input field on the add to cart form.'
+    default_quantity:
+      type: string
+      label: 'Default quantity'
+    combine:
+      type: boolean
+      label: 'Whether to attempt to combine order items containing the same product variation'

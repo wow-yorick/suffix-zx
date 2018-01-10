@@ -1,0 +1,4 @@
+services:
+  plugin.manager.commerce_customization:
+    class: Drupal\commerce_customization\Plugin\CommerceCustomizationManager
+    parent: default_plugin_manager

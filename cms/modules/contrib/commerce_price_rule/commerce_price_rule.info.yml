@@ -1,0 +1,14 @@
+name: Commerce Price Rule
+type: module
+description: 'Provides functionality for personalising product prices based on chosen conditions.'
+package: Commerce (contrib)
+# core: 8.x
+dependencies:
+  - commerce:commerce_product
+  - system (>=8.3.0)
+
+# Information added by Drupal.org packaging script on 2017-09-15
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'commerce_price_rule'
+datestamp: 1505452147

@@ -1,0 +1,5 @@
+commerce_price_rule.price_rule_calculation:
+  label: Commerce price rule calculation
+  provider: commerce_price_rule
+  plugin_manager_service_id: plugin.manager.commerce_price_rule_calculation
+  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator

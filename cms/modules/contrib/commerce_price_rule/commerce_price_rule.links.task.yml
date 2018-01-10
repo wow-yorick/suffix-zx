@@ -1,0 +1,4 @@
+entity.commerce_price_rule.collection:
+  route_name: entity.commerce_price_rule.collection
+  base_route: entity.commerce_price_rule.collection
+  title: Price Rules

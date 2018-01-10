@@ -1,0 +1,172 @@
+<?php
+
+/**
+ * @file
+ * Contains commerce_customization.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\commerce_cart\Form\AddToCartForm;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\commerce_price\Price;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+
+/**
+ * Implements hook_help().
+ */
+function commerce_customization_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the commerce_customization module.
+    case 'help.page.commerce_customization':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Product customizations for commercee.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter the add to cart form to append our custom form for customizations.
+ */
+function commerce_customization_form_alter(&$form, FormStateInterface $form_state) {
+  if ($form_state->getFormObject() instanceof AddToCartForm) {
+    if ($form_state->get('view_mode') == 'full') {
+      $order = $form_state->getFormObject()->getEntity();
+      $product_variant = $order->getPurchasedEntity();
+      $product_id = $product_variant->product_id->target_id;
+      $product = Product::load($product_id);
+
+      $plugin_manager = \Drupal::service('plugin.manager.commerce_customization');
+      $definitions = $plugin_manager->getDefinitions();
+      $product_is_customizable = FALSE;
+      foreach ($product->get('commerce_customization') as $delta => $customization_item) {
+        // Ignore if plugin doesn't exists or data is null.
+        $plugin = $customization_item->value;
+        if (!isset($definitions[$plugin])) {
+          continue;
+        }
+
+        // Instance and get the customization form.
+        $instance = $plugin_manager->createInstance($plugin);
+        $data = !empty($customization_item->data) ? unserialize($customization_item->data) : NULL;
+        $form['commerce_customization'][$delta] = $instance->getCustomizationForm($form, $form_state, $data);
+        $product_is_customizable = TRUE;
+        $form['commerce_customization'][$delta]['__plugin'] = [
+          '#type' => 'value',
+          '#value' => $plugin,
+        ];
+        $form['commerce_customization'][$delta]['__settings'] = [
+          '#type' => 'value',
+          '#value' => $data,
+        ];
+      }
+
+      // Do not combine similar items if there are customizations for this
+      // product.
+      if ($product_is_customizable) {
+        $form['commerce_customization']['#tree'] = TRUE;
+        $form_state->set('settings', ['combine' => FALSE]);
+      }
+
+      // Add our custom submit that must run before the form is submitted in
+      // order to add custom data to the order item.
+      array_unshift($form['actions']['submit']['#submit'], 'commerce_customization_add_to_cart');
+    }
+  }
+}
+
+/**
+ * Append the customization data to the order item.
+ */
+function commerce_customization_add_to_cart($form, FormStateInterface $form_state) {
+  if ($form_state->getFormObject() instanceof AddToCartForm) {
+    $customization = $form_state->getValue('commerce_customization');
+    $order_item = $form_state->getFormObject()->getEntity();
+    $order_item->setData('commerce_customization', $customization);
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Updates the order item price when presaving it, so we can recalculate the
+ * value when editing customizations.
+ */
+function commerce_customization_commerce_order_item_presave(EntityInterface $entity) {
+  $customizations = $entity->getData('commerce_customization');
+  if (!is_array($customizations)) {
+    return;
+  }
+
+  // If there is no __original_price set, thats the first time this entity is
+  // being saved and we didn't calculate the price with the customizations yet.
+  if (!isset($customizations['__original_price'])) {
+    $customizations['__original_price'] = $entity->unit_price->number;
+    $entity->setData('commerce_customization', $customizations);
+  }
+
+  // Must be stored as string.
+  $original_price = (string) $customizations['__original_price'];
+
+  $plugin_manager = \Drupal::service('plugin.manager.commerce_customization');
+  $definitions = $plugin_manager->getDefinitions();
+  $customizations_price = 0;
+  foreach ($customizations as $data) {
+    if (!isset($data['__plugin']) || !isset($definitions[$data['__plugin']])) {
+      continue;
+    }
+    $instance = $plugin_manager->createInstance($data['__plugin']);
+    unset($data['__plugin']);
+    // @todo calculate using commerce calculator and Price instances.
+    $customizations_price += $instance->calculatePrice($data);
+  }
+
+  if ($customizations_price > 0) {
+    // $original_price is stored as string, must be converted to sum with the
+    // customization price, but the class Price needs the value to be passed as
+    // string, so we cast it back to string.
+    $total = (string) ($customizations_price + (float) $original_price);
+
+    // The parameter TRUE means the value is overriden.
+    // @todo unhardcore
+    $entity->setUnitPrice(new Price($total, 'USD'), TRUE);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_customization_theme() {
+  return [
+    'commerce_customization_title' => [
+      'variables' => [
+        'number' => 0,
+        'currency' => NULL,
+        'title' => NULL,
+      ],
+      'template' => 'commerce-customization-title',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function commerce_customization_entity_base_field_info(EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'commerce_product') {
+    $fields['commerce_customization'] = BaseFieldDefinition::create('commerce_customization_type')
+      ->setLabel(t('Customizations'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+
+    return $fields;
+  }
+}

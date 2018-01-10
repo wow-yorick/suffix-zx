@@ -1,0 +1,6 @@
+commerce_order_number.settings:
+  title: 'Commerce order number'
+  route_name: 'commerce_order_number.settings'
+  parent: 'commerce.configuration'
+  description: 'Manage Commerce order number configuration.'
+  weight: 10

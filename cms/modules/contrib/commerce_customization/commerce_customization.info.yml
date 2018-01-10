@@ -1,0 +1,11 @@
+name: Commerce Customization
+type: module
+description: Product customizations for commerce.
+# core: 8.x
+package: Commerce
+
+# Information added by Drupal.org packaging script on 2017-11-27
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'commerce_customization'
+datestamp: 1511808790

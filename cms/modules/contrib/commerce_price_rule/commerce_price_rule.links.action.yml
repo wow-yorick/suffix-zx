@@ -1,0 +1,18 @@
+entity.commerce_price_rule.add_form:
+  route_name: entity.commerce_price_rule.add_form
+  title: 'Add a new price rule'
+  appears_on:
+    - entity.commerce_price_rule.collection
+
+entity.commerce_price_rule_list.add_form:
+  route_name: entity.commerce_price_rule_list.add_form
+  title: 'Add a new price list'
+  appears_on:
+    - view.commerce_price_rule_manage_price_lists.page
+
+entity.commerce_price_rule_list_item.add_form:
+  route_name: entity.commerce_price_rule_list_item.add_form
+  title: 'Add a new price list item'
+  class: \Drupal\commerce_price_rule\Plugin\Menu\LocalAction\PriceListItemAdd
+  appears_on:
+    - view.commerce_price_rule_manage_price_list_items.page
