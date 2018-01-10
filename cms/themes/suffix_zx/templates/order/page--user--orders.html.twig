@@ -40,7 +40,7 @@
 								<span class="total-price">总计: ￥139</span>
 								<div class="tab-btns">
 									<a href="javascript:;" class="secondary-btn">取消订单</a>
-									<a href="javascript:;" class="primary-btn">去付款</a>
+									<a href="/user/{{ _context.user.id }}/orders/detail" class="primary-btn">去付款</a>
 									<!-- <a href="javascript:;" class="disabled-btn">已完成</a>
 									<a href="javascript:;" class="green-btn">已完成</a> -->
 								</div>
@@ -62,7 +62,7 @@
 								<span class="total-price">总计: ￥139</span>
 								<div class="tab-btns">
 									<a href="javascript:;" class="disabled-btn">已完成</a>
-									<a href="javascript:;" class="green-btn">查看进度</a>
+									<a href="/user/{{ _context.user.id }}/orders/schedule" class="green-btn">查看进度</a>
 								</div>
 							</div>
 						</div>

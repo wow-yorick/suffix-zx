@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Defines functionality for the Commerce Price Rule module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_price_rule_theme() {
+  return [
+    'commerce_price_rule_form' => [
+      'render element' => 'form',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function commerce_price_rule_entity_operation(\Drupal\Core\Entity\EntityInterface $entity) {
+  $operations = [];
+
+  // Add an operation for managing a list's items on the price lists and on
+  // price rule's that have a price list calculation.
+
+  if ($entity->getEntityTypeId() == 'commerce_price_rule') {
+    $plugin_configuration = $entity->getCalculation()->getConfiguration();
+    if (!empty($plugin_configuration['price_list_id'])) {
+      $operations['manage_list'] = [
+        'title' => t('Manage List'),
+        'url' => \Drupal\Core\Url::fromRoute(
+          'view.commerce_price_rule_manage_price_list_items.page',
+          [
+            'arg_0' => $plugin_configuration['price_list_id'],
+          ]
+        ),
+        'weight' => 0,
+      ];
+    }
+  }
+
+  if ($entity->getEntityTypeId() === 'commerce_price_rule_list') {
+    $operations['manage_items'] = [
+      'title' => t('Manage Items'),
+      'url' => \Drupal\Core\Url::fromRoute(
+        'view.commerce_price_rule_manage_price_list_items.page',
+        [
+          'arg_0' => $entity->id(),
+        ]
+      ),
+      'weight' => 0,
+    ];
+  }
+
+  return $operations;
+}

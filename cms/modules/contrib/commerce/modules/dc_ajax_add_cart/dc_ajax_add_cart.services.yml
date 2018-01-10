@@ -1,0 +1,7 @@
+services:
+  dc_ajax_add_cart.lazy_builders:
+    class: Drupal\dc_ajax_add_cart\ProductLazyBuilders
+    arguments: ['@entity_type.manager', '@form_builder']
+  dc_ajax_add_cart.refresh_page_elements_helper:
+    class: Drupal\dc_ajax_add_cart\RefreshPageElementsHelper
+    arguments: ['@theme.manager', '@entity.query', '@plugin.manager.block']

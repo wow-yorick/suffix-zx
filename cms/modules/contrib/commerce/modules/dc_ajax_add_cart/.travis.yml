@@ -1,0 +1,81 @@
+# @file
+# .travis.yml - Drupal for Travis CI Integration
+#
+# Template provided by https://github.com/LionsAd/drupal_ti.
+#
+# Based for simpletest upon:
+#   https://github.com/sonnym/travis-ci-drupal-module-example
+
+language: php
+
+sudo: false
+
+php:
+  - 5.6
+  - 7
+
+matrix:
+  fast_finish: true
+
+env:
+  global:
+    # add composer's global bin directory to the path
+    # see: https://github.com/drush-ops/drush#install---composer
+    - PATH="$PATH:$HOME/.composer/vendor/bin"
+
+    # Configuration variables.
+    - DRUPAL_TI_MODULE_NAME="dc_ajax_add_cart"
+
+    # Define runners and environment vars to include before and after the
+    # main runners / environment vars.
+    #- DRUPAL_TI_SCRIPT_DIR_BEFORE="./drupal_ti/before"
+    #- DRUPAL_TI_SCRIPT_DIR_AFTER="./drupal_ti/after"
+
+    # The environment to use, supported are: drupal-7, drupal-8
+    - DRUPAL_TI_ENVIRONMENT="drupal-8"
+    - DRUPAL_TI_CORE_BRANCH="8.5.x"
+
+    # The installation profile to use:
+    - DRUPAL_TI_INSTALL_PROFILE="standard"
+
+    # Drupal specific variables.
+    - DRUPAL_TI_DB="drupal_travis_db"
+    - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
+    # Note: Do not add a trailing slash here.
+    - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
+    - DRUPAL_TI_WEBSERVER_PORT="8080"
+
+    # Simpletest specific commandline arguments, the DRUPAL_TI_SIMPLETEST_GROUP is appended at the end.
+    - DRUPAL_TI_SIMPLETEST_GROUP="dc_ajax_add_cart"
+    - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 1 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT"
+
+  matrix:
+    - DRUPAL_TI_RUNNERS="simpletest"
+
+mysql:
+  database: drupal_travis_db
+  username: root
+  encoding: utf8
+
+before_install:
+  - composer global require "hirak/prestissimo:^0.3"
+  - composer global require "lionsad/drupal_ti:dev-master"
+  - composer global require "drupal/coder:8.2.*"
+  - phpcs --config-set installed_paths "$HOME/.composer/vendor/drupal/coder/coder_sniffer"
+  - drupal-ti before_install
+
+install:
+  - drupal-ti install
+
+before_script:
+  - drupal-ti before_script
+  - drupal-ti --include "drupal_ti/before/before_script.sh"
+
+script:
+  - drupal-ti script
+
+after_script:
+  - drupal-ti after_script
+
+notifications:
+  email: false

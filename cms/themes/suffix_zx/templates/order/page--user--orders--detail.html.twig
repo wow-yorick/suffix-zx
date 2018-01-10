@@ -1,0 +1,89 @@
+{{ attach_library('suffix_zx/suffpage-home') }}
+	<header class="header">
+		<a href="javascript:history.back(-1);" class="pl backtohis"></a>
+		<h2 class="headerTitle"><span>我的订单</span></h2>
+	</header>
+	<div class="order-main wrapper">
+		<div class="order-statusBar">
+			<span>等待付款中</span>
+		</div>
+		<div class="pick-address chunk-bgmt">
+			<div class="addressBox">
+				<span class="address-icon"></span>
+				<p><label>姓名：</label><span>阿福</span><span class="phoneNumber">15925456257</span></p>
+				<p class="dz"><label>收货：</label><span class="Address">广东省广州市天河区东圃一横路13号汇 宝商业中心B区1A020室</span></p>
+				<i class="arrows"></i>
+			</div>
+		</div>
+		<div class="project-list">
+			<h3 class="column-heading flex">
+				<label>服务项目</label>
+				<span>共<em>3</em>项</span>
+			</h3>
+			<ul>
+				<li>
+					<a href="javascript:;" class="clearfix">
+						<img src="../image/cart-listimg.jpg" alt="">
+						<div class="li-ri">
+							<p class="flex"><span class="tit">卫生间改造(老人适用型)</span><span class="price">￥13900.00</span></p>
+							<p class="flex"><span class="spec">1m2起（含1m2）</span><span class="amount">x 1</span></p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="clearfix">
+						<img src="../image/cart-listimg.jpg" alt="">
+						<div class="li-ri">
+							<p class="flex"><span class="tit">卫生间改造(老人适用型)</span><span class="price">￥13900.00</span></p>
+							<p class="flex"><span class="spec">1m2起（含1m2）</span><span class="amount">x 1</span></p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="clearfix">
+						<img src="../image/cart-listimg.jpg" alt="">
+						<div class="li-ri">
+							<p class="flex"><span class="tit">卫生间改造(老人适用型)</span><span class="price">￥13900.00</span></p>
+							<p class="flex"><span class="spec">1m2起（含1m2）</span><span class="amount">x 1</span></p>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<a href="javascript:;" class="view-more">查看更多</a>
+		</div>
+		<div class="chunk-bgmt">
+			<h3 class="column-heading flex">
+				<label>上门信息</label>
+			</h3>
+			<div class="door-info">
+				<div class="info-item">
+					<label>上门时间：</label>
+					<span>2017-10-24  09:30</span>
+				</div>
+				<div class="info-item">
+					<label>上传图片：</label>
+					<span>无</span>
+				</div>
+				<div class="info-item">
+					<label>留言备注：</label>
+					<span>无</span>
+				</div>
+			</div>
+		</div>
+		<div class="chunk-bgmt orderTime">
+			<p><label>订单号:</label><span>10210215141</span></p>
+			<p><label>创建时间:</label><span>2015-10-19  15:34</span></p>
+		</div>
+		<div class="orderopdts">
+			<div class="orderop chunk-bgmt flex">
+				<span class="total-price">总计: ￥139</span>
+				<div class="tab-btns">
+					<a href="javascript:;" class="secondary-btn">取消订单</a>
+					<a href="javascript:;" class="primary-btn">去付款</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottom-fxied">
+        {% include '@suffix_zx/includes/footer.html.twig' %}
+	</div>

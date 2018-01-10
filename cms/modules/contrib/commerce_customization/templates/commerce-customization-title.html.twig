@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Default theme implementation for displaying a customization title.
+ *
+ * Used by the 'commerce_customizatino_title' formatter.
+ * Available variables:
+ *   - number: The number.
+ *   - currency: The currency entity.
+ *   - title: The plain text title.
+ *
+ * @ingroup themeable
+ */
+#}
+<div>
+  <label>{{ title }}</label>
+  <span class='commerce-customization-price'>{{ currency.getSymbol() }}{{ number|number_format(2, '.', ',') }}</span>
+</div>

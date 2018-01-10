@@ -1,0 +1,20 @@
+# Chinese, Simplified translation of Commerce Ajax Add to Cart (8.x-1.0-alpha4)
+# Copyright (c) 2017 by the Chinese, Simplified translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Commerce Ajax Add to Cart (8.x-1.0-alpha4)\n"
+"POT-Creation-Date: 2017-11-23 07:44+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: Chinese, Simplified\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Add to cart"
+msgstr "添加到购物车"
+msgid "Default quantity"
+msgstr "默认数量"
+msgid "Commerce (contrib)"
+msgstr "电子商务（贡献）"

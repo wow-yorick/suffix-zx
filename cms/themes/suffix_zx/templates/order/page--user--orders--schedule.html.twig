@@ -1,0 +1,43 @@
+{{ attach_library('suffix_zx/suffpage-home') }}
+	<header class="header headerGreen">
+		<a href="javascript:history.back(-1);" class="pl backtohis"></a>
+		<h2 class="headerTitle"><span>我的订单</span></h2>
+	</header>
+	<div class="order-main wrapper">
+		<div class="schedule-head">
+			<div class="schedule-icon"></div>
+			<div class="schedule-nature">
+				<p><label>服务状态:</label><span class="state">进行中</span></p>
+				<p><label>工程师:</label><span>吴师傅</span></p>
+				<p><label>联系电话:</label><span>1901274670</span></p>
+			</div>
+		</div>
+		<div class="ServiceTracker">
+			<h3 class="tit">服务跟踪</h3>
+			<div class="flow-tracker">
+				<div class="flow-item cur">
+					<span class="node"><b></b></span>
+					<p>已完工</p>
+					<p>2015-10-17  15:27:49</p>
+				</div>
+				<div class="flow-item">
+					<span class="node"><b></b></span>
+					<p>服务进行中</p>
+					<p>2015-10-17  15:27:49</p>
+				</div>
+				<div class="flow-item">
+					<span class="node"><b></b></span>
+					<p>商家确认成功</p>
+					<p>2015-10-17  15:27:49</p>
+				</div>
+				<div class="flow-item">
+					<span class="node"><b></b></span>
+					<p>订单提交成功</p>
+					<p>2015-10-17  15:27:49</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="bottom-fxied">
+    {% include '@suffix_zx/includes/footer.html.twig' %}
+</div>

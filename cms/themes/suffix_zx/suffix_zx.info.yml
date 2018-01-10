@@ -17,6 +17,7 @@ regions:
   content_qwhx: '全屋焕新'
   content_qwgz: '全屋改造'
   footer: '底部'
+  prductlist_grid: '产品网格'
 
 # Information added by Drupal.org packaging script on 2017-10-04
 version: '8.4.0'

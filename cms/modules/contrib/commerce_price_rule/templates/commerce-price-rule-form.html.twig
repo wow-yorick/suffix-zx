@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Template for the price rule add/edit form.
+ *
+ * Available variables:
+ * - form: The form.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="layout-price-rule-form clearfix">
+  <div class="layout-region layout-region-price-rule-main">
+    {{ form|without('advanced', 'actions') }}
+  </div>
+  <div class="layout-region layout-region-price-rule-secondary">
+    {{ form.advanced }}
+  </div>
+  <div class="layout-region layout-region-price-rule-footer">
+    {{ form.actions }}
+  </div>
+</div>
