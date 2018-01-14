@@ -10,6 +10,8 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\app_user\Utility\DescriptionTemplateTrait;
+use Drupal\views\Views;
+use Drupal\Core\Link;
 
 class CartController extends ControllerBase {
     use DescriptionTemplateTrait;
@@ -53,7 +55,7 @@ class CartController extends ControllerBase {
      * @return array
      *   A render array.
      */
-    public function cartPage() {
+    public function confirm() {
         $build = [
         ];
         $cacheable_metadata = new CacheableMetadata();
@@ -68,9 +70,9 @@ class CartController extends ControllerBase {
             $cart_views = $this->getCartViews($carts);
             foreach ($carts as $cart_id => $cart) {
                 $build[$cart_id] = [
-                    '#prefix' => '<div class="cart cart-form">',
-                    '#suffix' => '</div>',
-                    //'#type' => 'view',
+                    '#prefix' => '',
+                    '#suffix' => '',
+                    '#type' => 'view',
                     '#name' => $cart_views[$cart_id],
                     '#arguments' => [$cart_id],
                     '#embed' => TRUE,
@@ -88,6 +90,13 @@ class CartController extends ControllerBase {
             'tags' => $cacheable_metadata->getCacheTags(),
             'max-age' => $cacheable_metadata->getCacheMaxAge(),
         ];
+        //$view = Views::getView("commerce_cart_form");
+//        dump($view);
+        //dump($build);exit;
+        $permissions_admin_link = Link::createFromRoute($this->t('the permissions admin page'), 'user.admin_permissions')->toString();
+        $build['#theme'] = 'page__cart__confirm';
+        $build['#type'] ="page";
+        $build['#variables'] = $permissions_admin_link;
         return $build;
     }
 

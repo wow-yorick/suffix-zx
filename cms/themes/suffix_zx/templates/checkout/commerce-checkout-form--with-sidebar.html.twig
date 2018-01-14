@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * Two column template for the checkout form.
+ *
+ * Available variables:
+ * - form: The form.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="project-list">
+  <h3 class="column-heading flex">
+    <label>服务项目</label>
+    <span>共<em>{{ itemTotal }}</em>项</span>
+  </h3>
+  <ul>
+      {% for item in orderItems %}
+    <li>
+      <a href="javascript:;" class="clearfix">
+          {{ item.smallimg }}
+        <div class="li-ri">
+          <p class="flex"><span class="tit">{{ item.title }}</span><span class="price">￥{{ item.totalPrice }}.00</span></p>
+          <p class="flex"><!--<span class="spec">1m2起（含1m2）</span>--><span class="amount" data-single-price="{{ item.unitPrice }}" >x {{ item.quantity }}</span></p>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {#<a href="javascript:;" class="view-more">查看更多</a>#}
+</div>
+<div class="layout-checkout-form clearfix">
+  <div class="layout-region layout-region-checkout-main">
+    {{ form|without('sidebar', 'actions') }}
+  </div>
+  <div class="layout-region layout-region-checkout-secondary">
+    <h3>{% trans %} Order Summary {% endtrans %}</h3>
+    {{ form.sidebar }}
+  </div>
+  <div class="layout-region layout-region-checkout-footer">
+    {{ form.actions }}
+  </div>
+</div>

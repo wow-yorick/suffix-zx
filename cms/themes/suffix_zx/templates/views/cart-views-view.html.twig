@@ -39,47 +39,62 @@
     dom_id ? 'js-view-dom-id-' ~ dom_id,
   ]
 %}
-
+<form id="cartEditForm" action="/cart" method="post">
+    {{ form_build_id }}
+    {{ form_id }}
+    {{ form_token }}
 <div class="shopping-cart cartwrapper">
   <div class="formula-bar flex">
-    <span>已选中<em>{{ itemTotal }}</em>件商品</span>
-    <a href="/cart/edit" class="c-2b">编辑</a>
+    <span>已选中<em class="product_total">{{ product_total }}</em>件商品</span>
+    <a id="cartEditBtn" href="javascript:void(0);" onclick="cartEditBtn(this)" class="c-2b">编辑</a>
+    <a id="cartEditAffirmBtn" href="javascript:void(0);" style="display: none" onclick="cartEditAffirmBtn(this)" class="c-2b">完成</a>
   </div>
+
     {#{{ rows }}#}
     <div class="cartbuy">
         {% for item in orderItems %}
-        <a href="{{ item.productUrl }}" class="cart-commodity flex">
-            {#<label class="option selected"></label>#}
+        <a order-item-index="{{ loop.index }}"  data-order-key="{{ item.productKey }}"  href="javascript:void(0);" class="cart-commodity flex">
+            <label class="option selected" onclick="toggleSelectOrder(this)"></label>
           {#{{ item.removeBtn }}#}
             <div class="commodity-ri clearfix">
+
                 <div class="wares-img">
                     {{ item.smallimg }}
                 </div>
+
                 <div class="wares-info">
                     <h3>{{ item.title }}</h3>
                     <!--<p>1m2起（含1m2）</p>-->
-                    <div class="pm flex">
-                        <span class="price">￥<em>{{ item.totalPrice }}</em>.00</span>
-                        <span class="amount">x <em>{{ item.quantity }}</em></span>
+                    <div class="pm flex showPrice">
+                        <span class="price">￥<em class="totalPrice">{{ item.totalPrice }}</em>.00</span>
+                        <span class="amount">x <em data-single-price="{{ item.unitPrice }}" class="quantity">{{ item.quantity }}</em></span>
+                    </div>
+                    <div class="pm regulation-number flex editQuantity" style="display: none">
+                        <button class="decrease disabled" href="javascript:void(0)"  onclick="void(0);">-</button>
+                        <input class="number" type="number" name="edit_quantity[{{ item.productKey }}]" value="{{ item.quantity }}">
+                        <button class="increase"  href="javascript:void(0)"  onclick="void(0);">+</button>
                     </div>
                 </div>
             </div>
         </a>
         {% endfor %}
     </div>
+
 </div>
 <div class="cartbuy-footer">
-  <div class="cartbuy-box flex">
-    {#<label class="cb-footer">#}
-      {#<b></b>#}
-      {#<span>全选</span>#}
-    {#</label>#}
-    <div class="pay-tatol">
-      <div class="ta">
-        <p class="je"><em>合计</em><span class="sum">￥<span class="price">{{ price_total }}</span>.00</span></p>
-        <p class="no-yf">不含运费</p>
-      </div>
+    <div class="cartbuy-box flex">
+        <label class="cb-footer">
+            <b id="selectAll" onclick="selectAllItem(this)" class="selected"></b>
+            <span>全选</span>
+        </label>
+        <div class="pay-tatol">
+            <div class="ta">
+                <p class="je"><em>合计</em><span class="sum">￥<span class="price price_total">{{ price_total }}</span>.00</span></p>
+                <p class="no-yf">不含运费</p>
+            </div>
+        </div>
+        <a id="cartClearBtn" href="javascript:;" onclick="cartClearBtn(this)" class="buy-btn"><span id="jesuan-text">结算</span><span>(</span><span class="itemTotal">{{ itemTotal }}</span><span>)</span></a>
+        <a id="cartDeleteBtn" href="javascript:;" onclick="cartDeleteBtn(this)" style="display: none" class="buy-btn"><span>删除</span><span>(</span><span class="itemTotal">{{ itemTotal }}</span><span>)</span></a>
     </div>
-    <a href="/cart/confirm" class="buy-btn"><span>结算</span><span>(</span><span>{{ itemTotal }}</span><span>)</span></a>
-  </div>
 </div>
+</form>

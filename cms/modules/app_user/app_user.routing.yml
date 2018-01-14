@@ -30,10 +30,11 @@ app_user.home:
     _title: '我的'
   requirements:
     _permission: 'access content'
-app_user.commerce.cart:
-  path: '/usercart'
+
+app_user.commerce.cart.confirm:
+  path: '/cart/confirm'
   defaults:
-    _controller: '\Drupal\app_user\Controller\CartController::cartPage'
-    _title: '我的购物车'
+    _controller: '\Drupal\app_user\Controller\CartController::confirm'
+    _title: '确认订单'
   requirements:
     _permission: 'access content'

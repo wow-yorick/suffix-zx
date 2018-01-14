@@ -1,18 +1,31 @@
 <?php
 use Drupal\Core\Link;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\Component\Render\MarkupInterface;
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Database\Query\AlterableInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Url;
-use Drupal\views\Plugin\Derivative\ViewsLocalTask;
-use Drupal\views\ViewExecutable;
-use Drupal\views\Entity\View;
-use Drupal\views\Render\ViewsRenderPipelineMarkup;
 use Drupal\views\Views;
+
+function suffix_zx_hook_info() {
+    $hooks = [];
+
+    $hooks += array_fill_keys([
+        //'suffix_zx_preprocess_page_cart_confirm',
+        'suffix_zx_preprocess_cart_views_view',
+        'suffix_zx_preprocess_cart_views_view_list',
+        'suffix_zx_preprocess_views_view',
+        'suffix_zx_theme_suggestions_views_view_alter',
+    ], ['group' => 'cart']);
+    return $hooks;
+}
+
+function suffix_zx_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+    //dump($variables);
+    $view = $variables['view'];
+    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
+        return ;
+    }
+    $suggestions[] = 'cart_views_view';
+
+}
+
 /**
 * Implements hook_form_FORM_ID_alter().
 */
@@ -95,6 +108,21 @@ function suffix_zx_preprocess_page(&$variables) {
 
 function suffix_zx_theme($existing, $type, $theme, $path) {
     return [
+        'commerce_checkout_form__sidebar' => [
+            //'base hook' => 'commerce_checkout_form__sidebar',
+            'template' => 'commerce-checkout-form--sidebar',
+            "path" => "themes/suffix_zx/templates/checkout",
+            "preprocess functions" => ["suffix_zx_preprocess_commerce_checkout_form__sidebar"],
+        ],
+        'cart-confirm-views-view' => [
+            'base hook' => 'cart_confirm_views_view',
+            'template' => 'cart-confirm-views-view',
+            "path" => "themes/suffix_zx/templates/cart",
+            'variables' => [
+                'cart-item' => NULL,
+            ],
+            "preprocess functions" => ["suffix_zx_preprocess_cart_confirm_views_view"],
+        ],
         'cart_views_view' => [
             'base hook' => 'cart_views_view',
             "path" => "themes/suffix_zx/templates/views",
@@ -139,8 +167,10 @@ function suffix_zx_theme($existing, $type, $theme, $path) {
     ];
 }
 
-//function suffix_zx_theme_registry_alter(&$theme_registry) {
-    //dump($theme_registry);
+function suffix_zx_theme_registry_alter(&$theme_registry) {
+    //$theme_registry['page__cart__confirm']['preprocess functions'][] = 'suffix_zx_preprocess_page_cart_confirm';
+    //$theme_registry['page__cart__confirm']['variables'] = null;
+    //dump($theme_registry);exit;
 //    $theme_registry["page__cart"] = [
 //            "template" => "page--cart",
 //            "path" => "themes/suffix_zx/templates/cart",
@@ -161,17 +191,9 @@ function suffix_zx_theme($existing, $type, $theme, $path) {
 //    $theme_registry['views_view']['override preprocess functions'] = true;
 //    $theme_registry['views_view']['preprocess functions'][] = 'suffix_zx_preprocess_views_view';
 //    dump($theme_registry);
-//}
-
-
-function suffix_zx_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
-    $view = $variables['view'];
-    if (strpos($view->storage->get('tag'), 'commerce_cart_form') === FALSE) {
-        return ;
-    }
-    $suggestions[] = 'cart_views_view';
-    //dump($variables);
 }
+
+
 
 //function suffix_zx_theme_suggestions_views_view_table_alter(array &$suggestions, array $variables) {
 //    $view = $variables['view'];
@@ -204,22 +226,22 @@ function suffix_zx_theme_suggestions_views_view_alter(array &$suggestions, array
 //    //dump($variables);
 //}
 
-function _getCartViews(array $carts) {
-    $order_type_ids = array_map(function ($cart) {
-        /** @var \Drupal\commerce_order\Entity\OrderInterface $cart */
-        return $cart->bundle();
-    }, $carts);
-    $order_type_storage = $this->entityTypeManager()->getStorage('commerce_order_type');
-    $order_types = $order_type_storage->loadMultiple(array_unique($order_type_ids));
-    $cart_views = [];
-    foreach ($order_type_ids as $cart_id => $order_type_id) {
-        /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
-        $order_type = $order_types[$order_type_id];
-        $cart_views[$cart_id] = $order_type->getThirdPartySetting('commerce_cart', 'cart_form_view', 'commerce_cart_form');
-    }
-
-    return $cart_views;
-}
+//function _getCartViews(array $carts) {
+//    $order_type_ids = array_map(function ($cart) {
+//        /** @var \Drupal\commerce_order\Entity\OrderInterface $cart */
+//        return $cart->bundle();
+//    }, $carts);
+//    $order_type_storage = $this->entityTypeManager()->getStorage('commerce_order_type');
+//    $order_types = $order_type_storage->loadMultiple(array_unique($order_type_ids));
+//    $cart_views = [];
+//    foreach ($order_type_ids as $cart_id => $order_type_id) {
+//        /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
+//        $order_type = $order_types[$order_type_id];
+//        $cart_views[$cart_id] = $order_type->getThirdPartySetting('commerce_cart', 'cart_form_view', 'commerce_cart_form');
+//    }
+//
+//    return $cart_views;
+//}
 
 //function suffix_zx_preprocess_views_view($variables) {
 //    $view = $variables['view'];
@@ -229,23 +251,18 @@ function _getCartViews(array $carts) {
 //    //dump($variables);
 //}
 
-function suffix_zx_preprocess_cart_views_view_list(&$variables) {
-    //dump($variables);
-}
+//function suffix_zx_preprocess_cart_views_view_list(&$variables) {
+//    //dump($variables);
+//}
 
-function suffix_zx_preprocess_cart_views_view(&$variables) {
-    $variables['price_total'] = intval($variables['footer']['commerce_order_total']['#totals']['total']->getNumber());
-    //dump($variables);
-//    $checkout = $variables['rows']['actions']['checkout'];
-//    $checkout['#value'] ="结算";
-//    dump($checkout);
-//    echo render($checkout);
-
-    //dump($variables);
-    $orderCartList = $variables['rows']['output'][0]['#rows'];
-    //dump($variables['rows']);
+function _getOrderItem($orderCartList) {
+    $retMap = array(
+        'count' => count($orderCartList),
+        'orderItemsShow' => array(),
+        'itemTotal' =>0,
+    );
+    //dump($orderCartList);exit;
     $orderItemsShow = array();
-
     $itemTotal = 0;
     foreach ($orderCartList as $key => $resultRow) {
         //echo $key;
@@ -257,6 +274,7 @@ function suffix_zx_preprocess_cart_views_view(&$variables) {
             'totalPrice' => 0,
             'smallimg' => '',
             'productUrl' => '',
+            'productKey' =>$key,
         );
         $orderEntity = $resultRow->_entity;
         $orderRetationshipEntity = $resultRow->_relationship_entities;
@@ -275,14 +293,36 @@ function suffix_zx_preprocess_cart_views_view(&$variables) {
         $tmp['smallimg'] = render($imgStr);
         $tmp['totalPrice'] = intval($orderItems->getTotalPrice()->getNumber());
         $tmp['productUrl'] = '/product/'.$product->toArray()['product_id'][0]['value'];
-        $tmp['removeBtn'] = render($variables['rows']['remove_button'][$key]);
+        //$tmp['removeBtn'] = render($variables['rows']['remove_button'][$key]);
 
         $itemTotal += $tmp['quantity'];
+//        dump($tmp);exit;
         array_push($orderItemsShow, $tmp);
     }
-    $variables['orderItems'] = $orderItemsShow;
-    $variables['itemTotal'] = $itemTotal;
-    $view = views_embed_view('chanpinliebiao','default');
+    $retMap['orderItemsShow'] = $orderItemsShow;
+    $retMap['itemTotal'] = $itemTotal;
+    return $retMap;
+}
+
+function suffix_zx_preprocess_cart_views_view(&$variables) {
+    $variables['price_total'] = intval($variables['footer']['commerce_order_total']['#totals']['total']->getNumber());
+    //dump($variables);
+//    $checkout = $variables['rows']['actions']['checkout'];
+//    $checkout['#value'] ="结算";
+//    dump($checkout);
+//    echo render($checkout);
+
+    //dump($variables);exit;
+    $orderCartList = $variables['rows']['output'][0]['#rows'];
+    $dataRet = _getOrderItem($orderCartList);
+    $variables['product_total'] = $dataRet['count'];
+
+    $variables['orderItems'] = $dataRet['orderItemsShow'];
+    $variables['itemTotal'] = $dataRet['itemTotal'];
+    $variables['form_build_id'] = render($variables['rows']['form_build_id']);
+    $variables['form_token'] = render($variables['rows']['form_token']);
+    $variables['form_id'] = render($variables['rows']['form_id']);
+    //$view = views_embed_view('chanpinliebiao','default');
     //echo render($view);
     //dump($view);
     //dump($view = Views::getView('chanpinliebiao'));exit;
@@ -303,5 +343,29 @@ function suffix_zx_preprocess_cart_views_view(&$variables) {
     //dump($orderCartList);
     //echo $r = render($variables['rows']['output'][0]);exit;
     //$variables['price_total'] = $order->getSubtotalPrice()->getNumber() ? intval($order->getSubtotalPrice()->getNumber()) : 0;
+}
 
+//订单确认页面
+//function suffix_zx_preprocess_page_cart_confirm(&$variables) {
+//    $variables['page'][4]['#theme'] = 'cart-confirm-views-view';
+//    //dump($variables);
+//}
+//
+//function suffix_zx_preprocess_cart_confirm_views_view(&$variables) {
+//    dump($variables);
+//}
+
+function suffix_zx_preprocess_commerce_checkout_form(&$variables) {
+    //$variables['form']['sidebar']['#theme'] = 'commerce_checkout_form__sidebar';
+    $summary = $variables['form']['sidebar']['order_summary']['summary'];
+    $orderCartList = views_get_view_result($summary['#name'],$summary['#display_id'], $summary['#arguments'][0]);
+    $dataRet = _getOrderItem($orderCartList);
+    $variables['product_total'] = $dataRet['count'];
+    $variables['orderItems'] = $dataRet['orderItemsShow'];
+    $variables['itemTotal'] = $dataRet['itemTotal'];
+    //dump($variables);
+}
+
+function suffix_zx_preprocess_commerce_checkout_form__sidebar(&$variables) {
+    //dump($variables);
 }
