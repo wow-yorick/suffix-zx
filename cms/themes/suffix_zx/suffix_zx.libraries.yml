@@ -8,12 +8,13 @@ suffpage-home:
       css/order.css: {}
       css/personal-center.css: {}
       css/shopping-process.css: {}
+#  dependencies:
+#    - core/jquery
   js:
-      js/wapCommon.js: {}
+      js/zepto.min.js: {}
       js/swiper.min.js: {}
       js/flexible.js: {}
-  dependencies:
-    - core/jquery
+      js/wapCommon.js: {}
 
 suffpage-login:
   version: 1.x
@@ -34,6 +35,7 @@ suffpage-common:
   js:
     js/zepto.min.js: {}
     js/flexible.js: {}
+    js/wapCommon.js: {}
 
 suffpage-home-center:
   version: 1.x
