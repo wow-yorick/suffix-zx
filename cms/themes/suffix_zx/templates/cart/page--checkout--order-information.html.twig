@@ -3,47 +3,7 @@
 		<a href="javascript:history.back(-1);" class="pl backtohis"></a>
 		<h2 class="headerTitle"><span>确认订单</span></h2>
 	</header>
-	<div class="confirm-order cartwrapper">
-		<div class="shipping-address">
-			<a href="javascript:;"><em>+</em>暂无地址 点击添加</a>
-		</div>
-		<!-- <div class="Service-Item">
-			<label>服务项目</label>
-		</div> -->
 		{{ page.content }}
-
-
-		<div class="chunk-bgmt">
-			<h3 class="column-heading flex">
-				<label>上门信息</label>
-			</h3>
-			<div class="visit-Info">
-				<div class="interaction-Info piceker flex">
-					<label>上门时间</label>
-					<a href="javascript:;" class="TimePicker">2017-10-24  09:30</a>
-				</div>
-				<div class="interaction-Info">
-					<label>上传图片</label>
-					<a href="javascript:;" class="upload-pictures">
-						<input type="file" class="upload-file">
-						<span class="addicon">+</span>
-						<p>点击上传</p>
-					</a>
-				</div>
-				<div class="interaction-Info">
-					<label>留言备注</label>
-					<textarea class="J-textarea" name="" id="" placeholder="选填：给商家留言（限70个字以内）"></textarea>
-				</div>
-			</div>
-		</div>
-		<div class="Interval-prompt"><span>本订单享受安全消费保障</span></div>
-	</div>
-	<div class="cartbuy-footer">
-		<div class="cartbuy-box flex">
-			<div class="total"><label>待支付：</label><span>￥13900.00</span></div>
-			<a href="/cart/payment" class="buy-btn"><span>确认下单</span></a>
-		</div>
-	</div>
 	<div class="bottom-fxied">
         {% include '@suffix_zx/includes/footer.html.twig' %}
 	</div>

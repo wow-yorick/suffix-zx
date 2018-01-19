@@ -9,6 +9,34 @@
  * @ingroup themeable
  */
 #}
+<div class="confirm-order cartwrapper">
+  <div class="shipping-address">
+    {% if address['given_name'] %}
+    <div id="currentAddress">
+      <span>{{ address['administrative_area'] }} - {{ address['locality'] }} - {{ address['dependent_locality'] }} - {{ address['address_line2'] }} - {{ address['address_line1'] }}</span>
+      <span>{{ address['given_name'] }} {{ address['family_name'] }}</span>
+    </div>
+        {% else %}
+          <a href="javascript:;"><em>+</em>暂无地址 点击添加</a>
+    {% endif %}
+
+  </div>
+  <!-- <div class="Service-Item">
+      <label>服务项目</label>
+  </div>-->
+  <div class="layout-checkout-form clearfix">
+    <div class="layout-region layout-region-checkout-main">
+        {{ form|without('sidebar', 'actions') }}
+    </div>
+    <div class="layout-region layout-region-checkout-secondary">
+      <h3>{% trans %} Order Summary {% endtrans %}</h3>
+        {{ form.sidebar }}
+    </div>
+    <div class="layout-region layout-region-checkout-footer">
+        {{ form.actions }}
+    </div>
+  </div>
+    {{ form.actions }}
 <div class="project-list">
   <h3 class="column-heading flex">
     <label>服务项目</label>
@@ -29,15 +57,35 @@
   </ul>
   {#<a href="javascript:;" class="view-more">查看更多</a>#}
 </div>
-<div class="layout-checkout-form clearfix">
-  <div class="layout-region layout-region-checkout-main">
-    {{ form|without('sidebar', 'actions') }}
+  <div class="chunk-bgmt">
+    <h3 class="column-heading flex">
+      <label>上门信息</label>
+    </h3>
+    <div class="visit-Info">
+      <div class="interaction-Info piceker flex">
+        <label>上门时间</label>
+        <input type="date" name="field_shangmenshijian" />
+        <a href="javascript:;" class="TimePicker">2017-10-24  09:30</a>
+      </div>
+      <div class="interaction-Info">
+        <label>上传图片</label>
+        <a href="javascript:;" class="upload-pictures">
+          <input type="file" class="upload-file" name="field_beizhutupian">
+          <span class="addicon">+</span>
+          <p>点击上传</p>
+        </a>
+      </div>
+      <div class="interaction-Info">
+        <label>留言备注</label>
+        <textarea class="J-textarea" name="field_liuyanbeizhu" placeholder="选填：给商家留言（限70个字以内）"></textarea>
+      </div>
+    </div>
   </div>
-  <div class="layout-region layout-region-checkout-secondary">
-    <h3>{% trans %} Order Summary {% endtrans %}</h3>
-    {{ form.sidebar }}
-  </div>
-  <div class="layout-region layout-region-checkout-footer">
-    {{ form.actions }}
+  <div class="Interval-prompt"><span>本订单享受安全消费保障</span></div>
+</div>
+<div class="cartbuy-footer">
+  <div class="cartbuy-box flex">
+    <div class="total"><label>待支付：</label><span>￥{{ orderTotalPrice }}.00</span></div>
+    <a id="goToCheckout" href="javascript:void(0);" onclick="goToCheckout(this)" class="buy-btn"><span>确认下单</span></a>
   </div>
 </div>

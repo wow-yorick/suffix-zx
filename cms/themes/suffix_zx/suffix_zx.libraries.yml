@@ -25,6 +25,7 @@ suffpage-login:
   js:
       js/flexible.js: {}
       js/zepto.min.js: {}
+      js/swiper.min.js: {}
       js/wapCommon.js: {}
 
 suffpage-common:
@@ -35,6 +36,7 @@ suffpage-common:
   js:
     js/zepto.min.js: {}
     js/flexible.js: {}
+    js/swiper.min.js: {}
     js/wapCommon.js: {}
 
 suffpage-home-center:

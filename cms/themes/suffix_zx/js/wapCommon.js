@@ -135,3 +135,10 @@ function cartClearBtn(obj) {
         });
     });
 }
+
+//home
+var swiper = new Swiper('.home-swiper', {
+    pagination: {
+        el: '.swiper-pagination',
+    },
+});
