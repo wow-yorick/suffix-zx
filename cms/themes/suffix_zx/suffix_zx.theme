@@ -260,6 +260,7 @@ function _getOrderItem($orderCartList) {
         'count' => count($orderCartList),
         'orderItemsShow' => array(),
         'itemTotal' =>0,
+        'orderTotalPrice' => 0,
     );
     //dump($orderCartList);exit;
     $orderItemsShow = array();
@@ -287,7 +288,9 @@ function _getOrderItem($orderCartList) {
 
         $tmp['unitPrice'] = explode(" ",$orderItems->getUnitPrice())[0];
         $tmp['quantity'] = intval($orderItems->getQuantity());
+        //dump($product->get('field_fengmiantu'));exit;
         $imgStr = $product->get('field_fengmiantu')->view();
+        //dump($product->get('field_fengmiantu'));exit;
         //unset($imgStr['#label_display']);
         //unset($imgStr['#title']);
         $tmp['smallimg'] = render($imgStr);
@@ -296,6 +299,7 @@ function _getOrderItem($orderCartList) {
         //$tmp['removeBtn'] = render($variables['rows']['remove_button'][$key]);
 
         $itemTotal += $tmp['quantity'];
+        $retMap['orderTotalPrice'] += $tmp['totalPrice'];
 //        dump($tmp);exit;
         array_push($orderItemsShow, $tmp);
     }
@@ -356,6 +360,7 @@ function suffix_zx_preprocess_cart_views_view(&$variables) {
 //}
 
 function suffix_zx_preprocess_commerce_checkout_form(&$variables) {
+    //dump($variables);exit;
     //$variables['form']['sidebar']['#theme'] = 'commerce_checkout_form__sidebar';
     $summary = $variables['form']['sidebar']['order_summary']['summary'];
     $orderCartList = views_get_view_result($summary['#name'],$summary['#display_id'], $summary['#arguments'][0]);
@@ -363,9 +368,98 @@ function suffix_zx_preprocess_commerce_checkout_form(&$variables) {
     $variables['product_total'] = $dataRet['count'];
     $variables['orderItems'] = $dataRet['orderItemsShow'];
     $variables['itemTotal'] = $dataRet['itemTotal'];
+    $variables['orderTotalPrice'] = $dataRet['orderTotalPrice'];
+    $order = \Drupal::entityTypeManager()->getStorage("commerce_order")->load($summary['#arguments'][0]);
+    //dump($order);
+    $currentUser = \Drupal::currentUser();
+    $userEntity = \Drupal::entityTypeManager()->getStorage('user')->load($currentUser->id());
+    //kint($userEntity);
+
+    $profileQuery = \Drupal::entityQuery("profile");
+    $profileQuery->condition('uid',$currentUser->id(),'=');
+    $profileQuery->condition('is_default',true,'=');
+    $currentUserProfileIds = $profileQuery->execute();
+    //dump($profileQuery);exit;
+    $profile = \Drupal::entityTypeManager()->getStorage('profile')->loadMultiple($currentUserProfileIds);
+    $currentProfile = current($profile);
+    $variables['address'] = $currentProfile->address[0]->toArray();
+    //dump($variables['address']);
+
+    //获取字段定义
+//    $storageDef = $currentProfile->address->getFieldDefinition()
+//        ->getFieldStorageDefinition()
+//        ->getPropertyDefinition('family_name');
+//    dump($storageDef);
+
+
+//    $address["billing_information"] = array(
+//      "#type" => "commerce_profile_select",
+//      "#default_value" => $currentProfile,
+//        "#default_country" => "CN",
+//      "#available_countries" =>array('CN'),
+//    );
+//    dump($address);
+//    $currentAddress = $currentProfile->get('address')->get(0);
+//    //dump($currentAddress);
+//    $address = \Drupal::getContainer()->get('address.address_format_repository')->get('CN');
+//
+//    $form['address'] = [
+//    '#type' => 'address',
+//    '#default_value' => [
+//      'given_name' => $currentAddress->get('given_name')->getValue(),
+//      'family_name' => $currentAddress->get('family_name')->getValue(),
+//      'organization' => $currentAddress->get('organization')->getValue(),
+//      'address_line1' => $currentAddress->get('address_line1')->getValue(),
+//      'postal_code' => $currentAddress->get('postal_code')->getValue(),
+//      'locality' => $currentAddress->get('locality'),
+//      'administrative_area' => $currentAddress->get('administrative_area')->getValue(),
+//      'country_code' => $currentAddress->get('country_code')->getValue(),
+//      'langcode' => $currentAddress->get('langcode')->getValue(),
+//    ],
+//    '#available_countries' => ['CN'],
+//  ];
+    //dump($form);
+
+    //dump($address->getUsedFields());
+//    dump($variables);
+//    $view = Views::getView($summary['#name']);
+//    dump($view);
+//    $view = views_get_current_view();
+//    dump($view);
     //dump($variables);
+    //$order = \Drupal::entityTypeManager()->getStorage("commerce_order")->getEntityType();
+    //$fieldInfo = field_entity_field_storage_info($order);
+    //dump($fieldInfo);
+    //$fieldFormatter = \Drupal::getContainer()->get('plugin.manager.field.formatter');
+    //dump($fieldFormatter->getDefinition('address_plain'));
+    //$bundlesLabe = entity_get_bundles("commerce_order");
+    //$form = entity_get_form_display('commerce_order', $bundlesLabe['default']['label'], 'default');
+    //$order = \Drupal::entityTypeManager()->getStorage("commerce_order")->load($summary['#arguments'][0]);
+    //kint($order->get('field_shangmenshijian'));
 }
 
-function suffix_zx_preprocess_commerce_checkout_form__sidebar(&$variables) {
-    //dump($variables);
+function suffix_zx_form_commerce_checkout_flow_multistep_default_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    //dump($form);exit;
+    //dump($form_state);exit;
+    $form['payment_method'] = $form['payment_information']['payment_method'];
+    unset($form['payment_information']);
+    $submit_handlers = $form_state->getSubmitHandlers();
+    $submit_handlers [] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_submit';
+    $form_state->setSubmitHandlers($submit_handlers );
+    $validateHandlers = $form_state->getValidateHandlers();
+    $validateHandlers[] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_validate';
+    $form_state->setValidateHandlers($validateHandlers);
+    //dump($validateHandlers);
+
+    //dump($form);
+}
+
+function suffix_zx_form_commerce_checkout_flow_multistep_default_submit(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+    $tupian = $form_state->getValue('field_beizhutupian');
+    $beizhu = $form_state->getValue('field_liuyanbeizhu');
+    $shijian = $form_state->getValue('field_shangmenshijian');
+}
+
+function suffix_zx_form_commerce_checkout_flow_multistep_default_validate(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+    dump($form);exit;
 }

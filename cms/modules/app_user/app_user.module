@@ -29,3 +29,8 @@
 //        $form['actions']['submit']['#suffix'] = '<div class="nice-login-create">' . $link->toString() . '</div>';
 //    }
 //}
+
+
+function app_user_commerce_checkout_pane_info_alter(&$definitions) {
+    dump($definitions);exit;
+}
