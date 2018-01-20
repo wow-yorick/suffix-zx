@@ -24,7 +24,7 @@
   <!-- <div class="Service-Item">
       <label>服务项目</label>
   </div>-->
-  <div class="layout-checkout-form clearfix">
+  <div class="layout-checkout-form clearfix" style="display: none">
     <div class="layout-region layout-region-checkout-main">
         {{ form|without('sidebar', 'actions') }}
     </div>
@@ -36,7 +36,6 @@
         {{ form.actions }}
     </div>
   </div>
-    {{ form.actions }}
 <div class="project-list">
   <h3 class="column-heading flex">
     <label>服务项目</label>
@@ -64,7 +63,7 @@
     <div class="visit-Info">
       <div class="interaction-Info piceker flex">
         <label>上门时间</label>
-        <input type="date" name="field_shangmenshijian" />
+        <input type="text" name="field_shangmenshijian" value="2018-12-12 09:20:23" />
         <a href="javascript:;" class="TimePicker">2017-10-24  09:30</a>
       </div>
       <div class="interaction-Info">

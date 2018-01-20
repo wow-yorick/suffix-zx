@@ -142,3 +142,26 @@ var swiper = new Swiper('.home-swiper', {
         el: '.swiper-pagination',
     },
 });
+
+//结帐
+function goToCheckout(obj) {
+    var beizhu = $('[name=field_liuyanbeizhu]').val();
+    if(!beizhu) {
+        alert("请填写留言备注!");
+        return false;
+    }
+
+    var checkoutInput = '<input type="hidden" name="op" value="Continue to review" />';
+    $('#commerce-checkout-flow-multistep-default').append(checkoutInput);
+    $('#commerce-checkout-flow-multistep-default').submit();
+}
+
+//订单tab切换
+$('.nav-tab-top ul.flex').find('li').on('click',function () {
+    var allTabObj = $('.nav-tab-top ul.flex').find('li');
+    allTabObj.removeClass('cur');
+    $(this).addClass('cur');
+    $('.scroll-wrap').hide();
+    var currentArea = $(this).attr('data-code');
+    $('div.scroll-wrap[data-index='+currentArea+']').show();
+});

@@ -96,7 +96,7 @@ function suffix_zx_preprocess_page(&$variables) {
         $variables['selected_flag'] = 'cart';
     } elseif (strpos($variables['currentUrl'],'discover')) {
         $variables['selected_flag'] = 'discover';
-    } elseif (strpos($variables['currentUrl'],'home')) {
+    } elseif (1 === strpos($variables['currentUrl'],'user')) {
         $variables['selected_flag'] = 'home';
     } else {
         $variables['selected_flag'] = 'front';
@@ -168,6 +168,7 @@ function suffix_zx_theme($existing, $type, $theme, $path) {
 }
 
 function suffix_zx_theme_registry_alter(&$theme_registry) {
+    $theme_registry['page__user__orders']['preprocess functions'][] = 'suffix_zx_preprocess_page_user_orders';
     //$theme_registry['page__cart__confirm']['preprocess functions'][] = 'suffix_zx_preprocess_page_cart_confirm';
     //$theme_registry['page__cart__confirm']['variables'] = null;
     //dump($theme_registry);exit;
@@ -363,6 +364,7 @@ function suffix_zx_preprocess_commerce_checkout_form(&$variables) {
     //dump($variables);exit;
     //$variables['form']['sidebar']['#theme'] = 'commerce_checkout_form__sidebar';
     $summary = $variables['form']['sidebar']['order_summary']['summary'];
+    //dump($summary);exit;
     $orderCartList = views_get_view_result($summary['#name'],$summary['#display_id'], $summary['#arguments'][0]);
     $dataRet = _getOrderItem($orderCartList);
     $variables['product_total'] = $dataRet['count'];
@@ -439,19 +441,24 @@ function suffix_zx_preprocess_commerce_checkout_form(&$variables) {
 }
 
 function suffix_zx_form_commerce_checkout_flow_multistep_default_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-    //dump($form);exit;
-    //dump($form_state);exit;
-    $form['payment_method'] = $form['payment_information']['payment_method'];
-    unset($form['payment_information']);
-    $submit_handlers = $form_state->getSubmitHandlers();
-    $submit_handlers [] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_submit';
-    $form_state->setSubmitHandlers($submit_handlers );
-    $validateHandlers = $form_state->getValidateHandlers();
-    $validateHandlers[] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_validate';
-    $form_state->setValidateHandlers($validateHandlers);
-    //dump($validateHandlers);
-
-    //dump($form);
+    $currentUser = \Drupal::currentUser();
+    $profileQuery = \Drupal::entityQuery("profile");
+    $profileQuery->condition('uid',$currentUser->id(),'=');
+    $profileQuery->condition('is_default',true,'=');
+    $currentUserProfileIds = $profileQuery->execute();
+    $profile = \Drupal::entityTypeManager()->getStorage('profile')->loadMultiple($currentUserProfileIds);
+    $currentProfile = current($profile);
+    $form['payment_information']['billing_information']['#default_value'] = $currentProfile;
+//    //dump($form);exit;
+//    //dump($form_state);exit;
+//    //$submit_handlers = $form_state->getSubmitHandlers();
+    $form['#submit'][] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_submit';
+//    $submit_handlers [] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_submit';
+//    $form_state->setSubmitHandlers($submit_handlers );
+//    //$validateHandlers = $form_state->getValidateHandlers();
+//    $validateHandlers[] = 'suffix_zx_form_commerce_checkout_flow_multistep_default_validate';
+//    $form_state->setValidateHandlers($validateHandlers);
+    //dump($form_state->getBuildInfo());exit;
 }
 
 function suffix_zx_form_commerce_checkout_flow_multistep_default_submit(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
@@ -461,5 +468,52 @@ function suffix_zx_form_commerce_checkout_flow_multistep_default_submit(array &$
 }
 
 function suffix_zx_form_commerce_checkout_flow_multistep_default_validate(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    dump($form);exit;
+    //dump($form);exit;
+}
+
+
+//用户订单
+function suffix_zx_preprocess_page_user_orders(&$variables) {
+    $currentUser = \Drupal::currentUser();
+    $userId = $currentUser->id();
+    $orderCartList = views_get_view_result('commerce_user_orders','default', $userId);
+    //dump($orderCartList);
+    $orderList = array();
+    foreach($orderCartList as $key => $order) {
+        $tmp = array();
+
+        $orderEntity = $order->_entity;
+        $tmp['order_id'] = $orderEntity->order_id[0]->value;
+        $tmp['order_number'] = $orderEntity->order_number[0]->value;
+        $tmp['order_time'] = date('Y-m-d G:i',$orderEntity->created[0]->value);
+        $tmp['order_total'] = intval($orderEntity->total_price[0]->number);
+        $tmp['order_status'] = '待接单';
+        $tmp['item_count'] = $orderEntity->order_items->count();
+        $tmp['order_items'] = _getProductItem($orderEntity->order_items);
+
+        //dump($tmp);
+        //dump($orderEntity);
+        array_push($orderList, $tmp);
+    }
+    $variables['orderList'] = $orderList;
+
+}
+
+//获取订单条目中产品信息
+function _getProductItem($orderItemList) {
+    $productList = array();
+    foreach($orderItemList as $item) {
+        $tmp = array();
+        $orderItem = \Drupal::entityTypeManager()->getStorage("commerce_order_item")->load($item->target_id);
+        $productVariation = $orderItem->getPurchasedEntity();
+        $product = $productVariation->getProduct();
+        $tmp['title'] = $product->getTitle();
+
+        $imgStr = $product->get('field_fengmiantu')->view();
+        $tmp['smallimg'] = render($imgStr);
+        $tmp['quantity'] = intval($orderItem->getQuantity());
+        $tmp['unitPrice'] = explode(" ",$orderItem->getUnitPrice())[0];;
+        array_push($productList, $tmp);
+    }
+    return $productList;
 }
