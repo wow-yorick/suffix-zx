@@ -6,16 +6,17 @@
     <a href="javascript:history.back(-1);" class="pl backtohis"></a>
     <h2 class="headerTitle"><span>服务地址</span></h2>
 </header>
+{{ page.content }}
 <div class="profile-9vcMlb wrapper">
     <div class="address-container">
         <div class="addressBox">
-            <a href="/home/address/add" class="add-address"><em>+</em>新增地址</a>
+            <a href="/user/{{ _context.user.id }}/customer/add" class="add-address"><em>+</em>新增地址</a>
         </div>
         <ul class="address-list">
             <li>
                 <p><label>姓名：</label><span>阿福</span><span class="phoneNumber">15925456257</span></p>
                 <p><em class="default">[默认]</em><label>收货：</label><span class="Address">广东省广州市天河区东圃一横路13号汇 宝商业中心B区1A020室</span></p>
-                <a href="/home/address/edit/1" class="edit-address"></a>
+                <a href="/profile/2/edit?destination=/user/{{ _context.user.id }}/customer" class="edit-address"></a>
             </li>
             <li>
                 <p><label>姓名：</label><span>阿福</span><span class="phoneNumber">15925456257</span></p>
