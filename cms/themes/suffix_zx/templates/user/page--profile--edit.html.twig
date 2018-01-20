@@ -7,40 +7,41 @@
     <h2 class="headerTitle"><span>修改地址</span></h2>
     <a href="javascript:;" class="save pr">保存</a>
 </header>
+{{ page.content }}
 <div class="profile-9vcMlb wrapper">
     <div class="Edit-address">
         <div class="edit-classify">
             <div class="edit-item clearfix">
                 <label>姓名</label>
-                <input class="redactIn" type="text" value="邓栩瀚" placeholder="请输入您的姓名">
+                <input class="redactIn" type="text" value="{{ addr.given_name }}{{ addr.family_name }}" placeholder="请输入您的姓名">
             </div>
             <div class="edit-item clearfix">
                 <label>联系电话</label>
-                <input class="redactIn" type="tel" value="13544546915" placeholder="请输入您的手机号码">
+                <input class="redactIn" type="tel" value="{{ addr.phonenum }}" placeholder="请输入您的手机号码">
             </div>
         </div>
         <div class="edit-classify">
             <div class="edit-item clearfix">
                 <label>所在地区</label>
-                <input class="redactIn" type="text" value="广东省广州市天河区" placeholder="请选择你的城市" readonly="readonly">
+                <input class="redactIn" type="text" value="{{ addr.administrative_area }}{{ addr.locality }}{{ addr.dependent_locality }}" placeholder="请选择你的城市" readonly="readonly">
                 <b></b>
             </div>
             <div class="edit-item clearfix">
                 <label>详细地址</label>
-                <input class="redactIn" type="text" value="东圃一横路13号汇宝商业中心" placeholder="请输入您的详细地址">
+                <input class="redactIn" type="text" value="{{ addr.address_line2 }}{{ addr.address_line1 }}" placeholder="请输入您的详细地址">
                 <i class="clear"></i>
             </div>
         </div>
         <div class="edit-classify">
             <div class="edit-item clearfix">
                 <label>设为默认地址</label>
-                <span class="switchery switchery-default switchery-open">
+                <span class="switchery switchery-default {% if addr.is_default %}switchery-open{% endif %}">
 						<small></small>
 					</span>
             </div>
         </div>
     </div>
-    <a href="/profile/2/delete?destination=/user/{{ _context.user.id }}/customer" class="operate-default delete-address">删除收货地址</a>
+    <a href="/profile/{{ addr.profile_id }}/delete?destination=/user/{{ _context.user.id }}/customer" class="operate-default delete-address">删除收货地址</a>
 </div>
 <div class="bottom-fxied">
     {% include '@suffix_zx/includes/footer.html.twig' %}
