@@ -1,0 +1,47 @@
+<form id="profile-customer-edit-form" action="/profile/{{ addr.profile_id }}/edit?destination=/user/{{ _context.user.id }}/customer" method="post" accept-charset="UTF-8">
+    {{ form_build_id }}
+    {{ form_id }}
+    {{ form_token }}
+  <input type="hidden" name="address[0][address][country_code]" value="{{ addr.country_code }}"/>
+  <input type="hidden" name="address[0][address][postal_code]" value="{{ addr.postal_code }}"/>
+  <input type="hidden" name="address[0][address][administrative_area]" value="{{ addr.administrative_area }}"/>
+  <input type="hidden" name="address[0][address][locality]" value="{{ addr.locality }}"/>
+  <input type="hidden" name="address[0][address][dependent_locality]" value="{{ addr.dependent_locality }}"/>
+  <input type="hidden" id="family_name"  name="address[0][address][family_name]" value="{{ addr.family_name }}"/>
+  <input type="hidden" id="given_name" name="address[0][address][given_name]" value="{{ addr.given_name }}"/>
+  <div class="profile-9vcMlb wrapper">
+    <div class="Edit-address">
+      <div class="edit-classify">
+        <div class="edit-item clearfix">
+          <label>姓名</label>
+          <input class="redactIn" type="text" name="username" value="{{ addr.given_name }}{{ addr.family_name }}" placeholder="请输入您的姓名">
+        </div>
+        <div class="edit-item clearfix">
+          <label>联系电话</label>
+          <input class="redactIn" type="tel" maxlength="11" name="field_phonenumber[0][value]" value="{{ addr.field_phonenumber }}" placeholder="请输入您的手机号码">
+        </div>
+      </div>
+      <div class="edit-classify">
+        <div class="edit-item clearfix">
+          <label>所在地区</label>
+          <input class="redactIn" type="text" value="{{ addr.administrative_area }}{{ addr.locality }}{{ addr.dependent_locality }}" placeholder="请选择你的城市" readonly="readonly">
+          <b></b>
+        </div>
+        <div class="edit-item clearfix">
+          <label>详细地址</label>
+          <input class="redactIn" name="address[0][address][address_line1]" type="text" value="{{ addr.address_line2 }}{{ addr.address_line1 }}" placeholder="请输入您的详细地址">
+          <i class="clear"></i>
+        </div>
+      </div>
+      <div class="edit-classify">
+        <div class="edit-item clearfix">
+          <label>设为默认地址</label>
+          <span id="hasSetDefault" class="switchery switchery-default {% if addr.is_default %}switchery-open{% endif %}">
+						<small></small>
+					</span>
+        </div>
+      </div>
+    </div>
+    <a href="/profile/{{ addr.profile_id }}/delete?destination=/user/{{ _context.user.id }}/customer" class="operate-default delete-address">删除收货地址</a>
+  </div>
+</form>

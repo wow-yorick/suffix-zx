@@ -119,6 +119,23 @@ function suffix_zx_preprocess_page(&$variables) {
 
 function suffix_zx_theme($existing, $type, $theme, $path) {
     return [
+        'profile_customer_add_form' => [//用户地址新增页
+            'template' => 'profile-customer-add-form',
+            'render element' => 'elements',
+            "path" => "themes/suffix_zx/templates/user",
+            "preprocess functions" => ["suffix_zx_preprocess_profile_customer_add_form"],
+        ],
+        'profile_customer_edit_form' => [//用户地址编辑页
+            'template' => 'profile-customer-edit-form',
+            'render element' => 'elements',
+            "path" => "themes/suffix_zx/templates/user",
+            "preprocess functions" => ["suffix_zx_preprocess_profile_customer_edit_form"],
+        ],
+        'field_multiple_value_form_customer' => [
+            'template' => 'field-multiple-value-form-customer',
+            "path" => "themes/suffix_zx/templates/user",
+            "preprocess functions" => ["suffix_zx_preprocess_field_multiple_value_form_customer"],
+        ],
         'commerce_checkout_form__sidebar' => [
             //'base hook' => 'commerce_checkout_form__sidebar',
             'template' => 'commerce-checkout-form--sidebar',
@@ -186,7 +203,7 @@ function suffix_zx_theme_registry_alter(&$theme_registry) {
     //$theme_registry['page__cart__confirm']['preprocess functions'][] = 'suffix_zx_preprocess_page_cart_confirm';
 
     //$theme_registry['page__cart__confirm']['variables'] = null;
-    //dump($theme_registry);exit;
+//    dump($theme_registry);exit;
 //    $theme_registry["page__cart"] = [
 //            "template" => "page--cart",
 //            "path" => "themes/suffix_zx/templates/cart",
@@ -541,6 +558,7 @@ function suffix_zx_preprocess_page_user_customer(&$variables) {
     foreach ($profileList as $profile) {
         $addressEntity = $profile->_entity;
         $tmp = $addressEntity->address[0]->toArray();
+        $tmp['field_phonenumber'] = $addressEntity->field_phonenumber->value;
         $tmp['profile_id'] = $profile->profile_id;
         $tmp['is_default'] = isset($addressEntity->is_default[0]) ? $addressEntity->is_default[0]->value : 0;
         $addressList[] = $tmp;
@@ -550,26 +568,69 @@ function suffix_zx_preprocess_page_user_customer(&$variables) {
 }
 
 function suffix_zx_form_profile_customer_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-    $args = func_get_args();
-    //dump($args);
-}
-
-//用户地址列表-新增
-function suffix_zx_preprocess_page_user_customer_add(&$variables) {
     //$args = func_get_args();
-    //dump($args);
+//    $form['address']['widget']['#theme'] = 'field_multiple_value_form_customer';
+//    $form['field_phonenumber']['widget']['#theme'] = 'field_multiple_value_form_customer';
+    $form['#theme'] ='profile_customer_edit_form';
+    //dump($form);
 }
 
 //用户地址列表-编辑
-function suffix_zx_preprocess_page_user_profile_edit(&$variables) {
+//function suffix_zx_preprocess_page_user_profile_edit(&$variables) {
+//    $routeMatch = \Drupal::routeMatch();
+//    $profileEntity = $routeMatch->getParameters()->get('profile');
+//    if(!$profileEntity) {
+//        return false;
+//    }
+//    $tmp = $profileEntity->address[0]->toArray();
+//    $tmp['profile_id'] = $profileEntity->profile_id[0]->value;
+//    $tmp['is_default'] = isset($profileEntity->is_default[0]) ? $profileEntity->is_default[0]->value : 0;
+//    $variables['addr'] = $tmp;
+//    //dump($variables);
+//}
+
+function suffix_zx_preprocess_profile_customer_edit_form(&$variables) {
     $routeMatch = \Drupal::routeMatch();
     $profileEntity = $routeMatch->getParameters()->get('profile');
     if(!$profileEntity) {
         return false;
     }
     $tmp = $profileEntity->address[0]->toArray();
+    $tmp['field_phonenumber'] = $profileEntity->field_phonenumber->value;
     $tmp['profile_id'] = $profileEntity->profile_id[0]->value;
     $tmp['is_default'] = isset($profileEntity->is_default[0]) ? $profileEntity->is_default[0]->value : 0;
     $variables['addr'] = $tmp;
-    dump($variables);
+    $variables['form_build_id'] = render($variables['elements']['form_build_id']);
+    $variables['form_token'] = render($variables['elements']['form_token']);
+    $variables['form_id'] = render($variables['elements']['form_id']);
+    //dump($profileEntity);
+}
+
+
+//用户地址列表-新增-page-修改
+//function suffix_zx_preprocess_page_user_customer_add(&$variables) {
+////    $args = func_get_args();
+////    dump($args);
+//}
+
+//用户地址列表-新增-FORM ALERT
+function suffix_zx_form_profile_customer_add_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    //dump($form_state);
+}
+
+//用户地址列表-新增-form-page
+function suffix_zx_preprocess_profile_customer_add_form(&$variables) {
+    $variables['form_build_id'] = render($variables['elements']['form_build_id']);
+    $variables['form_token'] = render($variables['elements']['form_token']);
+    $variables['form_id'] = render($variables['elements']['form_id']);
+    //dump($variables);
+}
+
+function suffix_zx_profile_presave(Drupal\Core\Entity\EntityInterface $entity) {
+    dump($entity);exit;
+}
+
+function suffix_zx_profile_customer_add_form_validate() {
+    $args = func_get_args();
+    dump($args);
 }
