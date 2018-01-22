@@ -32,5 +32,5 @@
 
 
 function app_user_commerce_checkout_pane_info_alter(&$definitions) {
-    dump($definitions);exit;
+    //dump($definitions);exit;
 }

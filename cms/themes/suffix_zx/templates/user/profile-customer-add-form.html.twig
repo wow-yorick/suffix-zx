@@ -1,0 +1,46 @@
+<form id="profile-customer-add-form"  action="/user/1/customer/add" method="post" accept-charset="UTF-8" data-drupal-form-fields="edit-address-0-address-country-code--2,edit-address-0-address-postal-code,edit-address-0-address-administrative-area,edit-address-0-address-locality,edit-address-0-address-dependent-locality,edit-address-0-address-address-line2,edit-address-0-address-address-line1,edit-address-0-address-organization,edit-address-0-address-family-name,edit-address-0-address-given-name,edit-field-phonenumber-0-value,edit-submit,edit-set-default">
+    {{ form_build_id }}
+    {{ form_id }}
+    {{ form_token }}
+    <input type="hidden" name="address[0][address][country_code]" value="CN"/>
+    <input type="hidden" name="address[0][address][postal_code]" value="200000"/>
+    <input type="hidden" name="address[0][address][administrative_area]" value="Shanghai Shi"/>
+    <input type="hidden" name="address[0][address][locality]" value="Baoshan Qu"/>
+    <input type="hidden" name="address[0][address][dependent_locality]" value=""/>
+    <input type="hidden" id="family_name" name="address[0][address][family_name]" value=""/>
+    <input type="hidden" id="given_name" name="address[0][address][given_name]" value=""/>
+<div class="profile-9vcMlb wrapper">
+    <div class="Edit-address">
+        <div class="edit-classify">
+            <div class="edit-item clearfix">
+                <label>姓名</label>
+                <input class="redactIn" type="text" name="username" value="" placeholder="请输入您的姓名">
+            </div>
+            <div class="edit-item clearfix">
+                <label>联系电话</label>
+                <input class="redactIn" type="tel" maxlength="11" name="field_phonenumber[0][value]" value="" placeholder="请输入您的手机号码">
+            </div>
+        </div>
+        <div class="edit-classify">
+            <div class="edit-item clearfix">
+                <label>所在地区</label>
+                <input class="redactIn" type="text" value="" placeholder="请选择你的城市" readonly="readonly">
+                <b></b>
+            </div>
+            <div class="edit-item clearfix">
+                <label>详细地址</label>
+                <input class="redactIn" type="text" name="address[0][address][address_line1]" value="" placeholder="请输入您的详细地址">
+                <i class="clear"></i>
+            </div>
+        </div>
+        <div class="edit-classify">
+            <div class="edit-item clearfix">
+                <label>设为默认地址</label>
+                <span id="hasSetDefault" class="switchery switchery-default switchery-open">
+						<small></small>
+					</span>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

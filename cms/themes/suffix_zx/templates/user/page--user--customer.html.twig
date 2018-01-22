@@ -14,7 +14,7 @@
         <ul class="address-list">
             {% for addr in addressList %}
             <li>
-                <p><label>姓名：</label><span>{{ addr.given_name }}{{ addr.family_name }}</span><span class="phoneNumber">{{ addr.phonenumber }}</span></p>
+                <p><label>姓名：</label><span>{{ addr.given_name }}{{ addr.family_name }}</span><span class="phoneNumber">{{ addr.field_phonenumber }}</span></p>
                 <p>{% if addr.is_default %}<em class="default">[默认]</em>{% endif %}<label>收货：</label><span class="Address">{{ addr.administrative_area }}{{ addr.locality }}{{ addr.dependent_locality }}{{ addr.address_line2 }}{{ addr.address_line1 }}</span></p>
                 <a href="/profile/{{ addr.profile_id }}/edit?destination=/user/{{ _context.user.id }}/customer" class="edit-address"></a>
             </li>

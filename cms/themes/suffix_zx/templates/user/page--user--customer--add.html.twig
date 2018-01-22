@@ -5,43 +5,9 @@
 <header class="header">
     <a href="javascript:history.back(-1);" class="pl backtohis"></a>
     <h2 class="headerTitle"><span>新增地址</span></h2>
-    <a href="javascript:;" class="save pr">保存</a>
+    <a href="javascript:;" class="save pr" onclick="saveAddressEdit()">保存</a>
 </header>
 {{ page.content }}
-<div class="profile-9vcMlb wrapper">
-    <div class="Edit-address">
-        <div class="edit-classify">
-            <div class="edit-item clearfix">
-                <label>姓名</label>
-                <input class="redactIn" type="text" value="" placeholder="请输入您的姓名">
-            </div>
-            <div class="edit-item clearfix">
-                <label>联系电话</label>
-                <input class="redactIn" type="tel" value="" placeholder="请输入您的手机号码">
-            </div>
-        </div>
-        <div class="edit-classify">
-            <div class="edit-item clearfix">
-                <label>所在地区</label>
-                <input class="redactIn" type="text" value="" placeholder="请选择你的城市" readonly="readonly">
-                <b></b>
-            </div>
-            <div class="edit-item clearfix">
-                <label>详细地址</label>
-                <input class="redactIn" type="text" value="" placeholder="请输入您的详细地址">
-                <i class="clear"></i>
-            </div>
-        </div>
-        <div class="edit-classify">
-            <div class="edit-item clearfix">
-                <label>设为默认地址</label>
-                <span class="switchery switchery-default switchery-open">
-						<small></small>
-					</span>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="bottom-fxied">
     {% include '@suffix_zx/includes/footer.html.twig' %}
 </div>

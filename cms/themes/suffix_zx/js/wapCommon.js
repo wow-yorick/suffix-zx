@@ -165,3 +165,37 @@ $('.nav-tab-top ul.flex').find('li').on('click',function () {
     var currentArea = $(this).attr('data-code');
     $('div.scroll-wrap[data-index='+currentArea+']').show();
 });
+
+//地址修改
+function saveAddressEdit() {
+    var profileForm = $('#profile-customer-edit-form,#profile-customer-add-form');
+    var isDefault = $('#hasSetDefault').hasClass('switchery-open');
+    if(profileForm.find('[name=op]').length == 0) {
+        var submitInput = '<input type="hidden" name="op" value="保存" />';
+        profileForm.append(submitInput);
+    }
+    //alert(profileForm.find('[name=op]').length);
+    var opVal = '保存';
+    if(isDefault) {
+        opVal = 'Save and make default';
+    }
+    profileForm.find('[name=op]').val(opVal);
+    //alert(profileForm.find('[name=op]').val());
+    _getGivenAndfamilyName();
+    profileForm.submit();
+}
+
+function _getGivenAndfamilyName() {
+  var username = $('[name=username]').val();
+  if(!username || username.length < 2) {
+      return false;
+  }
+  $('#given_name').val(username.substring(0,1));
+  $('#family_name').val(username.substring(1,username.length));
+
+}
+
+//toggle address is default
+$('#hasSetDefault').on('click', function () {
+    $(this).toggleClass('switchery-open');
+})
