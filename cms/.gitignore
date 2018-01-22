@@ -18,7 +18,7 @@ vendor/*
 #sites/*/settings*.php
 #sites/*/services*.yml
 !sites/development.services.yml
-sites/default/settings.php
+!sites/default/settings.php
 
 #paths that contain user-generated content.
 #sites/*/files
