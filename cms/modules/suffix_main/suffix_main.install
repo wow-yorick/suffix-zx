@@ -89,6 +89,13 @@ function suffix_main_schema() {
         'length' => 256,
         'not null' => FALSE,
       ),
+      'status' => array(
+        'description' => t('状态.'),
+        'type' => 'int',
+        'length' => 12,
+        'not null' => FALSE,
+      ),
+
       'create_time' => array(
         'description' => t('创建时间.'),
         'type' => 'int',
@@ -110,6 +117,18 @@ function suffix_main_schema() {
         'description' => t('会员ID.'),
         'type' => 'int',
         'length' => 12,
+        'not null' => TRUE,
+      ),
+      'username' => array(
+        'description' => t('用户名.'),
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => TRUE,
+      ),
+      'mobile' => array(
+        'description' => t('手机号.'),
+        'type' => 'varchar',
+        'length' => 11,
         'not null' => TRUE,
       ),
       'apply_id' => array(

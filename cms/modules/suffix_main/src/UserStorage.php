@@ -15,7 +15,7 @@ class UserStorage extends BaseStorage {
         return self::getOne('users',array('uid'=>$uid),array(array('uid','user_id')));
     }
 
-    public static function getUserListByRole(){ //user__roles   users_field_data
+    public static function getUserListByRole($name){ //user__roles   users_field_data
         $dbs = array(
             array('user__roles','a'),
             array('users_field_data','b','a.entity_id = b.uid'),
@@ -25,6 +25,9 @@ class UserStorage extends BaseStorage {
             array('a.roles_target_id','shop_admin'),
             array('b.status',1),
         );
+        if($name){
+            $entry[] = array('b.name','%'.$name.'%','LIKE');
+        }
         $fields = array(
             array('b', 'uid','uid'),
             array('b', 'name','user_name'),

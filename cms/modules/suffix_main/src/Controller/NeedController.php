@@ -46,6 +46,8 @@ class NeedController extends APIBaseController {
         }
         $applyInfo = $this->json_deal($applyInfo);
         $insertData['user_id'] = $applyInfo['uid'];
+        $insertData['username'] = $applyInfo['username'];
+        $insertData['mobile'] = $applyInfo['mobile'];
         $insertData['province'] = $applyInfo['province'];
         $insertData['city'] = $applyInfo['city'];
         $insertData['district'] = $applyInfo['district'];
@@ -75,6 +77,25 @@ class NeedController extends APIBaseController {
         }
 
         $this->success($return);
+    }
+
+    public function getProductKind(){
+        $list = ProductStorage::getProductKind();
+        $this->success($list);
+    }
+
+    public function getProductDetail(){
+        $queryData = $this->getRequest();
+        $validateRule = array(
+            'product_id'=>array(
+                'rule'=>'require',
+                'declare'=>'产品ID'
+            ),
+        );
+        $this->fieldVerify($validateRule,$queryData);
+        $queryData = self::dataFormat($queryData,$validateRule);
+        $productInfo = ProductStorage::getProductInfo(intval($queryData['product_id']));
+        $this->success($productInfo);
     }
 
     public function getProductList(){
@@ -128,6 +149,8 @@ class NeedController extends APIBaseController {
             'user_id' => null,
             'apply_id' => null,
             'product_id' => null,
+            'username'=>'',
+            'mobile'=>'13200020001',
             'province' => '',
             'city' => '',
             'district' => '',
@@ -160,7 +183,15 @@ class NeedController extends APIBaseController {
     }
 
     public function getShopList(){
-        $shopList = UserStorage::getUserListByRole();
+        $queryData = $this->getRequest();
+        $validateRule = array(
+            'name'=>array(
+                'rule'=>'all',
+                'declare'=>'用户名'
+            ),
+        );
+        $this->fieldVerify($validateRule,$queryData);
+        $shopList = UserStorage::getUserListByRole($queryData['name']);
         $this->success($shopList);
     }
 
@@ -184,8 +215,22 @@ class NeedController extends APIBaseController {
         $insertData['district'] = $needInfo['district'];
         $insertData['remark'] = $needInfo['remark'];
         $orderId = OrderStorage::insertOrderInfo($insertData);
-        var_export($insertData);die;
         return $orderId?:null;
+    }
+
+
+    function  getUserInfo(){
+        $queryData = $this->getRequest();
+        $validateRule = array(
+            'uid'=>array(
+                'rule'=>'require',
+                'declare'=>'用户id'
+            ),
+        );
+        $this->fieldVerify($validateRule,$queryData);
+        $queryData = self::dataFormat($queryData,$validateRule);
+        $info = UserStorage::getOneUserByUid($queryData['uid']);
+        $this->success($info);
     }
 
 }
