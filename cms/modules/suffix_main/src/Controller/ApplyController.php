@@ -66,6 +66,20 @@ class ApplyController extends APIBaseController {
         $this->success($list);
     }
 
+    public function getUserByMobile(){
+        $queryData = $this->getRequest();
+        $validateRule = array(
+            'mobile'=>array(
+                'rule'=>'require',
+                'declare'=>'手机号'
+            ),
+        );
+        $this->fieldVerify($validateRule,$queryData);
+        $queryData = self::dataFormat($queryData,$validateRule);
+        $info = UserStorage::getOneUserByMobile($queryData['mobile']);
+        $this->success($info);
+    }
+
     private function getDefaultValue(){//补全插入数据字段
         return array(
             'username' => '',

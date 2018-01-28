@@ -61,6 +61,13 @@ suffix_main.get_user_info:
     _title: '用户详情'
   requirements:
     _permission: 'access content'
+suffix_main.get_user_by_mobile:
+  path: 'suffix_main/get_user_by_mobile'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\ApplyController::getUserByMobile'
+    _title: '手机号获取用户'
+  requirements:
+    _permission: 'access content'
 suffix_main.add_order:
   path: 'suffix_main/add_order'
   defaults:
