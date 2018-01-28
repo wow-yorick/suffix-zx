@@ -53,4 +53,13 @@ class ProductStorage extends BaseStorage {
     return $select->execute()->fetch();
   }
 
+  public static function getProductKind(){
+      $select = db_select('commerce_product','a');
+      $select->addField('a', 'type','type');
+      $select->distinct();
+      $types = $select->execute()->fetchAll();
+//      return $types->condition('type',array(),'');
+      return $types;
+  }
+
 }

@@ -33,11 +33,32 @@ suffix_main.product_list:
     _title: '产品列表'
   requirements:
     _permission: 'access content'
+suffix_main.product_kind:
+  path: 'suffix_main/product_kind'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::getProductKind'
+    _title: '产品分类'
+  requirements:
+    _permission: 'access content'
+suffix_main.product_detail:
+  path: 'suffix_main/product_detail'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::getProductDetail'
+    _title: '产品分类'
+  requirements:
+    _permission: 'access content'
 suffix_main.shop_list:
   path: 'suffix_main/shop_list'
   defaults:
     _controller: '\Drupal\suffix_main\Controller\NeedController::getShopList'
-    _title: '产品列表'
+    _title: '商家列表'
+  requirements:
+    _permission: 'access content'
+suffix_main.get_user_info:
+  path: 'suffix_main/get_user_info'
+  defaults:
+    _controller: '\Drupal\suffix_main\Controller\NeedController::getUserInfo'
+    _title: '用户详情'
   requirements:
     _permission: 'access content'
 suffix_main.add_order:
