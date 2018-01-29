@@ -10,6 +10,38 @@ function selectAllItem(obj) {
     _monitorSelect();
 }
 //});
+//产品详情
+$('.header-nav').find('a').on('click',function () {
+    $('.header-nav').find('a').removeClass('on');
+    $(this).addClass('on');
+})
+
+//减少
+function decrease(obj) {
+    var thisBtn = $(obj);
+    if(thisBtn.hasClass('disabled')) {
+        return false;
+    }
+    var actTag = $('#number');
+    if(actTag.val() <= 1) {
+        actTag.val(1);
+        thisBtn.addClass('disabled');
+        return false;
+    }
+    actTag.val(parseInt(actTag.val()) - 1);
+}
+//增加
+function increase(obj) {
+    var thisBtn = $(obj);
+    var actTag = $('#number');
+    if(actTag.val() >= 1) {
+        $('.decrease').removeClass('disabled');
+    }
+    actTag.val(parseInt(actTag.val()) + 1);
+}
+
+//产品详情 end
+
 function toggleSelectOrder(obj) {
     var _thisBtn = $(obj);
     _thisBtn.toggleClass('selected');
