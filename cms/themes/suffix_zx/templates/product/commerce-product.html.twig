@@ -1,70 +1,60 @@
-{#
-/**
- * @file
- *
- * Default product template.
- *
- * Available variables:
- * - attributes: HTML attributes for the wrapper.
- * - product: The rendered product fields.
- *   Use 'product' to print them all, or print a subset such as
- *   'product.title'. Use the following code to exclude the
- *   printing of a given field:
- *   @code
- *   {{ product|without('title') }}
- *   @endcode
- * - product_entity: The product entity.
- * - product_url: The product URL.
- *
- * @ingroup themeable
- */
-#}
-
 <div class="product-details wrapper">
-  <div class="product-serve">
-    <div class="productBigPicture">
-      {{ fengmiantu }}
-    </div>
-    <div class="proDets-nature">
-      <h1 class="module-title">{{ title }}</h1>
-      <div class="real-price">
-        <span class="price"><em>{{ price }}</em></span>
-        <span class="discount">7.8折</span>
-      </div>
-      <p class="original-price"><del>￥{{ zheqian }}</del></p>
-    </div>
-    <div class="proserve-nape flex">
-      <span class="BSO"><i></i><em>正品保障</em></span>
-      <span class="salesReturn"><i></i><em>7天无理由退货</em></span>
-      <span class="visit"><i></i><em>上门服务</em></span>
-      <span class="Zeroval"><i></i><em>0增值</em></span>
-    </div>
-    <div class="purchase-quantity flex">
-      <label>购买数量</label>
-      <div class="number">
-        <button class="decrease disabled">-</button>
-        <input id="number" type="number" value="1">
-        <button class="increase">+</button>
-      </div>
-      {{ add_to_cart }}
-    </div>
-    <div class="serve-time flex">
-      <label>服务时间</label>
-      <span class="times">8:00-20:00</span>
-    </div>
-    <div class="warm-prompt">
-      <label>温馨提示：</label>
-      <ul>
-        <li>1、此服务为人工服务，不包含配件</li>
-        <li>2、您可享受不满意重做服务，质保期为90天安全保障</li>
-        <li>3、施工服务时间为：8:00-20:00，你下单后的半小时内师傅会和您再次确定服务时间及服务项目。</li>
-        <li>3、施工服务时间为：8:00-20:00，你下单后的半小时内师傅会和您再次确定服务时间及服务项目。</li>
-      </ul>
-    </div>
-  </div>
-  <div class="dragtips">
-    <span class="txt">继续拖动，查看详情</span>
-    {{ body }}
-  </div>
+	<div class="product-serve" id="product-serve">
+		<div class="productBigPicture">
+            {{ fengmiantu }}
+		</div>
+		<div class="proDets-nature">
+			<h1 class="module-title">{{ title }}</h1>
+			<div class="real-price">
+				<span class="price">{{ price }}<em></em></span>
+				<span class="discount">7.8折</span>
+			</div>
+			<p class="original-price"><del>￥{{ zheqian }}</del></p>
+		</div>
+		<div class="proserve-nape flex">
+			<span class="BSO"><i></i><em>正品保障</em></span>
+			<span class="salesReturn"><i></i><em>7天无理由退货</em></span>
+			<span class="visit"><i></i><em>上门服务</em></span>
+			<span class="Zeroval"><i></i><em>0增值</em></span>
+		</div>
+		<div class="purchase-quantity flex">
+			<label>购买数量</label>
+			<div class="regulation-number">
+				<button class="decrease disabled" onclick="decrease(this)">-</button>
+				<input id="number" type="number" value="1">
+				<button class="increase" onclick="increase(this)">+</button>
+			</div>
+		</div>
+		<div class="serve-time flex">
+			<label>服务时间</label>
+			<span class="times">8:00-20:00</span>
+		</div>
+		<div class="warm-prompt">
+			<label>温馨提示：</label>
+			<ul>
+				<li>1、此服务为人工服务，不包含配件</li>
+				<li>2、您可享受不满意重做服务，质保期为90天安全保障</li>
+				<li>3、施工服务时间为：8:00-20:00，你下单后的半小时内师傅会和您再次确定服务时间及服务项目。</li>
+				<li>3、施工服务时间为：8:00-20:00，你下单后的半小时内师傅会和您再次确定服务时间及服务项目。</li>
+			</ul>
+		</div>
+	</div>
+	<div class="dragtips" id="dragtips">
+		<span class="txt">继续拖动，查看详情</span>
+        {{ body }}
+	</div>
 </div>
-
+<form action="{{ product_url }}" method="post" accept-charset="UTF-8">
+<div class="bottom-fxied">
+	<div class="actionBar-container flex">
+		<div class="supcart flex">
+			<a href="javascript:;" class="support"></a>
+			<a href="/cart" class="cart-link merchandise"></a>
+		</div>
+		<div class="trade">
+            {{ add_to_cart }}
+			{#<a href="javascript:;" class="cart-btn">加入购物车</a>#}
+		</div>
+	</div>
+</div>
+</form>
