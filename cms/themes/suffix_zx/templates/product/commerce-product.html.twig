@@ -1,3 +1,4 @@
+<form id="addToCart" action="{{ product_url }}" method="post" accept-charset="UTF-8">
 <div class="product-details wrapper">
 	<div class="product-serve" id="product-serve">
 		<div class="productBigPicture">
@@ -21,7 +22,7 @@
 			<label>购买数量</label>
 			<div class="regulation-number">
 				<button class="decrease disabled" onclick="decrease(this)">-</button>
-				<input id="number" type="number" value="1">
+				<input id="number" type="number" name="quantity" value="1">
 				<button class="increase" onclick="increase(this)">+</button>
 			</div>
 		</div>
@@ -42,9 +43,14 @@
 	<div class="dragtips" id="dragtips">
 		<span class="txt">继续拖动，查看详情</span>
         {{ body }}
+        {{ add_to_cart }}
 	</div>
 </div>
-<form action="{{ product_url }}" method="post" accept-charset="UTF-8">
+
+	{{ add_to_cart_form_id }}
+    {{ add_to_cart_form_build_id }}
+    {{ add_to_cart_form_token }}
+	<input type="hidden" name="op" value="添加到购物车"/>
 <div class="bottom-fxied">
 	<div class="actionBar-container flex">
 		<div class="supcart flex">
@@ -52,8 +58,7 @@
 			<a href="/cart" class="cart-link merchandise"></a>
 		</div>
 		<div class="trade">
-            {{ add_to_cart }}
-			{#<a href="javascript:;" class="cart-btn">加入购物车</a>#}
+			<a href="javascript:;" class="cart-btn" onclick="add_to_cart(this);">加入购物车</a>
 		</div>
 	</div>
 </div>

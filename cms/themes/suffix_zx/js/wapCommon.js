@@ -40,6 +40,10 @@ function increase(obj) {
     actTag.val(parseInt(actTag.val()) + 1);
 }
 
+//添加到购物车
+function add_to_cart(obj) {
+    $('#addToCart').submit();
+}
 //产品详情 end
 
 function toggleSelectOrder(obj) {
