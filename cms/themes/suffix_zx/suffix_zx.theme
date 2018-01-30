@@ -88,13 +88,36 @@ function suffix_zx_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStat
 }
 
 function suffix_zx_preprocess_commerce_product(&$variables) {
-    dump($variables);
+//    dump($variables);exit;
+    $cartLazyBuilders = \Drupal::getContainer()->get('commerce_product.lazy_builders');
+    $addCartForm = $cartLazyBuilders->addToCartForm($variables['product_entity']->id(),'full',true);
+    //dump($addCartForm);exit;
+    $variables['add_to_cart'] = $addCartForm;
+    $variables['add_to_cart_form_id'] = render($addCartForm['form_id']);
+    $variables['add_to_cart_form_build_id'] = render($addCartForm['form_build_id']);
+    $variables['add_to_cart_form_token'] = render($addCartForm['form_token']);
     $variables['title'] = render($variables['elements']['title']);
     $variables['fengmiantu'] = render($variables['elements']['field_fengmiantu']);
     $variables['price'] = render($variables['elements']['field_fengmianjiage']);
     $variables['body'] = render($variables['elements']['body']);
-    $variables['add_to_cart'] = render($variables['elements']['variations']);
+    //$variables['add_to_cart'] = render($variables['elements']['variations']);
     $variables['zheqian'] = sprintf("%.2f",ceil($variables['product_entity']->toArray()['field_fengmianjiage'][0]['number']/0.78));
+}
+
+//添加到购物车
+function suffix_zx_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    if(false === strpos($form_id,'commerce_order_item_add_to_cart_form_commerce_product')) {
+        return;
+    }
+    $form['#submit'][] = 'suffix_zx_add_to_cart_multi';
+    dump($form_state);exit;
+    $form_state->setSubmitHandlers(['suffix_zx_add_to_cart_multi']);
+    dump($form_state->getSubmitHandlers());
+    echo $form_id;
+}
+
+function suffix_zx_add_to_cart_multi(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+    dump($form);exit;
 }
 
 function suffix_zx_preprocess_page(&$variables) {
