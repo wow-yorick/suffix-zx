@@ -109,16 +109,8 @@ function suffix_zx_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form
     if(false === strpos($form_id,'commerce_order_item_add_to_cart_form_commerce_product')) {
         return;
     }
-    $form['#submit'][] = 'suffix_zx_add_to_cart_multi';
-    dump($form_state);exit;
-    $form_state->setSubmitHandlers(['suffix_zx_add_to_cart_multi']);
-    dump($form_state->getSubmitHandlers());
-    echo $form_id;
 }
 
-function suffix_zx_add_to_cart_multi(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    dump($form);exit;
-}
 
 function suffix_zx_preprocess_page(&$variables) {
     $request = Request::createFromGlobals();

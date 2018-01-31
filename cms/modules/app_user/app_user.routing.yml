@@ -38,3 +38,17 @@ app_user.commerce.cart.confirm:
     _title: '确认订单'
   requirements:
     _permission: 'access content'
+app_user.commerce.product.classify:
+  path: '/product/classify'
+  defaults:
+    _controller: '\Drupal\app_user\Controller\ProductController::classify'
+    _title: '产品分类'
+  requirements:
+    _permission: 'access content'
+app_user.commerce.product.productlist:
+  path: '/product/productlist'
+  defaults:
+    _controller: '\Drupal\app_user\Controller\ProductController::productlist'
+    _title: '产品列表'
+  requirements:
+    _permission: 'access content'

@@ -142,9 +142,6 @@ class APIBaseController extends ControllerBase {
      */
     protected function safetyVerification($requestData)
     {
-        if(!PRODUCT) {
-            return true;
-        }
         if (isset($requestData['mobile']) && $requestData['mobile'] == '13200000001' || empty($requestData['HTTP_REFERER'])) {
             return true;
         }
