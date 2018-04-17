@@ -1,7 +1,0 @@
-check_state:
-  version: VERSION
-  js:
-    js/check_state.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal

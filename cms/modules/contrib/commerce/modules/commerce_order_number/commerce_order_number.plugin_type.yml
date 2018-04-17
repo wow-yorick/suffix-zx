@@ -1,5 +1,0 @@
-commerce_order_number.commerce_order_number_generator:
-  label: Commerce order number generator
-  provider: commerce_order_number
-  plugin_manager_service_id: plugin.manager.commerce_order_number_generator
-  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator

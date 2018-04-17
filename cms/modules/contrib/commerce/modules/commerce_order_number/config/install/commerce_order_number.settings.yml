@@ -1,4 +1,0 @@
-generator: 'infinite'
-padding: 0
-pattern: '{order_number}'
-force: false
