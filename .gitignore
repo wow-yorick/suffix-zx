@@ -1,7 +1,12 @@
 *~
 .idea
 *.tar
+<<<<<<< HEAD
 cms/vendor
 #cms/composer.lock
 #cms/vendor/composer/installed.json
 cms/sites/default/config/settings.php
+=======
+#cms/composer.lock
+#cms/vendor/composer/installed.json
+>>>>>>> c7ad5f47474f46f326e1fc3961821e9d336aeb19

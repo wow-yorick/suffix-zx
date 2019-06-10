@@ -78,6 +78,10 @@ class CartController extends ControllerBase {
       'tags' => $cacheable_metadata->getCacheTags(),
       'max-age' => $cacheable_metadata->getCacheMaxAge(),
     ];
+<<<<<<< HEAD
+=======
+
+>>>>>>> c7ad5f47474f46f326e1fc3961821e9d336aeb19
     return $build;
   }
 

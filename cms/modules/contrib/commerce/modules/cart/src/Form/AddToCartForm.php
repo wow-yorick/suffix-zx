@@ -205,11 +205,14 @@ class AddToCartForm extends ContentEntityForm implements AddToCartFormInterface 
     if (!$cart) {
       $cart = $this->cartProvider->createCart($order_type_id, $store);
     }
+<<<<<<< HEAD
     $quantity =$form_state->getUserInput()['quantity'];
     if($quantity > 1) {
         $order_item->quantity = $quantity;
     }
     //dump($order_item->getQuantity());
+=======
+>>>>>>> c7ad5f47474f46f326e1fc3961821e9d336aeb19
     $this->cartManager->addOrderItem($cart, $order_item, $form_state->get(['settings', 'combine']));
     // Other submit handlers might need the cart ID.
     $form_state->set('cart_id', $cart->id());
