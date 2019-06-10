@@ -1,5 +1,7 @@
 *~
 .idea
 *.tar
+cms/vendor
 #cms/composer.lock
 #cms/vendor/composer/installed.json
+cms/sites/default/config/settings.php
