@@ -25,7 +25,7 @@
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
     "glob": "7.1.1",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.3",
     "stylelint": "^7.10.1",
     "stylelint-checkstyle-formatter": "^0.1.0",
     "stylelint-config-standard": "^16.0.0",
